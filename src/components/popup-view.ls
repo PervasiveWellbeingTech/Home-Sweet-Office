@@ -87,6 +87,10 @@ get_screenshot_utils = ->>
   get_user_id
 } = require 'libs_backend/background_common'
 
+{
+  once_available
+} = require 'libs_frontend/frontend_libs'
+
 
 
 polymer_ext {
@@ -413,6 +417,7 @@ polymer_ext {
 
 ############# STRESS INTERVENTION FUNCTIONS
 
+
   start_stress_intervention: ->>
     this.stress_intervention_active = true
     this.stress_intervention_display = false
@@ -621,47 +626,30 @@ polymer_ext {
 
   check_for_survey: ->>
     userid = await get_user_id()
-    console.log("Sending request for survey link")
-    survey_data = await JSON.parse(await get_json(hso_server_url + "/getSurvey", "userid=" + userid))
+    survey_data = JSON.parse(await get_json(hso_server_url + "/getSurvey", "userid=" + userid))
     if survey_data !== {}
-      console.log("Got following survey data from server")
-      console.log(survey_data)
       localstorage_setjson("survey_data", survey_data)
-      this.enable_survey_button()
-    else:
-      console.log("No survey data available from server")
+      once_available("survey_button", this.enable_survey_button())
 
   enable_survey_button: ->>
-    survey_data = localstorage_getjson("survey_data")
-    await survey_button = this.$$('#survey_button')
-    console.log(survey_button)
-    survey_button.innerHTML = survey_data.button_text
-    survey_button.style.background-color = "red"
-    survey_button.style.border-style = "hidden"
-    survey_button.disabled = false
+    survey_data = await localstorage_getjson("survey_data")
+    button = document.getElementById("survey_button")
+    button.innerHTML = survey_data.button_text
+    button.style.display = "flex"
+    button.disabled = false
 
   disable_survey_button: ->>
     localstorage_setjson("survey_data", {})
-    await survey_button = this.$$('#survey_button')
-    console.log(survey_button)
-    survey_button.innerHTML = "No surveys available. Check in later."
-    survey_button.style.background-color = "#65A7F2"
-    survey_button.style.border-style = "dashed"
-    survey_button.style.border-color = "white"
-    survey_button.style.color = "white"
-    survey_button.disabled = true
+    button = document.getElementById("survey_button")
+    button.style.display = "none"
+    button.disabled = true
 
   survey_button_clicked: ->>
     survey_data = localstorage_getjson("survey_data")
-    if survey_data !== {}
-      userid = await get_user_id()
-      chrome.tabs.create {url: survey_data.url + '?habitlab_userid=' + userid + '&click_location=dropdown'}
-      #console.log("Enabling survey with link " + survey_data.url)
-      # Send post request to database
-      post_json(hso_server_url + "/surveyClicked", {"_id": survey_data._id, "userid":userid,"click_location":"dropdown"})
-      this.disable_survey_button()
-    else
-      this.disable_survey_button()
+    userid = await get_user_id()
+    chrome.tabs.create {url: survey_data.url + '?habitlab_userid=' + userid + '&click_location=dropdown'}
+    post_json(hso_server_url + "/surveyClicked", {"_id": survey_data._id, "userid":userid,"click_location":"dropdown"})
+    this.disable_survey_button()
 
   results_button_clicked: ->
     chrome.tabs.create {url: 'options.html#overview'}
@@ -689,6 +677,60 @@ polymer_ext {
 
     localstorage_setbool('popup_view_has_been_opened', true)
 
+    # Check localstorage for current panel
+    panel = localstorage_getstring("current_panel")
+    if typeof(panel) === 'undefined'
+      localstorage_setstring("current_panel", "home")
+      panel = "home"
+
+    #console.log("data storage json: " + localstorage_getjson("intervention_data_tosend"))
+
+    # If intervention data undefined, set to empty object
+    if localstorage_getjson("intervention_data_tosend") === null
+      #console.log("Data to send undefined")
+      localstorage_setjson("intervention_data_tosend", {})
+    # Show appropriate panel
+    if panel === "home"
+      #console.log("Showing home panel")
+      this.stress_intervention_active = false
+    else if panel === "stress_before"
+      #console.log("Showing stress before panel")
+      this.stress_intervention_active = true
+      this.intervention_stress_before = true
+    else if panel === "stress_after"
+      #console.log("Showing stress after panel")
+      this.stress_intervention_active = true
+      this.intervention_stress_after = true
+    else if panel === "intervention_loading"
+      #console.log("Showing intervention display")
+      this.stress_intervention_active = true
+      this.stress_intervention_loading = true
+      this.show_stress_intervention()
+    else if panel === "intervention_display"
+      #console.log("Showing intervention display")
+      this.stress_intervention_active = true
+      this.stress_intervention_display = true
+      this.show_stress_intervention()
+    else if panel === "ask_intervention_done"
+      #console.log("Showing ask intervention done")
+      this.stress_intervention_active = true
+      this.ask_intervention_done = true
+      this.intervention_confirmation()
+    else if panel === "intervention_end"
+      #console.log("Showing intervention end")
+      this.stress_intervention_active = true
+      this.intervention_end = true
+      
+    survey_data = localstorage_getjson("survey_data")
+    if typeof(survey_data) === 'undefined'
+      localstorage_setjson("survey_data",{})
+      this.check_for_survey
+    else if survey_data !== {}
+      once_available("survey_button", this.enable_survey_button())
+    else
+      this.check_for_survey()
+      
+      
     setTimeout ->>
       require('../bower_components/iron-icon/iron-icon.deps')
       require('../bower_components/iron-icons/iron-icons.deps')
@@ -698,74 +740,7 @@ polymer_ext {
 
       await get_screenshot_utils()
       await get_swal()
-
-
-
-
-
-    # Check localstorage for current panel
-    panel = ""
-    if typeof(localstorage_getstring("current_panel")) === 'undefined'
-      localstorage_setstring("current_panel", "home")
-      panel = "home"
-    else
-      panel = localstorage_getstring("current_panel")
-
-    #console.log("data storage json: " + localstorage_getjson("intervention_data_tosend"))
-
-    # If intervention data undefined, set to empty object
-    if localstorage_getjson("intervention_data_tosend") === null
-      console.log("Data to send undefined")
-      localstorage_setjson("intervention_data_tosend", {})
-
-    # Show appropriate panel
-    if panel === "home"
-      console.log("Showing home panel")
-      this.stress_intervention_active = false
-    else if panel === "stress_before"
-      console.log("Showing stress before panel")
-      this.stress_intervention_active = true
-      this.intervention_stress_before = true
-    else if panel === "stress_after"
-      console.log("Showing stress after panel")
-      this.stress_intervention_active = true
-      this.intervention_stress_after = true
-    else if panel === "intervention_loading"
-      console.log("Showing intervention display")
-      this.stress_intervention_active = true
-      this.stress_intervention_loading = true
-      this.show_stress_intervention()
-    else if panel === "intervention_display"
-      console.log("Showing intervention display")
-      this.stress_intervention_active = true
-      this.stress_intervention_display = true
-      this.show_stress_intervention()
-    else if panel === "ask_intervention_done"
-      console.log("Showing ask intervention done")
-      this.stress_intervention_active = true
-      this.ask_intervention_done = true
-      this.intervention_confirmation()
-    else if panel === "intervention_end"
-      console.log("Showing intervention end")
-      this.stress_intervention_active = true
-      this.intervention_end = true
-
-    /*
-    #await this.check_for_survey()
-    console.log(localstorage_getjson("survey_data"))
-    # Check localstorage for survey  data
-    if typeof(localstorage_getjson("survey_data")) === 'undefined'
-      await this.check_for_survey()
-      console.log("survey data undefined")
-      localstorage_setjson("survey_data", {})
-    else if localstorage_getjson("survey_data") !== {}
-      console.log("survey link found in localstorage")
-      this.enable_survey_button()
-    else
-      await this.check_for_survey()
-      */
-
-  , 1
+    , 1
 }, {
   source: require 'libs_frontend/polymer_methods'
   methods: [

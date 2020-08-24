@@ -130,6 +130,15 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
           padding-top: 5px;
         }
 
+        #survey_button {
+          display: none;
+          width: 100%;
+          margin-left: 0;
+          color: white;
+          font-weight: bold;
+          background-color: red;
+          disabled: true;
+
         [type=radio] {
           position: absolute;
           opacity: 0;
@@ -144,6 +153,7 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
 
         [type=radio]:checked + img {
           outline: 2px solid #65A7F2;
+
         }
 
 
@@ -156,8 +166,6 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
 
         <!--
         <paper-toggle-button checked="{{is_habitlab_disabled}}" style="float: left; margin-top: 5px; margin-left: 5px" on-change="disable_habitlab_changed"><span style="color: white">Turn Off HabitLab Today</span></paper-toggle-button>
-
-
         <paper-toggle-button checked="{{stress_intervention_active}}" style="float: left; margin-top: 5px; margin-left: 5px" on-change="get_stress_intervention"><span style="color: white">stress interv</span></paper-toggle-button>
         -->
 
@@ -169,9 +177,8 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
           <paper-button class="paperbuttons" raised style="display: none" on-click="settings_button_clicked">Settings</paper-button>
         </div>
 
-        <paper-button class="paperbuttons" id="survey_button" disabled style="display: none; border-style: dashed; border-color: white; background-color: #65A7F2; color: white; margin-left: 0; width:100%; margin-bottom: 10px" raised on-click="survey_button_clicked" >No surveys available. Check in later.</paper-button>
-
-
+        <paper-button class="paperbuttons" raised id="survey_button" on-click="survey_button_clicked"></paper-button>
+        
         <template is="dom-if" if="{{!stress_intervention_active}}">
           <paper-card>
             <div style="margin: 15px 0 0 5px; font-size: 18px; text-align: left; font-weight: bold">Sweet Moment</div>
