@@ -1,6 +1,6 @@
 manifest_version: 2
-name: HabitLab
-short_name: habitlab
+name: Home Sweet
+short_name: HS
 default_locale: en
 description: >-
   Build better habits online! Tell HabitLab your goals, and it will determine

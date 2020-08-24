@@ -472,7 +472,7 @@ polymer_ext {
     this.stress_intervention_loading = true
     localstorage_setstring("current_panel", "intervention_loading")
     this.intervention_data_received = await JSON.parse(await get_json(hso_server_url + "/getIntervention", []))
-    #await sleep(5000)
+    await sleep(5000)
     localstorage_setjson("selected_intervention_data", this.intervention_data_received)
     this.show_stress_intervention()
 
@@ -720,7 +720,7 @@ polymer_ext {
       #console.log("Showing intervention end")
       this.stress_intervention_active = true
       this.intervention_end = true
-      
+
     survey_data = localstorage_getjson("survey_data")
     if typeof(survey_data) === 'undefined'
       localstorage_setjson("survey_data",{})
@@ -729,8 +729,8 @@ polymer_ext {
       once_available("survey_button", this.enable_survey_button())
     else
       this.check_for_survey()
-      
-      
+
+
     setTimeout ->>
       require('../bower_components/iron-icon/iron-icon.deps')
       require('../bower_components/iron-icons/iron-icons.deps')
