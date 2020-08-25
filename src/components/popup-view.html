@@ -292,7 +292,7 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
         -->
 
         <template is="dom-if" if="{{stress_intervention_display}}">
-          <paper-card>
+          <paper-card id="intervention_panel">
             <iron-icon style="float: left; padding: 5px; cursor: pointer" src="../icons/back_arrow.png" raised on-click="returnto_stress_before"></iron-icon>
             <iron-icon  src="../icons/close_icon.png" style="float: right; padding: 5px; cursor: pointer" raised on-click="cancel_stress_intervention"></iron-icon>
 
@@ -343,7 +343,7 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
 
               <div style="margin-bottom: 20px; margin-top: 20px; font-size: 20px; text-align: center">We are proud of you for taking the step. A window will open so that you can complete the task<br><br></div>
 
-              <div style="border-style: solid; border-color: #65A7F2; margin: 0 10px 10px 0">
+              <div id="confirmation_panel">
               <div id="confirmation_title" style="margin-bottom: 20px; margin-top: 20px; font-size: 25px; text-align: center; font-weight: bold"><b>Loading...</b></div>
               <div id="confirmation_text" style="margin-bottom: 20px; margin-top: 20px; font-size: 20px; text-align: center; font-weight: bold"><b>Loading...</b></div>
               </div>

@@ -491,12 +491,15 @@ polymer_ext {
       productivity: 'Productivity.png'
       somatic: 'Somatic.png'
     localstorage_setstring("current_panel", "intervention_display")
+    once_available("intervention_panel", this.update_intervention_panel())
+
+  update_intervention_panel: ->>
     data = await localstorage_getjson("selected_intervention_data")
-    await this.$$('#intervention_text').innerHTML = data.text
-    await this.$$('#intervention_duration').innerHTML = data.duration
-    await this.$$('#intervention_title').innerHTML = "<b>Task: " + data.name + "<b>"
-    await console.log("../icons/HSO_icons/" + this.icons[data.type])
-    await this.$$('#intervention_icon').src = "../icons/HSO_icons/" + this.icons[data.type]
+    this.$$('#intervention_text').innerHTML = data.text
+    this.$$('#intervention_duration').innerHTML = data.duration
+    this.$$('#intervention_title').innerHTML = "<b>Task: " + data.name + "<b>"
+    console.log("../icons/HSO_icons/" + this.icons[data.type])
+    this.$$('#intervention_icon').src = "../icons/HSO_icons/" + this.icons[data.type]
 
   record_stress_before: ->>
     await console.log(this.$$("input[name=stress_level]:checked").value)
@@ -527,8 +530,8 @@ polymer_ext {
     to_send["intervention_selected"] = data["_id"]
     localstorage_setjson("intervention_data_tosend", to_send)
     #console.log(this.intervention_data_received.text)
-    await this.$$('#confirmation_text').innerHTML = data.text
-    await this.$$('#confirmation_title').innerHTML = "Task: " + data.name
+
+    once_available("confirmation_panel", this.update_confirmation_panel())
 
     #await sleep(2000)
 
@@ -541,12 +544,16 @@ polymer_ext {
       chrome.windows.create(url: this.intervention_data_received.url, top: 200px, left: 300px, width:800px, height:900px)
 
 
+  update_confirmation_panel: ->>
+    data = await localstorage_getjson("selected_intervention_data")
+    this.$$('#confirmation_text').innerHTML = data.text
+    this.$$('#confirmation_title').innerHTML = "Task: " + data.name
+
   intervention_confirmation: ->>
     console.log("Ask intervention done again!")
     intervention = await localstorage_getjson("selected_intervention_data")
     console.log(intervention.text)
-    await this.$$('#confirmation_text').innerHTML = intervention.text
-    await this.$$('#confirmation_title').innerHTML = "Task: " + intervention.name
+    once_available('confirmation_panel', this.update_confirmation_panel())
 
 
   confirm_intervention_done: ->>
@@ -627,7 +634,7 @@ polymer_ext {
   check_for_survey: ->>
     userid = await get_user_id()
     survey_data = JSON.parse(await get_json(hso_server_url + "/getSurvey", "userid=" + userid))
-    if survey_data !== {}
+    if survey_data !== {} || survey_data !== null
       localstorage_setjson("survey_data", survey_data)
       once_available("survey_button", this.enable_survey_button())
 
@@ -722,7 +729,8 @@ polymer_ext {
       this.intervention_end = true
 
     survey_data = localstorage_getjson("survey_data")
-    if typeof(survey_data) === 'undefined'
+    console.log(survey_data)
+    if typeof(survey_data) === 'undefined' or survey_data === null
       localstorage_setjson("survey_data",{})
       this.check_for_survey
     else if survey_data !== {}
