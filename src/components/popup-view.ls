@@ -670,7 +670,8 @@ polymer_ext {
     #chrome.browserAction.setBadgeBackgroundColor {color: '#000000'}
     self = this
     # CHANGED THIS LINE FOR HSO MVP PILOT
-    is_habitlab_enabled().then (is_enabled) -> self.is_habitlab_disabled = !is_enabled
+    #is_habitlab_enabled().then (is_enabled) -> self.is_habitlab_disabled = !is_enabled
+    is_habitlab_disabled = true
 
     #FILTER THIS FOR ONLY THE CURRENT GOAL SITE#
     await this.set_goals_and_interventions!
@@ -686,7 +687,8 @@ polymer_ext {
 
     # Check localstorage for current panel
     panel = localstorage_getstring("current_panel")
-    if typeof(panel) === 'undefined'
+    console.log(panel)
+    if typeof(panel) === 'undefined' or panel === null
       localstorage_setstring("current_panel", "home")
       panel = "home"
 
