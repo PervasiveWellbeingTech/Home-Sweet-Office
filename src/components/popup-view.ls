@@ -602,7 +602,6 @@ polymer_ext {
     to_send = localstorage_getjson("intervention_data_tosend")
     to_send["written_feedback"] = prompt("Intervention Feedback")
     localstorage_setjson("intervention_data_tosend", to_send)
-    this.end_stress_intervention()
 
   ask_another_intervention: ->>
     to_send = localstorage_getjson("intervention_data_tosend")
