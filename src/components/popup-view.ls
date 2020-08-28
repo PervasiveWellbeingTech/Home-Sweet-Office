@@ -485,11 +485,11 @@ polymer_ext {
     this.intervention_end = false
     this.stress_intervention_loading = false
     this.icons =
-      cognitive_behavioral: 'Cognitive Behavioral.png'
-      meta_cognitive: 'Meta-Cognitive.png'
-      positive_psychology: 'Positive Psychology.png'
+      cognitive_behavioral: 'cog_behavioral.png'
+      meta_cognitive: 'meta_cog.png'
+      positive_psychology: 'positive_psych.png'
       productivity: 'Productivity.png'
-      somatic: 'Somatic.png'
+      somatic: 'somatic.png'
     localstorage_setstring("current_panel", "intervention_display")
     once_available("intervention_panel", this.update_intervention_panel())
 
@@ -510,8 +510,11 @@ polymer_ext {
     this.get_stress_intervention()
 
   record_stress_after: ->>
+    if this.$$("input[name=stress_level_after]:checked") === null
+      window.alert("Please select an option.")
+      return
     to_send = localstorage_getjson("intervention_data_tosend")
-    await to_send["stress_after"] = this.$$("input[name=stress_level]:checked").value
+    await to_send["stress_after"] = this.$$("input[name=stress_level_after]:checked").value
     localstorage_setjson("intervention_data_tosend", to_send)
     console.log(localstorage_getjson("intervention_data_tosend"))
     this.show_final_panel()
@@ -615,6 +618,10 @@ polymer_ext {
     console.log("Data sent: " + await localstorage_getjson("intervention_data_tosend"))
     localstorage_setjson("intervention_data_tosend", {})
 
+  confirm_cancel: ->>
+    if window.confirm("Are you sure you want to exit the intervention?")
+      this.cancel_stress_intervention()
+
   cancel_stress_intervention: ->>
     this.stress_intervention_active = false
     this.stress_intervention_display = false
@@ -657,6 +664,9 @@ polymer_ext {
     chrome.tabs.create {url: survey_data.url + '?habitlab_userid=' + userid + '&click_location=dropdown'}
     post_json(hso_server_url + "/surveyClicked", {"_id": survey_data._id, "userid":userid,"click_location":"dropdown"})
     this.disable_survey_button()
+
+  close_popup: ->
+    window.close()
 
   results_button_clicked: ->
     chrome.tabs.create {url: 'options.html#overview'}
