@@ -163,6 +163,15 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
         .gray_stress_button [type=radio]:checked + img {
           content: url("./icons/HSO_icons/circle_gray_check.png");
         }
+        .pos_stress_button [type=radio]:checked + img {
+          content: url("./icons/HSO_icons/green_plus.png");
+        }
+        .neg_stress_button [type=radio]:checked + img {
+          content: url("./icons/HSO_icons/red_x.png");
+        }
+        .neutral_stress_button [type=radio]:checked + img {
+          content: url("./icons/HSO_icons/gray_minus.png");
+        }
 
 
       </style>
@@ -192,7 +201,7 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
 
             <div style="margin: 15px 0 0 5px; font-size: 18px; text-align: left; font-weight: bold">Sweet Moment</div>
             <div style="width: 100%; padding: 110px 0px 169px">
-              <div style="margin-top: 30px; margin-botton: 60px; font-size: 20px; text-align: center">Take a sweet moment to destress.</div>
+              <div style="margin-top: 30px; margin-botton: 60px; font-size: 25px; text-align: center">Take a sweet moment to destress.</div>
               <paper-button style="width: 33%; margin-left: 35%; margin-top: 20px; background-color: #65A7F2; color: white; " class="paperbuttons" raised on-click="start_stress_intervention">BEGIN</paper-button>
             </div>
           </paper-card>
@@ -369,8 +378,10 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
             <iron-icon src="../icons/close_icon.png" style="float: right; padding: 10px 0px 10px 0; cursor: pointer" raised on-click="confirm_cancel"></iron-icon>
 
             <div style="width: 100%; padding: 100px 5px 100px 5px">
-
-              <div style="margin: 10px; font-size: 25px; font-weight: bold; text-align: left">Check In</div>
+              <div>
+              <iron-icon style="float: left; margin: 0 10px 0 10px" src="../icons/HSO_icons/check_in_icon.png"> </iron-icon>
+              <div style="foat: left; margin: 10px; font-size: 25px; font-weight: bold; text-align: left">Check In</div>
+              <div>
               <div style="margin: 10px; font-size: 20px; text-align: left">How are you feeling right now?</div>
 
                 <div id="stress_meter" align="center">
@@ -426,25 +437,15 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
               <div style="margin: 10px; font-size: 25px; font-weight: bold; text-align: left">Check Out</div>
               <div style="margin: 10px; font-size: 20px; text-align: left">How do you feel after doing the exercise?</div>
               <div id="stress_meter" align="center">
-                  <!--
-                  <input type="radio" name="stress_level" value=-3>
-                  <label for="lowest"><img src="../icons/HSO_icons/Ellipse 8.png" onmouseover="select_stress(this)" onmouseout="deselect_stress(this)" width=70 height=70/></label>
-
-                  <input type="radio" name="stress_level" value=0>
-                  <label for="lowest"><img src="../icons/HSO_icons/Ellipse 14.png" width=20 height=20/></label>
-
-                  <input type="radio" name="stress_level" value=3>
-                  <label for="highest"><img src="../icons/HSO_icons/Ellipse 9.png" width=70 height=70/></label>
-                  -->
-                  <label>
+                  <label class="neg_stress_button">
                   <input type="radio" name="stress_level_after" value=-1 >
-                  <img src="../icons/thumbs_down.svg" width=90 height=90 style="margin: 0 10px 0 10px"/></label>
-                  <label class="gray_stress_button">
+                  <img src="../icons/HSO_icons/circle_brown.png" width=90 height=90 style="margin: 0 10px 0 10px"/></label>
+                  <label class="neutral_stress_button">
                   <input type="radio" name="stress_level_after" value=0 >
-                  <img src="../icons/HSO_icons/Ellipse 14.png" width=75 height=75 style="margin: 0 10px 0 10px"/></label>
-                  <label>
+                  <img src="../icons/HSO_icons/circle_gray.png" width=70 height=70 style="margin: 0 10px 0 10px"/></label>
+                  <label class="pos_stress_button">
                   <input type="radio" name="stress_level_after" value=1 >
-                  <img src="../icons/thumbs_up.svg" width=90 height=90 style="margin: 0 10px 0 10px"/></label>
+                  <img src="../icons/HSO_icons/circle_green.png" width=90 height=90 style="margin: 0 10px 0 10px"/></label>
               </div>
 
                 <p style="padding: 0 0 0 25%; float:left; width: 50%; font-size: 18px; font-weight:bold">
@@ -468,7 +469,10 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
             <iron-icon src="../icons/close_icon.png" style="float: right; padding: 10px 0px 10px 0; cursor: pointer" raised on-click="end_stress_intervention"></iron-icon>
             <iron-icon style="float: left; padding: 5px; cursor: pointer" src="../icons/back_arrow.png" raised on-click="returnto_stress_after"></iron-icon>
             <div style="width: 100%; padding: 100px 5px 100px 5px">
-              <div style="margin: 10px; font-size: 25px; font-weight: bold; text-align: left">Submitted</div>
+              <div>
+              <iron-icon style="float: left; margin: 0 10px 0 10px" src="../icons/HSO_icons/submitted_icon.png"> </iron-icon>
+              <div style="float: left; margin: 10px; font-size: 25px; font-weight: bold; text-align: left">Submitted</div>
+              </div>
               <div style="margin: 10px; font-size: 20px; text-align: left">Thanks for letting us know. In order to improve our platform we would love your feedback</div>
               <paper-input style="border: solid; margin: auto; padding: 20px; width: 80%; text-align: center" label="Feedback (optional)"></paper-input>
 
