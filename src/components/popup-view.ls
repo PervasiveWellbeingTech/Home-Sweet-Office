@@ -1,6 +1,6 @@
 ######### Libraries
 
-hso_server_url = 'http://green-antonym-197023.wl.r.appspot.com'
+hso_server_url = 'http://localhost:3000'
 
 {polymer_ext} = require 'libs_frontend/polymer_utils'
 
