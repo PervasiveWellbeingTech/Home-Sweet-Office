@@ -600,6 +600,8 @@ polymer_ext {
     to_send["intervention_cancelled_stage"] = ""
     localstorage_setjson("intervention_data_tosend", to_send)
     this.send_intervention_data()
+    console.log(this.$$("input[name=stress_level]:checked").value)
+    this.$$("input[name=stress_level]:checked").value = 0
 
   written_intervention_feedback: ->>
     to_send = localstorage_getjson("intervention_data_tosend")
