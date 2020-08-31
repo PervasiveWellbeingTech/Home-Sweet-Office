@@ -4,6 +4,11 @@ window.addEventListener "unhandledrejection", (evt) ->
 # debugging purpose
 # localStorage.setItem("local_logging_server", true)
 
+### HSO changes
+hso_server_url = 'http://green-antonym-197023.wl.r.appspot.com' #'http://localhost:3000'
+disable_icon_changes = true
+disable_icon_timer = true
+
 do !->>
   localStorage.removeItem 'cached_list_all_goals'
   localStorage.removeItem 'cached_list_all_interventions'
@@ -232,6 +237,15 @@ do !->>
     #setInterval ->
     #  show_finish_configuring_notification_if_needed()
     #, 5000
+
+    ## HSO Add Ons
+    ### Send first-time logging data to HSO server
+    localStorage.setItem('icon_nudge_active', false)
+    hso_first_logging_data = {
+      userid : await get_user_id(),
+      time : new Date()
+    }
+    post_json(hso_server_url + "/postInstall", hso_first_logging_data)
 
   {
     get_all_message_handlers
@@ -814,10 +828,12 @@ do !->>
   load_intervention_for_location = promise-debounce (location, tabId) ->>
 
     if is_it_outside_work_hours() and (not localStorage.getItem('override_enabled_interventions_once')?)
-      chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_disabled.svg')}
+      if (not disable_icon_changes)
+        chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_disabled.svg')}
       return
     if !is_habitlab_enabled_sync()
-      chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_disabled.svg')}
+      if (not disable_icon_changes)
+        chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_disabled.svg')}
       return
 
     is_suggestion_mode = false
@@ -946,14 +962,16 @@ do !->>
       if choose_by_temporary_difficulty
         if (goals_list.length == 0) or ['easy', 'medium', 'hard'].indexOf(temporary_difficulty) == -1 # temporary difficulty not set, or is nothing
           await set_active_interventions_for_domain_and_session domain, session_id, []
-          chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_disabled.svg')}
+          if (not disable_icon_changes)
+            chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_disabled.svg')}
           return
         chosen_intervention_name = await choose_intervention_for_difficulty_level_and_goal(temporary_difficulty, goals_list[0])
         interventions_to_load = [chosen_intervention_name]
         intervention_info_new = all_interventions[chosen_intervention_name]
         await set_active_interventions_for_domain_and_session domain, session_id, interventions_to_load
         await execute_content_scripts_for_intervention intervention_info_new, tabId, interventions_to_load, is_new_session, session_id, override_enabled_interventions?, is_suggestion_mode, {'choose_difficulty_screen': choose_difficulty_interface, 'frequency_of_choose_difficulty': frequency_of_choose_difficulty}
-        chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_active.svg')}
+        if (not disable_icon_changes)
+          chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_active.svg')}
         return
       else
         interventions_to_load = ['internal/choose_difficulty']
@@ -969,7 +987,8 @@ do !->>
         if localStorage.choose_difficulty_interface?
           choose_difficulty_interface = localStorage.choose_difficulty_interface
         await execute_content_scripts_for_intervention intervention_info_new, tabId, interventions_to_load, is_new_session, session_id, override_enabled_interventions?, is_suggestion_mode, {'choose_difficulty_interface': choose_difficulty_interface, 'frequency_of_choose_difficulty': frequency_of_choose_difficulty}
-        chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_active.svg')}
+        if (not disable_icon_changes)
+          chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_active.svg')}
         return
     if should_set_active_interventions
       if intervention?
@@ -995,9 +1014,11 @@ do !->>
     dlog interventions_to_load
     await load_intervention_list interventions_to_load, tabId, is_new_session, session_id, override_enabled_interventions?, is_suggestion_mode
     if interventions_to_load.length > 0
-      chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_active.svg')}
+      if (not disable_icon_changes)
+        chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_active.svg')}
     else
-      chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_disabled.svg')}
+      if (not disable_icon_changes)
+        chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_disabled.svg')}
     return
 
   /*
@@ -1156,7 +1177,8 @@ do !->>
       iframed_domain_to_track := null
 
     if not (url.startsWith('http://') or url.startsWith('https://'))
-      chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon.svg')}
+      if (not disable_icon_changes)
+        chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon.svg')}
       return
 
     #if tabid_to_current_location[tabId] == url
@@ -1173,12 +1195,15 @@ do !->>
       load_intervention_for_location(url, tabId).then ->
         loaded_interventions = tab_id_to_loaded_interventions[tabId]
         if loaded_interventions? and loaded_interventions.length > 0
-          chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_active.svg')}
+          if (not disable_icon_changes)
+            chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_active.svg')}
         else
           if is_habitlab_enabled_sync() and !is_it_outside_work_hours()
-            chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon.svg')}
+            if (not disable_icon_changes)
+              chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon.svg')}
           else
-            chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_disabled.svg')}
+            if (not disable_icon_changes)
+              chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon_disabled.svg')}
 
   # A bit naive and over-conservative, but a start
   chrome.windows.onFocusChanged.addListener (windowId) ->
@@ -1429,15 +1454,18 @@ do !->>
     current_day = get_days_since_epoch()
     has_enabled_goal = await site_has_enabled_spend_less_time_goal(current_domain)
     if ((not has_enabled_goal) and (localStorage.allow_nongoal_timer == 'false'))
-      chrome.browserAction.setBadgeText({text: '', tabId: active_tab.id})
+      if(not disable_icon_timer)
+        chrome.browserAction.setBadgeText({text: '', tabId: active_tab.id})
       #return
     domain_to_session_id = tab_id_to_domain_to_session_id[active_tab.id]
     if not domain_to_session_id?
-      chrome.browserAction.setBadgeText({text: '', tabId: active_tab.id})
+      if(not disable_icon_timer)
+        chrome.browserAction.setBadgeText({text: '', tabId: active_tab.id})
       return
     session_id = domain_to_session_id[current_domain]
     if not session_id?
-      chrome.browserAction.setBadgeText({text: '', tabId: active_tab.id})
+      if(not disable_icon_timer)
+        chrome.browserAction.setBadgeText({text: '', tabId: active_tab.id})
       return
     # dlog "currently browsing #{url_to_domain(active_tab.url)} on day #{get_days_since_epoch()}"
     # [session_id, is_new_session] = await get_session_id_for_tab_id_and_domain(active_tab.id, current_domain)
@@ -1446,7 +1474,8 @@ do !->>
     updates_to_sync.push({domain: current_domain, seconds: 1})
     addtokey_dictdict('seconds_on_domain_per_day', current_domain, current_day, 1).then (total_seconds) ->>
       if has_enabled_goal or (localStorage.allow_nongoal_timer != 'false')
-        chrome.browserAction.setBadgeText({text: printable_time_spent_short(total_seconds), tabId: active_tab.id})
+        if(not disable_icon_timer)
+          chrome.browserAction.setBadgeText({text: printable_time_spent_short(total_seconds), tabId: active_tab.id})
       if (not goal_suggestion_threshold?) or (goal_suggestion_threshold <= 0) or (not isFinite(goal_suggestion_threshold))
         return
       if ((not has_enabled_goal) and total_seconds > goal_suggestion_threshold)
@@ -1700,3 +1729,73 @@ do !->>
   if url_to_open_on_next_start?
     localStorage.removeItem('habitlab_open_url_on_next_start')
     chrome.tabs.create {url: url_to_open_on_next_start}
+
+
+  ### Change HSO icon
+  setInterval (->>
+
+    if (localStorage.getItem('icon_nudge_active') == "true")
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-6.svg')})
+    else
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
+
+    /*
+    d = new Date()
+    total_seconds = d.getMilliseconds()
+    time_interval = total_seconds / 50
+    time_interval = Math.round(time_interval)
+
+    console.log(total_seconds)
+    console.log(time_interval)
+
+    if (time_interval == 0)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
+    else if (time_interval == 1)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-1.svg')})
+    else if (time_interval == 2)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-2.svg')})
+    else if (time_interval == 3)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-3.svg')})
+    else if (time_interval == 4)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-4.svg')})
+    else if (time_interval == 5)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-5.svg')})
+    else if (time_interval == 6)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-6.svg')})
+    else if (time_interval == 7)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-6.svg')})
+    else if (time_interval == 8)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-6.svg')})
+    else if (time_interval == 9)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-6.svg')})
+    else if (time_interval == 10)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-5.svg')})
+    else if (time_interval == 11)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-4.svg')})
+    else if (time_interval == 12)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-3.svg')})
+    else if (time_interval == 13)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-2.svg')})
+    else if (time_interval == 14)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-1.svg')})
+    else if (time_interval == 15)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
+    else if (time_interval == 16)
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
+    */
+  ), 1000
+
+  #document.onmousemove (event) ->>
+  #  x = event.pageX
+  #  y = event.pageY
+  #  console.log(x + "--" + y)
+
+  #document.window.onpointerdown (event) ->>
+  #  timer = new Date()
+  #  console.log('Pointer down event')
+
+  #document.window.onpointerup (event) ->
+  #  time_up = new Date();
+  #  timer_diff = time_up - timer;
+  #  console.log('Pointer up event');
+  #  chrome.alert("Time clicked: " + timer_diff);

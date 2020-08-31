@@ -81,20 +81,20 @@ content_scripts:
       - 'http://habitlab.github.io/'
       - 'https://habitlab.github.io/'
 icons:
-  '19': icons/HSO_icons/HSO_icon_blue.png
-  '32': icons/HSO_icons/HSO_icon_blue.png
-  '38': icons/HSO_icons/HSO_icon_blue.png
-  '48': icons/HSO_icons/HSO_icon_blue.png
-  '64': icons/HSO_icons/HSO_icon_blue.png
-  '128': icons/HSO_icons/HSO_icon_blue.png
+  '19': icons/HSO_icons/logo.svg
+  '32': icons/HSO_icons/logo.svg
+  '38': icons/HSO_icons/logo.svg
+  '48': icons/HSO_icons/logo.svg
+  '64': icons/HSO_icons/logo.svg
+  '128': icons/HSO_icons/logo.svg
 browser_action:
   default_icon:
-    '19': icons/HSO_icons/HSO_icon_blue.png
-    '32': icons/HSO_icons/HSO_icon_blue.png
-    '38': icons/HSO_icons/HSO_icon_blue.png
-    '48': icons/HSO_icons/HSO_icon_blue.png
-    '64': icons/HSO_icons/HSO_icon_blue.png
-    '128': icons/HSO_icons/HSO_icon_blue.png
+    '19': icons/HSO_icons/logo.svg
+    '32': icons/HSO_icons/logo.svg
+    '38': icons/HSO_icons/logo.svg
+    '48': icons/HSO_icons/logo.svg
+    '64': icons/HSO_icons/logo.svg
+    '128': icons/HSO_icons/logo.svg
   default_popup: popup.html
 options_ui:
   page: options.html

@@ -227,7 +227,7 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
             <div style="margin: 2%; font-size: 20px; text-align: left; font-weight: bold">Sweet Moment</div>
             <div style="margin-top: 30%">
               <div style="margin-top: 30px; margin-botton: 60px; font-size: 25px; text-align: center">Take a sweet moment to destress.</div>
-              <paper-button class="stressIntervention_button" raised on-click="start_stress_intervention">BEGIN</paper-button>
+              <paper-button class="stressIntervention_button" style="color:white" raised on-click="start_stress_intervention">BEGIN</paper-button>
             </div>
           </paper-card>
         </template>
@@ -349,7 +349,7 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
                   </div>
                   <div id="intervention_text" style="display: inline-block; margin:3% 5% 0 5%;font-size:20px;text-align:left"></div>
 
-              <paper-button id="intervention_go_button" class="stressIntervention_button" raised on-click="click_intervention_link">Let's do it</paper-button>
+              <paper-button id="intervention_go_button" class="stressIntervention_button" style="color:white; margin-top: 15%" raised on-click="click_intervention_link">Let's do it</paper-button>
               <!--
               <paper-button id="intervention_another_button" class="stressIntervention_button" raised on-click="get_stress_intervention">Give me another sweet moment</paper-button>
               -->
@@ -382,7 +382,7 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
               <div style="margin-top: 5%; font-size: 20px; text-align: center">We are proud of you for taking the step.<br>Let us know when you are done and we'll continue.</div>
 
 
-              <paper-button class="stressIntervention_button" raised on-click="confirm_intervention_done">DONE</paper-button>
+              <paper-button class="stressIntervention_button" style="color:white; margin-top: 10%" raised on-click="confirm_intervention_done">DONE</paper-button>
           </paper-card>
         </template>
 
@@ -432,7 +432,7 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
                   </div>
               </div>
 
-          <paper-button class="stressIntervention_button" raised on-click="record_stress_before">Continue</paper-button>
+          <paper-button class="stressIntervention_button" style="color:white" raised on-click="record_stress_before">Continue</paper-button>
 
           </paper-card>
         </template>
@@ -448,7 +448,7 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
                 <div style="margin-top: 1%; font-size: 20px; text-align: left">How are you feeling after doing the exercise?</div>
               </div>
 
-              <div id="stress_meter" style="margin-top: 8%" align="center">
+              <div id="stress_meter" style="margin-top: 6%" align="center">
                   <label class="stress_button" id="neg_button" >
                   <input type="radio" name="stress_level_after" value=-1 >
                   <img src="../icons/HSO_icons/circle_brown.png" width=70 height=70 style="margin: 0 10px 0 10px"/>
@@ -466,7 +466,7 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
                 </label>
               </div>
 
-              <paper-button class="stressIntervention_button" raised on-click="record_stress_after">Finish</paper-button>
+              <paper-button class="stressIntervention_button" style="color:white" raised on-click="record_stress_after">Finish</paper-button>
           </paper-card>
         </template>
 
@@ -487,8 +487,8 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
 
               <paper-input style="border: solid; border-color: #C4C4C4; margin: auto; padding: 20px; width: 80%; text-align: center; margin-top: 3%" label="Feedback (optional)"></paper-input>
 
-              <paper-button class="stressIntervention_button" raised on-click="written_intervention_feedback">Submit Feedback</paper-button>
-              <paper-button class="stressIntervention_button" style="margin-top: 2%" raised on-click="end_stress_intervention">Exit Intervention</paper-button>
+              <paper-button class="stressIntervention_button" style="color:white" raised on-click="written_intervention_feedback">Submit Feedback</paper-button>
+              <paper-button class="stressIntervention_button" style="color:white; margin-top: 2%" raised on-click="end_stress_intervention">Exit Intervention</paper-button>
 
             </div>
           </paper-card>
