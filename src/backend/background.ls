@@ -5,9 +5,13 @@ window.addEventListener "unhandledrejection", (evt) ->
 # localStorage.setItem("local_logging_server", true)
 
 ### HSO changes
+
 hso_server_url = 'http://green-antonym-197023.wl.r.appspot.com' #'http://localhost:3000'
 disable_icon_changes = true
 disable_icon_timer = true
+localStorage.setItem('icon_nudge_active', false)
+localStorage.setItem('browser_session_start', (new Date()).getTime())
+localStorage.setItem('last_intervention', (new Date()).getTime())
 
 do !->>
   localStorage.removeItem 'cached_list_all_goals'
@@ -238,9 +242,8 @@ do !->>
     #  show_finish_configuring_notification_if_needed()
     #, 5000
 
-    ## HSO Add Ons
+    ## HSO Add Ons On Installation
     ### Send first-time logging data to HSO server
-    localStorage.setItem('icon_nudge_active', false)
     hso_first_logging_data = {
       userid : await get_user_id(),
       time : new Date()
@@ -1734,56 +1737,56 @@ do !->>
   ### Change HSO icon
   setInterval (->>
 
-    if (localStorage.getItem('icon_nudge_active') == "true")
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-6.svg')})
+    if (localStorage.getItem('icon_nudge_active') == "false")
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
     else
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
+      d = new Date()
+      time_interval = d.getTime() # Get date integer
+      time_interval = time_interval % 10000 # Only get up to seconds
+      time_interval = Math.round(time_interval / 100.00) # Discard last two digits
+      time_interval = time_interval % 50
+      if (time_interval == 0)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
+      else if (time_interval == 1)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-1.svg')})
+      else if (time_interval == 2)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-2.svg')})
+      else if (time_interval == 3)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-3.svg')})
+      else if (time_interval == 4)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-4.svg')})
+      else if (time_interval == 5)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-5.svg')})
+      else if (time_interval < 20)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-6.svg')})
+      else if (time_interval == 21)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-5.svg')})
+      else if (time_interval == 22)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-4.svg')})
+      else if (time_interval == 23)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-3.svg')})
+      else if (time_interval == 24)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-2.svg')})
+      else if (time_interval == 25)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-1.svg')})
+      else if (time_interval == 26)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
+      else if (time_interval == 27)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
+  ), 100
 
-    /*
-    d = new Date()
-    total_seconds = d.getMilliseconds()
-    time_interval = total_seconds / 50
-    time_interval = Math.round(time_interval)
+  setInterval (->>
+    timeout_length = 60
+    curr_time = (new Date()).getTime()
+    baseline = await localStorage.getItem('last_intervention')
+    target_time = parseInt(baseline) + 60000 * timeout_length # num of minutes
+    if (curr_time > target_time)
+      localStorage.setItem('icon_nudge_active', 'true')
+  ), 10000 # 1000 = one second
 
-    console.log(total_seconds)
-    console.log(time_interval)
-
-    if (time_interval == 0)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
-    else if (time_interval == 1)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-1.svg')})
-    else if (time_interval == 2)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-2.svg')})
-    else if (time_interval == 3)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-3.svg')})
-    else if (time_interval == 4)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-4.svg')})
-    else if (time_interval == 5)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-5.svg')})
-    else if (time_interval == 6)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-6.svg')})
-    else if (time_interval == 7)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-6.svg')})
-    else if (time_interval == 8)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-6.svg')})
-    else if (time_interval == 9)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-6.svg')})
-    else if (time_interval == 10)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-5.svg')})
-    else if (time_interval == 11)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-4.svg')})
-    else if (time_interval == 12)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-3.svg')})
-    else if (time_interval == 13)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-2.svg')})
-    else if (time_interval == 14)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-1.svg')})
-    else if (time_interval == 15)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
-    else if (time_interval == 16)
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
-    */
-  ), 1000
+  #document.addEventListener("click",
+  #  console.log("Click detected")
+  #  );
 
   #document.onmousemove (event) ->>
   #  x = event.pageX

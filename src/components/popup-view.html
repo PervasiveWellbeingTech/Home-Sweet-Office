@@ -221,12 +221,12 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
         <paper-button class="paperbuttons" raised id="survey_button" on-click="survey_button_clicked"></paper-button>
 
         <template is="dom-if" if="{{!stress_intervention_active}}">
-          <paper-card class="intervention_panel">
+          <paper-card class="intervention_panel" id="home_panel">
             <iron-icon  src="../icons/close_icon.png" style="float: right; padding: 5px; cursor: pointer" raised on-click="close_popup"></iron-icon>
 
             <div style="margin: 2%; font-size: 20px; text-align: left; font-weight: bold">Sweet Moment</div>
             <div style="margin-top: 30%">
-              <div style="margin-top: 30px; margin-botton: 60px; font-size: 25px; text-align: center">Take a sweet moment to destress.</div>
+              <div id="intro_message" style="margin-top: 30px; margin-botton: 60px; font-size: 25px; text-align: center">Take a sweet moment to destress.</div>
               <paper-button class="stressIntervention_button" style="color:white" raised on-click="start_stress_intervention">BEGIN</paper-button>
             </div>
           </paper-card>
@@ -415,7 +415,7 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
                     <img src="../icons/HSO_icons/circle_gray.png" width=50 height=50 />
                   </label>
                     <label class="stress_button" id="green_button">
-                    <input type="radio" name="stress_level" value=1 >
+                    <input type="radio" name="stress_level" value=1>
                     <img src="../icons/HSO_icons/circle_green.png" width=50 height=50/>
                   </label>
                     <label class="stress_button" id="green_button">

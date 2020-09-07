@@ -426,6 +426,9 @@ polymer_ext {
     this.intervention_stress_after = false
     this.intervention_end = false
     localstorage_setstring("current_panel", "stress_before")
+    if (await localstorage_getbool('icon_nudge_active'))
+      once_available("home_panel", this.set_nudge_message())
+
     console.log(localstorage_getstring("current_panel", "stress_before"))
     # Create object to send to database
     console.log("Data to send: ")
@@ -442,6 +445,11 @@ polymer_ext {
     console.log(localstorage_getjson("intervention_data_tosend"))
     await console.log(this.$$("input[name=stress_level]:checked").value)
 
+  set_nudge_message: ->>
+    this.$$('#intro_message').innerHTML = "Seems like you've been browsing for a while. Take a moment to destress."
+
+  remove_nudge_message: ->>
+      this.$$('#intro_message').innerHTML = "Take a sweet moment to destress."
 
   returnto_stress_before:->>
     this.stress_intervention_active = true
@@ -602,6 +610,10 @@ polymer_ext {
     this.send_intervention_data()
     console.log(this.$$("input[name=stress_level]:checked").value)
     this.$$("input[name=stress_level]:checked").value = 0
+    localstorage_setbool('icon_nudge_active', false)
+    localstorage_setstring('last_intervention', new Date().getTime())
+    once_available("home_panel", this.remove_nudge_message())
+
 
   written_intervention_feedback: ->>
     to_send = localstorage_getjson("intervention_data_tosend")
@@ -631,6 +643,10 @@ polymer_ext {
     this.intervention_stress_before = false
     this.intervention_stress_after = false
     this.intervention_end = false
+    console.log("Cancelling stress intervention")
+    console.log(this.$$("input[name=stress_level]:checked").value)
+    this.$$("input[name=stress_level]").value = 0
+    this.$$("input[name=stress_level]:checked").prop('checked', false)
     to_send = localstorage_getjson("intervention_data_tosend")
     to_send["intervention_completed"] = 0
     to_send["intervention_cancelled"] = 1
@@ -711,8 +727,9 @@ polymer_ext {
       localstorage_setjson("intervention_data_tosend", {})
     # Show appropriate panel
     if panel === "home"
-      #console.log("Showing home panel")
       this.stress_intervention_active = false
+      if (await localstorage_getbool('icon_nudge_active'))
+        once_available("home_panel", this.set_nudge_message())
     else if panel === "stress_before"
       #console.log("Showing stress before panel")
       this.stress_intervention_active = true
