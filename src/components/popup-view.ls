@@ -615,10 +615,12 @@ polymer_ext {
     once_available("home_panel", this.remove_nudge_message())
 
 
-  written_intervention_feedback: ->>
+  send_intervention_feedback: ->>
     to_send = localstorage_getjson("intervention_data_tosend")
-    to_send["written_feedback"] = prompt("Intervention Feedback")
+    console.log(this.$$("#written_feedback").writtenFeedbackText)
+    to_send["written_feedback"] = this.$$("#written_feedback").input
     localstorage_setjson("intervention_data_tosend", to_send)
+    alert("Feedback Submitted.")
 
   ask_another_intervention: ->>
     to_send = localstorage_getjson("intervention_data_tosend")
@@ -646,7 +648,7 @@ polymer_ext {
     console.log("Cancelling stress intervention")
     console.log(this.$$("input[name=stress_level]:checked").value)
     this.$$("input[name=stress_level]").value = 0
-    this.$$("input[name=stress_level]:checked").prop('checked', false)
+    #this.$$("input[name=stress_level]:checked").prop('checked', false)
     to_send = localstorage_getjson("intervention_data_tosend")
     to_send["intervention_completed"] = 0
     to_send["intervention_cancelled"] = 1

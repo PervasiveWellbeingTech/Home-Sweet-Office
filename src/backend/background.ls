@@ -1,19 +1,22 @@
 window.addEventListener "unhandledrejection", (evt) ->
   throw new Error(evt.reason)
 
+
 # debugging purpose
 # localStorage.setItem("local_logging_server", true)
 
 ### HSO changes
 
 hso_server_url = 'http://green-antonym-197023.wl.r.appspot.com' #'http://localhost:3000'
-disable_icon_changes = true
-disable_icon_timer = true
+disable_icon_changes = true # Remove habitlab icon changes
+disable_icon_timer = true # Remove habitlab icon timer
 localStorage.setItem('icon_nudge_active', false)
 localStorage.setItem('browser_session_start', (new Date()).getTime())
 localStorage.setItem('last_intervention', (new Date()).getTime())
 
+
 do !->>
+
   localStorage.removeItem 'cached_list_all_goals'
   localStorage.removeItem 'cached_list_all_interventions'
   localStorage.removeItem 'cached_list_generic_interventions'
@@ -690,6 +693,9 @@ do !->>
           });
         });
       })();
+
+      ## Mouse rate recorder
+
 
       SystemJS.import_multi(['libs_common/intervention_info', 'libs_frontend/intervention_log_utils'], function(intervention_info_setter_lib, log_utils) {
         intervention_info_setter_lib.set_intervention(intervention);
@@ -1744,61 +1750,42 @@ do !->>
       time_interval = d.getTime() # Get date integer
       time_interval = time_interval % 10000 # Only get up to seconds
       time_interval = Math.round(time_interval / 100.00) # Discard last two digits
-      time_interval = time_interval % 50
-      if (time_interval == 0)
+      time_interval = time_interval
+      if (time_interval <= 25)
         chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
-      else if (time_interval == 1)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-1.svg')})
-      else if (time_interval == 2)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-2.svg')})
-      else if (time_interval == 3)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-3.svg')})
-      else if (time_interval == 4)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-4.svg')})
-      else if (time_interval == 5)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-5.svg')})
-      else if (time_interval < 20)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-6.svg')})
-      else if (time_interval == 21)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-5.svg')})
-      else if (time_interval == 22)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-4.svg')})
-      else if (time_interval == 23)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-3.svg')})
-      else if (time_interval == 24)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-2.svg')})
-      else if (time_interval == 25)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-1.svg')})
       else if (time_interval == 26)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-1.svg')})
       else if (time_interval == 27)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-2.svg')})
+      else if (time_interval == 28)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-3.svg')})
+      else if (time_interval == 29)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-4.svg')})
+      else if (time_interval == 30)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-5.svg')})
+      else if (time_interval < 55)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-6.svg')})
+      else if (time_interval == 56)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-5.svg')})
+      else if (time_interval == 57)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-4.svg')})
+      else if (time_interval == 58)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-3.svg')})
+      else if (time_interval == 59)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-2.svg')})
+      else if (time_interval == 60)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-1.svg')})
+      else if (time_interval == 61)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
+      else if (time_interval >= 62)
         chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
   ), 100
 
   setInterval (->>
-    timeout_length = 60
+    timeout_length = 1
     curr_time = (new Date()).getTime()
     baseline = await localStorage.getItem('last_intervention')
     target_time = parseInt(baseline) + 60000 * timeout_length # num of minutes
     if (curr_time > target_time)
       localStorage.setItem('icon_nudge_active', 'true')
   ), 10000 # 1000 = one second
-
-  #document.addEventListener("click",
-  #  console.log("Click detected")
-  #  );
-
-  #document.onmousemove (event) ->>
-  #  x = event.pageX
-  #  y = event.pageY
-  #  console.log(x + "--" + y)
-
-  #document.window.onpointerdown (event) ->>
-  #  timer = new Date()
-  #  console.log('Pointer down event')
-
-  #document.window.onpointerup (event) ->
-  #  time_up = new Date();
-  #  timer_diff = time_up - timer;
-  #  console.log('Pointer up event');
-  #  chrome.alert("Time clicked: " + timer_diff);

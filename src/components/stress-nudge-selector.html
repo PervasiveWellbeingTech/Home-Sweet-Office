@@ -1,0 +1,64 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer-themes/ice.html">
+<link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+
+<dom-module id="stress-nudge-selector">
+  <template>
+    <style>
+       :host {
+        display: block;
+        width: 100%;
+        height: 100%;
+        --paper-radio-button-label-color: white;
+        --paper-radio-button: {
+          color: white;
+        };
+      }
+
+      .title {
+        font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-size: 30px;
+        padding-top: 30px;
+        padding-bottom: 20px;
+        text-align: center;
+        font-weight: 400;
+        /*text-shadow: 1px 1px 2px #346da3; */
+      }
+
+      .radiobuttons {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+        font-size: 20px;
+        text-align: left;
+        color: white;
+      }
+
+      .radiobutton {
+        color: white;
+      }
+
+      .papercard {
+        margin-top: 30px;
+        border-radius: 30px;
+      }
+    </style>
+
+    <div class="title">How often during browsing do you want to be reminded to do a stress intervention?</div>
+
+    <paper-card class="papercard">
+      <paper-radio-group on-selected-changed="selectedchanged" class="radiobuttons" id="stressnudgeradiogroup">
+        <paper-radio-button on-keydown="ignore_keydown" class="radiobutton" value=15><strong>15 mins</strong></paper-radio-button><br>
+        <paper-radio-button on-keydown="ignore_keydown" class="radiobutton" value=30><strong>30 mins</strong></paper-radio-button><br>
+        <paper-radio-button on-keydown="ignore_keydown" class="radiobutton" value=45><strong>45 mins</strong></paper-radio-button><br>
+        <paper-radio-button on-keydown="ignore_keydown" class="radiobutton" value=60><strong>1 hour</strong></paper-radio-button><br>
+        <paper-radio-button on-keydown="ignore_keydown" class="radiobutton" value=120><strong>2 hours</strong></paper-radio-button><br>
+        <paper-radio-button on-keydown="ignore_keydown" class="radiobutton" value=180><strong>3 hours</strong></paper-radio-button><br>
+      </paper-radio-group>
+    </paper-card>
+
+  </template>
+  <script src="difficulty-selector.js"></script>
+</dom-module>

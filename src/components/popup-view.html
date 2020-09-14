@@ -1,4 +1,4 @@
-check_in_icon.jpg<link rel="import" href="../bower_components/polymer/polymer.html">
+check_in_icon.pngcheck_in_icon.png<link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer-themes/ice.html">
 
 Component 1<link rel="import" href="../bower_components/paper-button/paper-button.html">
@@ -342,12 +342,12 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
 
               <div style="margin-top: 25%">
 
-                  <div style="padding:0 0 0 5%;float:left;width:100%">
+                  <div style="padding:0 0 0 5%;float:left;width:85%">
                       <img id="intervention_icon" style="float:left; width:10%;height:10%; margin-right: 10px" alt="Loading..."/>
-                       <p id="intervention_title" style="display: inline; margin-bottom:20px;margin-top:20px;font-size:25px;text-align:center"><b>Loading...</b></p>
+                       <p id="intervention_title" style=" display: inline; margin-bottom:20px;margin-top:20px;font-size:25px;text-align:center"><b>Loading...</b></p>
                       <p id="intervention_duration" style="display: block; margin:10px 10px 5px 0;font-size:15px"></p>
                   </div>
-                  <div id="intervention_text" style="display: inline-block; margin:3% 5% 0 5%;font-size:20px;text-align:left"></div>
+                  <div id="intervention_text" style="overflow-wrap: normal; display: inline-block; margin:3% 5% 0 5%;font-size:20px;text-align:left"></div>
 
               <paper-button id="intervention_go_button" class="stressIntervention_button" style="color:white; margin-top: 15%" raised on-click="click_intervention_link">Let's do it</paper-button>
               <!--
@@ -374,12 +374,16 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
           <paper-card class="intervention_panel">
             <iron-icon src="../icons/close_icon.png" style="float: right; padding: 5px; cursor: pointer" raised on-click="confirm_cancel"></iron-icon>
 
-              <div id="confirmation_panel" style="margin-top: 25%">
-              <div id="confirmation_title" style="font-size: 25px; text-align: center; font-weight: bold"><b>Loading...</b></div>
-              <div id="confirmation_text" style="font-size: 20px; text-align: center; font-weight: bold"><b>Loading...</b></div>
+
+            <div style="margin-top: 25%; margin-left: 5%; font-size: 20px; text-align: left; font-weight: bold">We are proud of you for taking the step.<br>Let us know when you are done to continue.</div>
+
+              <div id="confirmation_panel" style="margin-top: 5%; margin-left: 5%">
+                <div id="confirmation_title" style="overflow-wrap: normal; font-size: 25px; text-align: left"><b>Loading...</b></div>
+                <div id="confirmation_text" style="overflow-wrap: normal; font-size: 20px; text-align: left"><b>Loading...</b></div>
               </div>
 
-              <div style="margin-top: 5%; font-size: 20px; text-align: center">We are proud of you for taking the step.<br>Let us know when you are done and we'll continue.</div>
+
+
 
 
               <paper-button class="stressIntervention_button" style="color:white; margin-top: 10%" raised on-click="confirm_intervention_done">DONE</paper-button>
@@ -392,43 +396,43 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
             <iron-icon src="../icons/close_icon.png" style="float: right; padding: 5px; cursor: pointer" raised on-click="confirm_cancel"></iron-icon>
 
               <div style="margin-top: 20%; margin-left: 5%">
-              <iron-icon style="display:inline-block;" src="../icons/HSO_icons/check_in_icon.jpg"> </iron-icon>
+              <iron-icon style="display:inline-block;" src="../icons/HSO_icons/check_in_icon.png"> </iron-icon>
               <div style="display: inline; vertical-align: middle; font-size:25px;font-weight:700;">Check In</div>
               <div style="margin-top: 1%; font-size: 20px; text-align: left">How are you feeling right now?</div>
               </div>
 
                 <div id="stress_meter" align="center" style="margin-top: 5%">
-                    <label class="stress_button" id="brown_button">
+                    <label class="stress_button" id="green_button">
                     <input type="radio" name="stress_level" value=-3 >
-                    <img src="../icons/HSO_icons/circle_brown.png" width=50 height=50/>
+                    <img src="../icons/HSO_icons/circle_green.png" width=50 height=50/>
                     </label>
-                    <label class="stress_button" id="brown_button">
+                    <label class="stress_button" id="green_button">
                     <input type="radio" name="stress_level" value=-2 >
-                    <img src="../icons/HSO_icons/circle_brown.png" width=50 height=50/>
+                    <img src="../icons/HSO_icons/circle_green.png" width=50 height=50/>
                   </label>
-                    <label class="stress_button" id="brown_button">
+                    <label class="stress_button" id="green_button">
                     <input type="radio" name="stress_level" value=-1 >
-                    <img src="../icons/HSO_icons/circle_brown.png" width=50 height=50 />
+                    <img src="../icons/HSO_icons/circle_green.png" width=50 height=50 />
                   </label>
                     <label class="stress_button" id="gray_button">
                     <input type="radio" name="stress_level" value=0 checked>
                     <img src="../icons/HSO_icons/circle_gray.png" width=50 height=50 />
                   </label>
-                    <label class="stress_button" id="green_button">
+                    <label class="stress_button" id="brown_button">
                     <input type="radio" name="stress_level" value=1>
-                    <img src="../icons/HSO_icons/circle_green.png" width=50 height=50/>
+                    <img src="../icons/HSO_icons/circle_brown.png" width=50 height=50/>
                   </label>
-                    <label class="stress_button" id="green_button">
+                    <label class="stress_button" id="brown_button">
                     <input type="radio" name="stress_level" value=2 >
-                    <img src="../icons/HSO_icons/circle_green.png" width=50 height=50/>
+                    <img src="../icons/HSO_icons/circle_brown.png" width=50 height=50/>
                   </label>
-                    <label class="stress_button" id="green_button">
+                    <label class="stress_button" id="brown_button">
                     <input type="radio"  name="stress_level" value=3 >
-                    <img src="../icons/HSO_icons/circle_green.png" width=50 height=50/>
+                    <img src="../icons/HSO_icons/circle_brown.png" width=50 height=50/>
                   </label>
-                  <div style="display: inline-block; width: 89%">
-                    <p style="float: left; font-size: 18px;">Very Stressed</p>
-                    <p style="float: right; font-size: 18px;">Not Stressed At All</p>
+                  <div style="display:inline-block;margin-left: -3%; width:83%">
+                    <p style="float: left; font-size: 15px;">Not Stressed <br> At All</p>
+                    <p style="float: right; font-size: 15px;">Very <br> Stressed</p>
                   </div>
               </div>
 
@@ -443,7 +447,7 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
             <iron-icon src="../icons/close_icon.png" style="float: right; padding: 5px; cursor: pointer" raised on-click="confirm_cancel"></iron-icon>
 
               <div style="margin-top: 18%; margin-left: 5%">
-                <iron-icon style="display:inline-block; margin-left; 10px" src="../icons/HSO_icons/check_in_icon.jpg"> </iron-icon>
+                <iron-icon style="display:inline-block; margin-left; 10px" src="../icons/HSO_icons/check_in_icon.png"> </iron-icon>
                 <div style="display: inline; vertical-align: middle; font-size:25px;font-weight:700;">Check Out</div>
                 <div style="margin-top: 1%; font-size: 20px; text-align: left">How are you feeling after doing the exercise?</div>
               </div>
@@ -485,10 +489,10 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
               </div>
 
 
-              <paper-input style="border: solid; border-color: #C4C4C4; margin: auto; padding: 20px; width: 80%; text-align: center; margin-top: 3%" label="Feedback (optional)"></paper-input>
+              <paper-input id="written_feedback" value="{{writtenFeedbackText}}" style="border: solid; border-color: #C4C4C4; margin: auto; padding: 20px; width: 80%; text-align: center; margin-top: 3%" label="Feedback (optional)"></paper-input>
 
-              <paper-button class="stressIntervention_button" style="color:white" raised on-click="written_intervention_feedback">Submit Feedback</paper-button>
-              <paper-button class="stressIntervention_button" style="color:white; margin-top: 2%" raised on-click="end_stress_intervention">Exit Intervention</paper-button>
+              <paper-button class="stressIntervention_button" style="color:white" raised on-click="send_intervention_feedback">Submit Feedback</paper-button>
+              <paper-button class="stressIntervention_button" style="color:white; background-color: gray; margin-top: 2%" raised on-click="end_stress_intervention">Exit Intervention</paper-button>
 
             </div>
           </paper-card>

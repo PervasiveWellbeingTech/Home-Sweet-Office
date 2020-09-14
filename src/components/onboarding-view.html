@@ -15,6 +15,7 @@
 <link rel="import" href="idea-generation-panel.html">
 <link rel="import" href="difficulty-selector.html">
 <link rel="import" href="difficulty-selector-survey.html">
+<link rel="import" href="stress-nudge-selector.html">
 <link rel="import" href="sync-view.html">
 
 <dom-module id="onboarding-view">
@@ -162,6 +163,10 @@
         display: none;
       }
 
+      #screen1_scroll_wrapper::-webkit-scrollbar {
+        display: none;
+      }
+
       #screen2_scroll_wrapper::-webkit-scrollbar {
         display: none;
       }
@@ -198,14 +203,14 @@
       <p>This is the settings page, where you can manage your settings.</p>
     </paper-dialog>
 
-
-      <div id="screen2" slide-name="initial-goal-selector" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
-        <div id="screen2_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">
-          <div style="margin-bottom: 50px">
-            <initial-goal-selector is_onboarding="true" id="goal_selector" on-goal_changed="rerender_onboarding_badges" />
-          </div>
+    <div id="screen2" slide-name="initial-goal-selector" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
+      <div id="screen2_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">
+        <div style="margin-bottom: 50px">
+          <initial-goal-selector is_onboarding="true" id="goal_selector" on-goal_changed="rerender_onboarding_badges" />
         </div>
       </div>
+    </div>
+
 
     <template is="dom-if" if="{{!difficulty_selector_disabled}}">
       <div id="screen2b" slide-name="difficulty-selector" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
@@ -301,7 +306,7 @@
           </div>
           <div class="prevnext_button_container">
             <paper-button class="prevnext_button" on-click="onboarding_complete">
-              <iron-icon icon="check" style="color: white; height: 40px; width: 40px; padding-right: 5px"></iron-icon> {{msg("Start Using HabitLab")}}
+              <iron-icon icon="check" style="color: white; height: 40px; width: 40px; padding-right: 5px"></iron-icon> {{msg("Start Using Home Sweet")}}
             </paper-button>
           </div>
         </div>
