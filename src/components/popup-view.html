@@ -1,7 +1,7 @@
-check_in_icon.pngcheck_in_icon.png<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/polymer-themes/ice.html">
 
-Component 1<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
@@ -349,7 +349,7 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
                   </div>
                   <div id="intervention_text" style="overflow-wrap: normal; display: inline-block; margin:3% 5% 0 5%;font-size:20px;text-align:left"></div>
 
-              <paper-button id="intervention_go_button" class="stressIntervention_button" style="color:white; margin-top: 15%" raised on-click="click_intervention_link">Let's do it</paper-button>
+              <paper-button id="intervention_go_button" class="stressIntervention_button" style="color:white; margin-bottom: 15%" raised on-click="click_intervention_link">Let's do it</paper-button>
               <!--
               <paper-button id="intervention_another_button" class="stressIntervention_button" raised on-click="get_stress_intervention">Give me another sweet moment</paper-button>
               -->
@@ -375,18 +375,14 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
             <iron-icon src="../icons/close_icon.png" style="float: right; padding: 5px; cursor: pointer" raised on-click="confirm_cancel"></iron-icon>
 
 
-            <div style="margin-top: 25%; margin-left: 5%; font-size: 20px; text-align: left; font-weight: bold">We are proud of you for taking the step.<br>Let us know when you are done to continue.</div>
+            <div style="margin-top: 20%; margin-left: 5%; font-size: 20px; text-align: left; font-weight: bold">We are proud of you for taking the step.<br>Let us know when you are done to continue.</div>
 
               <div id="confirmation_panel" style="margin-top: 5%; margin-left: 5%">
                 <div id="confirmation_title" style="overflow-wrap: normal; font-size: 25px; text-align: left"><b>Loading...</b></div>
-                <div id="confirmation_text" style="overflow-wrap: normal; font-size: 20px; text-align: left"><b>Loading...</b></div>
+                <div id="confirmation_text" style="overflow-wrap: normal; font-size: 20px; text-align: left; margin-right: 5%"><b>Loading...</b></div>
               </div>
 
-
-
-
-
-              <paper-button class="stressIntervention_button" style="color:white; margin-top: 10%" raised on-click="confirm_intervention_done">DONE</paper-button>
+              <paper-button id="confirmation_button" class="stressIntervention_button" style="color:white; margin-top: 8%" raised on-click="confirm_intervention_done">DONE</paper-button>
           </paper-card>
         </template>
 
@@ -452,11 +448,11 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
                 <div style="margin-top: 1%; font-size: 20px; text-align: left">How are you feeling after doing the exercise?</div>
               </div>
 
-              <div id="stress_meter" style="margin-top: 6%" align="center">
+              <div id="stress_change_meter" style="margin-top: 6%" align="center">
                   <label class="stress_button" id="neg_button" >
                   <input type="radio" name="stress_level_after" value=-1 >
                   <img src="../icons/HSO_icons/circle_brown.png" width=70 height=70 style="margin: 0 10px 0 10px"/>
-                  <p style="font-size: 18px; font-weight:bold"> Worse</p>
+                  <p style="font-size: 18px; font-weight:bold"> Worse </p>
                 </label>
                   <label class="stress_button" id="neutral_button">
                   <input type="radio" name="stress_level_after" value=0 >
@@ -489,7 +485,7 @@ Component 1<link rel="import" href="../bower_components/paper-button/paper-butto
               </div>
 
 
-              <paper-input id="written_feedback" value="{{writtenFeedbackText}}" style="border: solid; border-color: #C4C4C4; margin: auto; padding: 20px; width: 80%; text-align: center; margin-top: 3%" label="Feedback (optional)"></paper-input>
+              <paper-textarea id="written_feedback" value="{{writtenFeedbackText}}" rows="2" max-rows="2" style="border: solid; border-color: #C4C4C4; margin: auto; padding: 20px; width: 80%; text-align: center; margin-top: 3%" label="Feedback (optional)"></paper-textarea>
 
               <paper-button class="stressIntervention_button" style="color:white" raised on-click="send_intervention_feedback">Submit Feedback</paper-button>
               <paper-button class="stressIntervention_button" style="color:white; background-color: gray; margin-top: 2%" raised on-click="end_stress_intervention">Exit Intervention</paper-button>

@@ -80,6 +80,20 @@ content_scripts:
       - 'https://habitlab.stanford.edu/'
       - 'http://habitlab.github.io/'
       - 'https://habitlab.github.io/'
+  - all_frames: false
+    run_at: document_start
+    js:
+      - click_rate_script.js
+    matches:
+      - 'http://*/*'
+      - 'https://*/*'
+  - all_frames: false
+    run_at: document_start
+    js:
+      - scroll_rate_script.js
+    matches:
+      - 'http://*/*'
+      - 'https://*/*'
 icons:
   '19': icons/HSO_icons/logo.svg
   '32': icons/HSO_icons/logo.svg

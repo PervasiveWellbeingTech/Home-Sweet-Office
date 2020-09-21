@@ -1,11 +1,10 @@
 window.addEventListener "unhandledrejection", (evt) ->
   throw new Error(evt.reason)
 
-
 # debugging purpose
 # localStorage.setItem("local_logging_server", true)
 
-### HSO changes
+### HSO variables
 
 hso_server_url = 'http://green-antonym-197023.wl.r.appspot.com' #'http://localhost:3000'
 disable_icon_changes = true # Remove habitlab icon changes
@@ -13,7 +12,10 @@ disable_icon_timer = true # Remove habitlab icon timer
 localStorage.setItem('icon_nudge_active', false)
 localStorage.setItem('browser_session_start', (new Date()).getTime())
 localStorage.setItem('last_intervention', (new Date()).getTime())
-
+localStorage.setItem("click_rate_buffer", "[]")
+localStorage.setItem("scroll_rate_buffer", "[]")
+localStorage.setItem("intervention_timed_out", false)
+localStorage.setItem("session_timer", "")
 
 do !->>
 
@@ -636,6 +638,11 @@ do !->>
     window.loaded_content_scripts = {};
   }
 
+  document.addEventListener('pointerdown', (event) => {
+    click_start = new Date();
+    console.log(click_start);
+  });
+
   if (replacing_current_intervention || (window.allowed_interventions['#{intervention_info_copy.name}'] && !window.loaded_interventions['#{intervention_info_copy.name}'])) {
     window.loaded_interventions['#{intervention_info_copy.name}'] = true;
 
@@ -1135,6 +1142,25 @@ do !->>
       if tabs_to_listen_for_focus.has(tab.id)
         tabs_to_listen_for_focus.delete(tab.id)
       return
+    'log_click': (data) ->>
+      console.log(data)
+      buffer = JSON.parse(localStorage.getItem("click_rate_buffer"))
+      ## Log only last 50 clicks
+      #if buffer.length >= 50
+      #  buffer = buffer.slice(1,51)
+      buffer.push(data)
+      localStorage.setItem("click_rate_buffer", JSON.stringify(buffer))
+      return
+    'log_scroll': (data) ->>
+      {scroll_time, scroll_speed} = data
+      console.log(data)
+      buffer = JSON.parse(localStorage.getItem("scroll_rate_buffer"))
+      console.log(buffer)
+      #if buffer.length >= 50
+      #  buffer = buffer.slice(1,51)
+      buffer.push(data)
+      localStorage.setItem("scroll_rate_buffer", buffer)
+      return
   }
 
   #tabid_to_current_location = {}
@@ -1351,13 +1377,16 @@ do !->>
   chrome.runtime.onMessage.addListener (request, sender, sendResponse) ->
     {type, data} = request
     # console.log 'onMessage'
-    # console.log type
-    # console.log data
+    #console.log(request)
+    #console.log(data)
+    #console.log(type)
     #dlog 'onmessage'
     #dlog type
     #dlog data
     #dlog sender
+
     message_handler = message_handlers[type]
+
     if not message_handler?
       return
     # tabId = sender.tab.id
@@ -1750,42 +1779,81 @@ do !->>
       time_interval = d.getTime() # Get date integer
       time_interval = time_interval % 10000 # Only get up to seconds
       time_interval = Math.round(time_interval / 100.00) # Discard last two digits
-      time_interval = time_interval
-      if (time_interval <= 25)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
-      else if (time_interval == 26)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-1.svg')})
-      else if (time_interval == 27)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-2.svg')})
-      else if (time_interval == 28)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-3.svg')})
-      else if (time_interval == 29)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-4.svg')})
-      else if (time_interval == 30)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-5.svg')})
-      else if (time_interval < 55)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-6.svg')})
-      else if (time_interval == 56)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-5.svg')})
-      else if (time_interval == 57)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-4.svg')})
-      else if (time_interval == 58)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-3.svg')})
-      else if (time_interval == 59)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-2.svg')})
-      else if (time_interval == 60)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo-1.svg')})
-      else if (time_interval == 61)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
-      else if (time_interval >= 62)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo.svg')})
+      time_interval = time_interval % 50
+      if (time_interval <= 4)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_1.svg')})
+      else if (time_interval == 4)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_1.svg')})
+      else if (time_interval == 5)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_2.svg')})
+      else if (time_interval == 6)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_2.svg')})
+      else if (time_interval == 7)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_3.svg')})
+      else if (time_interval == 8)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_3.svg')})
+      else if (time_interval == 9)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_4.svg')})
+      else if (time_interval == 10)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_4.svg')})
+      else if (time_interval < 35)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_5.svg')})
+      else if (time_interval == 36)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_4.svg')})
+      else if (time_interval == 37)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_4.svg')})
+      else if (time_interval == 38)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_3.svg')})
+      else if (time_interval == 39)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_3.svg')})
+      else if (time_interval == 40)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_2.svg')})
+      else if (time_interval == 41)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_2.svg')})
+      else if (time_interval >= 42)
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue_1.svg')})
   ), 100
 
   setInterval (->>
-    timeout_length = 1
+    timeout_length = 60 # in minutes
     curr_time = (new Date()).getTime()
     baseline = await localStorage.getItem('last_intervention')
     target_time = parseInt(baseline) + 60000 * timeout_length # num of minutes
     if (curr_time > target_time)
       localStorage.setItem('icon_nudge_active', 'true')
   ), 10000 # 1000 = one second
+
+  setInterval (->>
+    curr_time = (new Date()).getTime()
+    console.log(curr_time)
+    baseline = await localStorage.getItem('session_timer')
+
+    # Different thresholds for each panel (higher for confirmation so user has time)
+    timeout_threshold = 0
+    curr_panel = localStorage.getItem("current_panel")
+    if curr_panel === "ask_intervention_done"
+      timeout_threshold = 20
+    else
+      timeout_threshold = 1
+
+    target_time = parseInt(baseline) + 60000 * timeout_threshold
+    console.log(target_time)
+    if (curr_time > target_time) and (localStorage.getItem('intervention_timed_out') === "false")
+      console.log("Session timed out")
+      localStorage.setItem('intervention_timed_out', 'true')
+      # Send information stored
+      to_send = JSON.parse(localStorage.getItem("intervention_data_tosend"))
+      #console.log(to_send)
+      #console.log(typeof(to_send))
+      to_send["intervention_completed"] = 0
+      to_send["intervention_cancelled"] = 0
+      to_send["intervention_timed_out"] = 1
+      to_send["intervention_cancelled_stage"] = localStorage.getItem("current_panel")
+      #console.log(to_send)
+      localStorage.setItem("intervention_data_tosend", JSON.stringify(to_send))
+      localStorage.setItem("current_panel", "home")
+      post_json(hso_server_url + "/postInterventionData", JSON.parse(localStorage.getItem("intervention_data_tosend")))
+      console.log("Data sent: " + await JSON.stringify(localStorage.getItem("intervention_data_tosend")))
+      localStorage.setItem("intervention_data_tosend", "{}")
+
+  ), 1000 # 1000 = one second
