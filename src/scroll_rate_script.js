@@ -1,3 +1,5 @@
+let scroll_buffer = []
+
 const checkScrollSpeed = (function(settings){
     settings = settings || {};
 
@@ -25,12 +27,12 @@ const checkScrollSpeed = (function(settings){
 
 
 document.addEventListener('scroll', function() {
-    //scroll_time = new Date();
-    //console.log(checkScrollSpeed());
-    //console.log(scroll_diff);
-    //let message = {type: 'log_scroll', data: {scroll_time, scroll_diff}};
-    //console.log(message)
-    //chrome.runtime.sendMessage(message, function(response) {
-    //console.log("Response: ", response);
-    //});
+    //console.log(scroll_buffer);
+    scroll_buffer.push(checkScrollSpeed());
+    if (scroll_buffer.length > 100){
+      //console.log(scroll_buffer);
+      let message = {type: 'log_scroll', data: scroll_buffer};
+      chrome.runtime.sendMessage(message);
+      scroll_buffer = []
+    }
 });

@@ -1143,7 +1143,7 @@ do !->>
         tabs_to_listen_for_focus.delete(tab.id)
       return
     'log_click': (data) ->>
-      console.log(data)
+      #console.log(data)
       buffer = JSON.parse(localStorage.getItem("click_rate_buffer"))
       ## Log only last 50 clicks
       #if buffer.length >= 50
@@ -1152,14 +1152,14 @@ do !->>
       localStorage.setItem("click_rate_buffer", JSON.stringify(buffer))
       return
     'log_scroll': (data) ->>
-      {scroll_time, scroll_speed} = data
-      console.log(data)
+      #console.log(data)
       buffer = JSON.parse(localStorage.getItem("scroll_rate_buffer"))
-      console.log(buffer)
       #if buffer.length >= 50
       #  buffer = buffer.slice(1,51)
-      buffer.push(data)
-      localStorage.setItem("scroll_rate_buffer", buffer)
+      #console.log(buffer)
+      buffer = buffer.concat(data)
+      #console.log(buffer)
+      localStorage.setItem("scroll_rate_buffer", JSON.stringify(buffer))
       return
   }
 
@@ -1825,7 +1825,7 @@ do !->>
 
   setInterval (->>
     curr_time = (new Date()).getTime()
-    console.log(curr_time)
+    #console.log(curr_time)
     baseline = await localStorage.getItem('session_timer')
 
     # Different thresholds for each panel (higher for confirmation so user has time)
@@ -1837,9 +1837,9 @@ do !->>
       timeout_threshold = 1
 
     target_time = parseInt(baseline) + 60000 * timeout_threshold
-    console.log(target_time)
+    #console.log(target_time)
     if (curr_time > target_time) and (localStorage.getItem('intervention_timed_out') === "false")
-      console.log("Session timed out")
+      #console.log("Session timed out")
       localStorage.setItem('intervention_timed_out', 'true')
       # Send information stored
       to_send = JSON.parse(localStorage.getItem("intervention_data_tosend"))
@@ -1853,7 +1853,7 @@ do !->>
       localStorage.setItem("intervention_data_tosend", JSON.stringify(to_send))
       localStorage.setItem("current_panel", "home")
       post_json(hso_server_url + "/postInterventionData", JSON.parse(localStorage.getItem("intervention_data_tosend")))
-      console.log("Data sent: " + await JSON.stringify(localStorage.getItem("intervention_data_tosend")))
+      #console.log("Data sent: " + await JSON.stringify(localStorage.getItem("intervention_data_tosend")))
       localStorage.setItem("intervention_data_tosend", "{}")
 
   ), 1000 # 1000 = one second

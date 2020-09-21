@@ -442,10 +442,10 @@ polymer_ext {
     to_send["date"] = new Date()
     to_send["userid"] = await get_user_id()
     to_send["interventions_shown"] = []
-    console.log("Click rate buffer: ", await localstorage_getjson("click_rate_buffer"))
-    console.log(typeof(await localstorage_getjson("click_rate_buffer")))
+    #console.log("Click rate buffer: ", await localstorage_getjson("click_rate_buffer"))
+    #console.log(typeof(await localstorage_getjson("click_rate_buffer")))
     to_send["contextual_info"]["click_rate_buffer"] = await localstorage_getjson("click_rate_buffer")
-    #to_send["contextual_info"]["scroll_rate_buffer"] = await localstorage_getjson("scroll_rate_buffer")
+    to_send["contextual_info"]["scroll_rate_buffer"] = await localstorage_getjson("scroll_rate_buffer")
     to_send["contextual_info"]["current_tab_info"] = await get_active_tab_info()
     localstorage_setjson("intervention_data_tosend", to_send)
     console.log(localstorage_getjson("intervention_data_tosend"))
@@ -577,6 +577,10 @@ polymer_ext {
     data = await localstorage_getjson("selected_intervention_data")
     this.$$('#confirmation_text').innerHTML = data.text
     this.$$('#confirmation_title').innerHTML = "Current Task: " + data.name
+
+  show_userid : ->>
+    userid = await get_user_id()
+    this.$$('#userid_label').innerHTML = "UserID: " + userid
 
   intervention_confirmation: ->>
     #console.log("Ask intervention done again!")
@@ -807,6 +811,8 @@ polymer_ext {
       once_available("survey_button", this.enable_survey_button())
     else
       this.check_for_survey()
+
+    once_available("userid_label", this.show_userid())
 
     setTimeout ->>
       require('../bower_components/iron-icon/iron-icon.deps')
