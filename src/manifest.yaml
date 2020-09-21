@@ -1,11 +1,11 @@
 manifest_version: 2
-name: Home Sweet
-short_name: HS
+name: Home Sweet Office
+short_name: HSO
 default_locale: en
 description: >-
-  Build better habits online! Tell HabitLab your goals, and it will determine
-  the appropriate interventions via experimentation.
-version: 1.0.272
+  Home Sweet Office delivers interventions to help you manage your stress
+  while browsing the web
+version: 1.0.0
 minimum_chrome_version: 55.0.0.0
 permissions:
   - tabs
@@ -95,20 +95,20 @@ content_scripts:
       - 'http://*/*'
       - 'https://*/*'
 icons:
-  '19': icons/HSO_icons/logo.svg
-  '32': icons/HSO_icons/logo.svg
-  '38': icons/HSO_icons/logo.svg
-  '48': icons/HSO_icons/logo.svg
-  '64': icons/HSO_icons/logo.svg
-  '128': icons/HSO_icons/logo.svg
+  '19': icons/HSO_icons/icon_blue_1.svg
+  '32': icons/HSO_icons/icon_blue_1.svg
+  '38': icons/HSO_icons/icon_blue_1.svg
+  '48': icons/HSO_icons/icon_blue_1.svg
+  '64': icons/HSO_icons/icon_blue_1.svg
+  '128': icons/HSO_icons/icon_blue_1.svg
 browser_action:
   default_icon:
-    '19': icons/HSO_icons/logo.svg
-    '32': icons/HSO_icons/logo.svg
-    '38': icons/HSO_icons/logo.svg
-    '48': icons/HSO_icons/logo.svg
-    '64': icons/HSO_icons/logo.svg
-    '128': icons/HSO_icons/logo.svg
+    '19': icons/HSO_icons/icon_blue_1.svg
+    '32': icons/HSO_icons/icon_blue_1.svg
+    '38': icons/HSO_icons/icon_blue_1.svg
+    '48': icons/HSO_icons/icon_blue_1.svg
+    '64': icons/HSO_icons/icon_blue_1.svg
+    '128': icons/HSO_icons/icon_blue_1.svg
   default_popup: popup.html
 options_ui:
   page: options.html

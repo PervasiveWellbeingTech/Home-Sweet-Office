@@ -1213,7 +1213,7 @@ do !->>
 
     if not (url.startsWith('http://') or url.startsWith('https://'))
       if (not disable_icon_changes)
-        chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/icon.svg')}
+        chrome.browserAction.setIcon {tabId: tabId, path: chrome.extension.getURL('icons/HSO_icons/logo.svg')}
       return
 
     #if tabid_to_current_location[tabId] == url
