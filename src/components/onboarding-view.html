@@ -9,11 +9,15 @@
 <link rel="import" href="../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../bower_components/html-echo/html-echo.html">
 <link rel="import" href="initial-goal-selector.html">
+<link rel="import" href="initial-goal-selector-hso.html">
+<link rel="import" href="initial-goal-selector-hso2.html">
 <link rel="import" href="positive-goal-selector.html">
+<link rel="import" href="positive-goal-selector-hso.html">
 <link rel="import" href="onboarding-badges.html">
 <link rel="import" href="irb-dialog.html">
 <link rel="import" href="idea-generation-panel.html">
 <link rel="import" href="difficulty-selector.html">
+<link rel="import" href="difficulty-selector-hso.html">
 <link rel="import" href="difficulty-selector-survey.html">
 <link rel="import" href="stress-nudge-selector.html">
 <link rel="import" href="sync-view.html">
@@ -199,44 +203,71 @@
     <irb-dialog id="irbdialog" shown_in_context="onboarding"></irb-dialog>
 
     <paper-dialog id="dialog">
-      <h2>Done Setting Up Home Sweet!</h2>
-      <p>This is the settings page, where you can manage your settings.</p>
+      <h2>Done Setting Up HSO!</h2>
+      <p> You can close this page and continue browsing. Click on the top-right HSO icon at any time to start an intervention.</p>
     </paper-dialog>
 
-    <div id="screen2" slide-name="initial-goal-selector" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
-      <div id="screen2_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">
+    <div id="screen2" slide-name="initial-goal-selector-hso" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
+      <!--<div id="screen2_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
         <div style="margin-bottom: 50px">
-          <initial-goal-selector is_onboarding="true" id="goal_selector" on-goal_changed="rerender_onboarding_badges" />
+          <initial-goal-selector-hso is_onboarding="true" id="goal_selector" on-goal_changed="rerender_onboarding_badges" />
         </div>
-      </div>
+      <!--</div>-->
     </div>
 
-
+<!--
     <template is="dom-if" if="{{!difficulty_selector_disabled}}">
       <div id="screen2b" slide-name="difficulty-selector" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
         <div id="screen2b_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">
           <div style="margin-bottom: 200px">
             <template is="dom-if" if="{{regular_difficulty_selector}}">
-              <difficulty-selector on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector" />
+              <difficulty-selector-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector" />
             </template>
             <template is="dom-if" if="{{!regular_difficulty_selector}}">
-              <difficulty-selector-survey />
+              <difficulty-selector-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector" />
             </template>
           </div>
         </div>
       </div>
     </template>
+-->
+<div id="screen2b" slide-name="difficulty-selector" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
+  <!--<div id="screen2b_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
+    <div style="margin-bottom: 200px">
+      <template is="dom-if" if="{{regular_difficulty_selector}}">
+        <difficulty-selector-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector" />
+      </template>
+      <template is="dom-if" if="{{!regular_difficulty_selector}}">
+        <difficulty-selector-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector" />
+      </template>
+    </div>
+  <!--</div>-->
+</div>
 
+    <!--
     <template is="dom-if" if="{{!positive_goals_disabled}}">
-      <div id="screen3" slide-name="positive-goal-selector" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
+    -->
+    <!--
+    <template is="dom-if" if="{{positive_goals_disabled}}">
+      <div id="screen3" slide-name="positive-goal-selector-hso" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
         <div id="screen3_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">
           <div style="margin-bottom: 100px">
-            <positive-goal-selector is_onboarding="true" id="positive_goal_selector" on-goal_changed="rerender_onboarding_badges" />
+            <positive-goal-selector-hso is_onboarding="true" id="positive_goal_selector-hso" on-goal_changed="rerender_onboarding_badges" />
           </div>
         </div>
       </div>
     </template>
+    -->
+    <div id="screen3" slide-name="positive-goal-selector-hso" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
+      <!--<div id="screen3_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
+        <div style="margin-bottom: 100px">
+          <positive-goal-selector-hso is_onboarding="true" id="positive_goal_selector-hso" on-goal_changed="rerender_onboarding_badges" />
+        </div>
+      <!--</div>-->
+    </div>
 
+
+<!--
     <template is="dom-if" if="{{true_statement}}">
       <div id="screen4" slide-name="onboarding-badges" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
         <div id="screen4_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">
@@ -246,8 +277,19 @@
         </div>
       </div>
     </template>
+-->
 
-    <template is="dom-if" if="{{!signin_disabled}}">
+  <div id="screen4" slide-name="onboarding-badges" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
+    <!--<div id="screen4_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
+      <div style="margin-bottom: 170px">
+        <onboarding-badges id="badges_received" />
+      </div>
+    <!--</div>-->
+
+  </div>
+
+
+    <template is="dom-if" if="{{signin_disabled}}">
       <div id="screen4b" slide-name="sync-view" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
         <div id="screen4b_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">
           <div style="margin-bottom: 200px">
@@ -257,7 +299,7 @@
       </div>
     </template>
 
-    <template is="dom-if" if="{{!idea_voting_disabled}}">
+    <template is="dom-if" if="{{idea_voting_disabled}}">
       <div id="screen5" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
         <div id="screen5_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">
           <div style="margin-bottom: 170px">
@@ -266,6 +308,7 @@
         </div>
       </div>
     </template>
+
 
     <template is="dom-if" if="{{is_not_equal_to_any(slide_idx, 0, last_slide_idx)}}">
       <div class="bottom-bar">
@@ -306,7 +349,7 @@
           </div>
           <div class="prevnext_button_container">
             <paper-button class="prevnext_button" on-click="onboarding_complete">
-              <iron-icon icon="check" style="color: white; height: 40px; width: 40px; padding-right: 5px"></iron-icon> {{msg("Start Using Home Sweet")}}
+              <iron-icon icon="check" style="color: white; height: 40px; width: 40px; padding-right: 5px"></iron-icon> {{msg("Start Using Home Sweet Office")}}
             </paper-button>
           </div>
         </div>

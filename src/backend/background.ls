@@ -16,6 +16,8 @@ localStorage.setItem("click_rate_buffer", "[]")
 localStorage.setItem("scroll_rate_buffer", "[]")
 localStorage.setItem("intervention_timed_out", false)
 localStorage.setItem("session_timer", "")
+localStorage.setItem("nudge_time", 15)
+localStorage.setItem("install_location", "undefined")
 
 do !->>
 
@@ -246,14 +248,6 @@ do !->>
     #setInterval ->
     #  show_finish_configuring_notification_if_needed()
     #, 5000
-
-    ## HSO Add Ons On Installation
-    ### Send first-time logging data to HSO server
-    hso_first_logging_data = {
-      userid : await get_user_id(),
-      time : new Date()
-    }
-    post_json(hso_server_url + "/postInstall", hso_first_logging_data)
 
   {
     get_all_message_handlers
@@ -1815,7 +1809,7 @@ do !->>
   ), 100
 
   setInterval (->>
-    timeout_length = 60 # in minutes
+    timeout_length = localStorage.getItem('nudge_time') # in minutes
     curr_time = (new Date()).getTime()
     baseline = await localStorage.getItem('last_intervention')
     target_time = parseInt(baseline) + 60000 * timeout_length # num of minutes

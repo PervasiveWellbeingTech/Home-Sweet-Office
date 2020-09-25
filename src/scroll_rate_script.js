@@ -4,7 +4,8 @@ const checkScrollSpeed = (function(settings){
     settings = settings || {};
 
     let lastPos, newPos, timer, delta,
-        delay = settings.delay || 50;
+        delay = settings.delay || 10;
+    let start = new Date();
 
     function clear() {
         lastPos = null;
@@ -21,13 +22,13 @@ const checkScrollSpeed = (function(settings){
         lastPos = newPos;
         clearTimeout(timer);
         timer = setTimeout(clear, delay);
-        return delta;
+        return {start, delta};
     };
 })();
 
 
 document.addEventListener('scroll', function() {
-    //console.log(scroll_buffer);
+    console.log(scroll_buffer);
     scroll_buffer.push(checkScrollSpeed());
     if (scroll_buffer.length > 100){
       //console.log(scroll_buffer);

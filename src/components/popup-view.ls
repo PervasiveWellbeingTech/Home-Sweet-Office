@@ -570,7 +570,7 @@ polymer_ext {
     #  chrome.tabs.sendMessage(tab.id, {type: "action_example"})
     #});
     await if this.intervention_data_received.url !== "" then
-      chrome.windows.create(url: this.intervention_data_received.url, top: 200px, left: 300px, width:800px, height:900px)
+      chrome.windows.create(url: this.intervention_data_received.url, top: 100px, left: 150px, width:600px, height:600px)
 
 
   update_confirmation_panel: ->>
