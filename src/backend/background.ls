@@ -1870,7 +1870,7 @@ do !->>
   # Reset intervention if timer reaches threshold
   setInterval (->>
     curr_time = (new Date()).getTime()
-    #console.log(curr_time)
+    console.log(curr_time)
     baseline = await localStorage.getItem('panel_timer')
 
     # Different thresholds for each panel (higher for confirmation so user has time)
@@ -1880,9 +1880,10 @@ do !->>
       timeout_threshold = 20
     else
       timeout_threshold = 1
+    console.log(timeout_threshold)
 
     target_time = parseInt(baseline) + 60000 * timeout_threshold
-    #console.log(target_time)
+    console.log(target_time)
     if (curr_time > target_time) and (localStorage.getItem('intervention_timed_out') === "false")
       #console.log("Session timed out")
       localStorage.setItem('intervention_timed_out', 'true')

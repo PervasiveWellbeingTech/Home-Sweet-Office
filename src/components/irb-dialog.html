@@ -7,6 +7,7 @@
     <style>
       .card-content {
         font-size: 20px;
+        height: 80%;
       }
 
       .checkbox_span {
@@ -15,15 +16,15 @@
       }
     </style>
 
-    <paper-dialog id="irb_dialog" with-backdrop modal style="z-index: 9007199254740991;">
-      <div class="subtext">Please read and agree to our terms of service</div>
+    <paper-dialog id="irb_dialog" with-backdrop modal style="width: 70%; height: 60%; z-index: 9007199254740991; overflow-y: scroll">
+      <div class="subtext"><b>Please read and agree to our terms of service</b></div>
       <!--<div class="subtext">By using Home Sweet, you are agreeing to the <a href = "https://github.com/habitlab/habitlab/wiki/Privacy#stanford-irb" target= "_blank" style = "color:white; text-decoration: underline;padding-bottom:10px;">terms of service</a>.</div>-->
 
       <div style="text-align:center;">
-        <div style="width: 100%; height: 100%; overflow: hidden">
-          <div id="irb_text" style="display: inline-block;height: 70px; margin-top: 15px; font-size: 12px; width: 700px;background-color:rgba(250,250,250,0.6); color:rgba(75,84,92,95);padding:5px;padding-top:10px; padding-bottom:10px; border-radius: 5px;overflow-x: hidden; overflow-y: scroll;">
+        <div style="width: 100%; height: 100%;">
+          <div id="irb_text" style="display: inline-block;height: 80%; margin-top: 15px; font-size: 12px; width: 85%;background-color:rgba(250,250,250,0.6); color:rgba(75,84,92,95);padding:5px;padding-top:10px; padding-bottom:10px; border-radius: 5px;overflow-x: hidden;">
 
-            Home Sweet Office is a research project run by the <a href="https://med.stanford.edu/pervasivewellbeingtech.html" target="_blank" style="color: rgb(81, 167, 249);">Stanford Pervasive Wellbeing Technology Lab</a>
+            <b>Home Sweet Office</b> is a research project run by the <a href="https://med.stanford.edu/pervasivewellbeingtech.html" target="_blank" style="color: rgb(81, 167, 249);">Stanford Pervasive Wellbeing Technology Lab</a>
             <br><br>
 
             <b>Description</b>: Home Sweet Office is a research study on managing stress online. You can participate by installing
@@ -34,7 +35,7 @@
             sending this data to our servers below or via an option under the extension settings.
             <br><br>
             <paper-checkbox checked="{{allow_logging}}">
-              <span class="checkbox_span">Let Home Sweet send anonymized data to Stanford's servers<br>( we need this data to help us build Home Sweet! <a href="https://github.com/habitlab/habitlab/wiki/Privacy" target="_blank" style="color: rgb(81, 167, 249);" on-click="see_what_gets_loggged_clicked">see what gets logged</a> )</span>
+              <span class="checkbox_span"><b>Let Home Sweet send anonymized data to Stanford's servers<br>( we need this data to help us build Home Sweet! <a href="https://github.com/habitlab/habitlab/wiki/Privacy" target="_blank" style="color: rgb(81, 167, 249);" on-click="see_what_gets_loggged_clicked">see what gets logged</a> )</b></span>
             </paper-checkbox>
             <br><br>
             <b>Time Involvement</b>: You can participate for as long as you want by keeping the extension installed.
