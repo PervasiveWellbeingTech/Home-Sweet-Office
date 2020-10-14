@@ -428,7 +428,7 @@ polymer_ext {
     this.intervention_stress_after = false
     this.intervention_end = false
     localstorage_setstring("current_panel", "stress_before")
-    localstorage_setstring("session_timer", (new Date()).getTime())
+    localstorage_setstring("panel_timer", (new Date()).getTime())
     localstorage_setbool('intervention_timed_out', false)
     if (await localstorage_getbool('icon_nudge_active'))
       once_available("home_panel", this.set_nudge_message())
@@ -465,7 +465,7 @@ polymer_ext {
     this.intervention_stress_after = false
     this.intervention_end = false
     localstorage_setstring("current_panel", "stress_before")
-    localstorage_setstring("session_timer", (new Date()).getTime())
+    localstorage_setstring("panel_timer", (new Date()).getTime())
     localstorage_setbool('intervention_timed_out', false)
 
 
@@ -477,7 +477,7 @@ polymer_ext {
     this.intervention_stress_after = true
     this.intervention_end = false
     localstorage_setstring("current_panel", "stress_after")
-    localstorage_setstring("session_timer", (new Date()).getTime())
+    localstorage_setstring("panel_timer", (new Date()).getTime())
     localstorage_setbool('intervention_timed_out', false)
 
   get_stress_intervention: ->>
@@ -489,7 +489,7 @@ polymer_ext {
     this.intervention_end = false
     this.stress_intervention_loading = true
     localstorage_setstring("current_panel", "intervention_loading")
-    localstorage_setstring("session_timer", (new Date()).getTime())
+    localstorage_setstring("panel_timer", (new Date()).getTime())
     localstorage_setbool('intervention_timed_out', false)
     console.log("Requesting intervention from server...")
     this.intervention_data_received = await JSON.parse(await get_json(hso_server_url + "/getIntervention", []))
@@ -513,7 +513,7 @@ polymer_ext {
       productivity: 'Productivity.png'
       somatic: 'somatic.png'
     localstorage_setstring("current_panel", "intervention_display")
-    localstorage_setstring("session_timer", (new Date()).getTime())
+    localstorage_setstring("panel_timer", (new Date()).getTime())
     localstorage_setbool('intervention_timed_out', false)
     console.log("Updating panel with intervention...")
     once_available("intervention_panel", this.update_intervention_panel())
@@ -556,7 +556,7 @@ polymer_ext {
     this.intervention_end = false
     this.stress_intervention_loading = false
     localstorage_setstring("current_panel", "ask_intervention_done")
-    localstorage_setstring("session_timer", (new Date()).getTime())
+    localstorage_setstring("panel_timer", (new Date()).getTime())
     localstorage_setbool('intervention_timed_out', false)
     data = await localstorage_getjson("selected_intervention_data")
     to_send = localstorage_getjson("intervention_data_tosend")
@@ -575,7 +575,7 @@ polymer_ext {
     #  chrome.tabs.sendMessage(tab.id, {type: "action_example"})
     #});
     await if this.intervention_data_received.url !== "" then
-      chrome.windows.create(url: this.intervention_data_received.url, top: 100px, left: 150px, width:600px, height:850px)
+      chrome.windows.create(url: this.intervention_data_received.url, top: 50px, left: 50px, width:1300, height:900)
 
 
   update_confirmation_panel: ->>
@@ -601,7 +601,7 @@ polymer_ext {
     this.intervention_stress_after = true
     this.intervention_end = false
     localstorage_setstring("current_panel", "stress_after")
-    localstorage_setstring("session_timer", (new Date()).getTime())
+    localstorage_setstring("panel_timer", (new Date()).getTime())
     localstorage_setbool('intervention_timed_out', false)
 
     timer_done = new Date()
@@ -619,7 +619,7 @@ polymer_ext {
     this.intervention_end = true
     to_send = localstorage_getjson("intervention_data_tosend")
     localstorage_setstring("current_panel", "intervention_end")
-    localstorage_setstring("session_timer", (new Date()).getTime())
+    localstorage_setstring("panel_timer", (new Date()).getTime())
     localstorage_setbool('intervention_timed_out', false)
     to_send["intervention_completed"] = 1
     to_send["intervention_cancelled"] = 0
@@ -633,7 +633,7 @@ polymer_ext {
     this.intervention_stress_after = false
     this.intervention_end = false
     localstorage_setstring("current_panel", "home")
-    localstorage_setstring("session_timer", (new Date()).getTime())
+    localstorage_setstring("panel_timer", (new Date()).getTime())
     localstorage_setbool('intervention_timed_out', false)
     to_send = localstorage_getjson("intervention_data_tosend")
     to_send["intervention_completed"] = 1
@@ -684,7 +684,8 @@ polymer_ext {
     this.intervention_stress_before = false
     this.intervention_stress_after = false
     this.intervention_end = false
-    #console.log("Cancelling stress intervention")
+    localstorage_setstring("current_panel", "home")
+    console.log("Cancelling stress intervention")
     #console.log(this.$$("input[name=stress_level]:checked").value)
     this.$$("input[name=stress_level]").value = 0
     #this.$$("input[name=stress_level]:checked").prop('checked', false)
@@ -696,7 +697,7 @@ polymer_ext {
     to_send["intervention_cancelled_stage"] = localstorage_getstring("current_panel")
     localstorage_setjson("intervention_data_tosend", to_send)
     localstorage_setstring("current_panel", "home")
-    localstorage_setstring("session_timer", "")
+    localstorage_setstring("panel_timer", "")
     this.send_intervention_data()
 
   check_for_survey: ->>

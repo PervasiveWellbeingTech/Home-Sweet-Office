@@ -28,7 +28,7 @@ const checkScrollSpeed = (function(settings){
 
 
 document.addEventListener('scroll', function() {
-    console.log(scroll_buffer);
+    //console.log(scroll_buffer);
     scroll_buffer.push(checkScrollSpeed());
     if (scroll_buffer.length > 100){
       //console.log(scroll_buffer);

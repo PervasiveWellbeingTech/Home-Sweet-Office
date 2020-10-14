@@ -57,6 +57,7 @@ polymer_ext({
   selectedLocationchanged: async function(evt) {
     /*
     if (this.ignoreselectedchanged == true) {
+
       return
     }
     */
@@ -110,4 +111,4 @@ polymer_ext({
   methods: [
     'once_available'
   ]
-})
+});
