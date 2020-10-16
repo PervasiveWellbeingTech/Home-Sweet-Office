@@ -5,6 +5,13 @@ window.addEventListener "unhandledrejection", (evt) ->
 # localStorage.setItem("local_logging_server", true)
 
 ### HSO variables
+{
+    get_json
+    post_json
+} = require('libs_backend/ajax_utils')
+{
+  get_user_id
+} = require 'libs_backend/background_common'
 
 # Note: Background.ls runs once every time browser is initiatied
 hso_server_url = 'http://green-antonym-197023.wl.r.appspot.com' #'http://localhost:3000'
@@ -20,8 +27,9 @@ localStorage.setItem("click_rate_buffer", "[]")
 localStorage.setItem("scroll_rate_buffer", "[]")
 localStorage.setItem("panel_timer", "")
 # These shouldn't be here
-localStorage.setItem("nudge_time", '30')
-localStorage.setItem("install_location", "")
+userid = get_user_id()
+profile_info = get_json(hso_server_url + "/getProfileInfo", "userid=" + userid)
+localStorage.setItem("nudge_time", profile_info['nudge_time'])
 
 do !->>
 
@@ -79,11 +87,6 @@ do !->>
         localStorage.setItem('habitlab_version', habitlab_version)
 
   require 'libs_backend/systemjs'
-
-  {
-      get_json
-      post_json
-  } = require('libs_backend/ajax_utils')
 
   require! {
     moment
@@ -1155,8 +1158,8 @@ do !->>
     'log_scroll': (data) ->>
       #console.log(data)
       buffer = JSON.parse(localStorage.getItem("scroll_rate_buffer"))
-      if buffer.length >= 5000
-        buffer = buffer.slice(1,5001)
+      if buffer.length >= 1000
+        buffer = buffer.slice(1,1001)
       #console.log(buffer)
       buffer = buffer.concat(data)
       #console.log(buffer)
@@ -1859,7 +1862,7 @@ do !->>
 
   # Activating nudge after interval
   setInterval (->>
-    timeout_length = 1 #localStorage.getItem('nudge_time') # in minutes
+    timeout_length = await localStorage.getItem('nudge_time') # in minutes
     curr_time = (new Date()).getTime()
     baseline = await localStorage.getItem('last_intervention')
     target_time = parseInt(baseline) + 60000 * timeout_length # num of minutes
@@ -1876,10 +1879,12 @@ do !->>
     # Different thresholds for each panel (higher for confirmation so user has time)
     timeout_threshold = 0
     curr_panel = localStorage.getItem("current_panel")
-    if curr_panel === "ask_intervention_done"
+    if curr_panel === "home"
+      timeout_threshold = 10000
+    else if curr_panel === "ask_intervention_done"
       timeout_threshold = 20
     else
-      timeout_threshold = 1
+      timeout_threshold = 3
     console.log(timeout_threshold)
 
     target_time = parseInt(baseline) + 60000 * timeout_threshold

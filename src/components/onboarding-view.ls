@@ -47,7 +47,8 @@ polymer_ext {
       type: Number
       value: do ->
         if (window.hashdata_unparsed == 'last')
-          output = 3
+          output = 2
+          '''
           if localStorage.positive_goals_disabled == 'true'
             output -= 1
           if localStorage.difficulty_selector_disabled == 'true'
@@ -56,6 +57,7 @@ polymer_ext {
             output -= 1
           if localStorage.signin_disabled == 'true'
             output -= 1
+          '''
           return output
         return 0
       observer: 'slide_changed'
@@ -82,19 +84,19 @@ polymer_ext {
     },
     positive_goals_disabled: {
       type: Boolean
-      value: localStorage.positive_goals_disabled == 'true'
+      value: false #localStorage.positive_goals_disabled == 'true'
     },
     signin_disabled: {
       type: Boolean
-      value: localStorage.signin_disabled == 'true'
+      value: false #localStorage.signin_disabled == 'true'
     },
     difficulty_selector_disabled: {
       type: Boolean
-      value: localStorage.difficulty_selector_disabled == 'true'
+      value: false #localStorage.difficulty_selector_disabled == 'true'
     },
     idea_voting_disabled: {
       type: Boolean
-      value: localStorage.idea_voting_disabled == 'true'
+      value: false #localStorage.idea_voting_disabled == 'true'
     },
     true_statement: {
       type: Boolean,
@@ -102,12 +104,13 @@ polymer_ext {
     },
     regular_difficulty_selector: {
       type: Boolean,
-      value: localStorage.difficulty_selector_survey != 'true',
+      value: true #localStorage.difficulty_selector_survey != 'true',
     },
     last_slide_idx: {
       type: Number
       value: do ->
-        output = 3
+        output = 2
+        '''
         if localStorage.positive_goals_disabled == 'true'
           output -= 1
         if localStorage.difficulty_selector_disabled == 'true'
@@ -116,6 +119,7 @@ polymer_ext {
           output -= 1
         if localStorage.signin_disabled == 'true'
           output -= 1
+        '''
         return output
     }
   }
@@ -192,6 +196,7 @@ polymer_ext {
     # $('#pagepiling').pagepiling.setKeyboardScrolling(false)
     $('body').css('overflow', 'auto')
     #this.fire 'onboarding-complete', {}
+
     #### HSO #####
     this.send_profile_info()
 

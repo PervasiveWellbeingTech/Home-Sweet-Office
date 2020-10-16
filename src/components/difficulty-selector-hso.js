@@ -95,7 +95,7 @@ polymer_ext({
   },
 
   ready: async function(evt) {
-    if (localStorage.user_chosen_difficulty != null) {
+    //if (localStorage.user_chosen_difficulty != null) {
       //await once_available('')
       /*
       this.ignoreselectedchanged = true
@@ -103,7 +103,7 @@ polymer_ext({
       this.$$('#difficultyradiogroup').selected = localStorage.user_chosen_difficulty
       this.ignoreselectedchanged = false
       */
-    }
+  //  }
   }
 
 }, {

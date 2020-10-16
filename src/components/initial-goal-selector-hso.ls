@@ -81,7 +81,7 @@ polymer_ext {
     },
     title_text: {
       type: String
-      value: msg("We use these sites for interventions. Uncheck the ones you wouldn't like to be redirected to.")
+      value: msg("We use these sites for interventions. Uncheck the ones you don't have accounts for or you wouldn't like to use.")
     }
     # title_text_bolded_portion: {
     #   type: String
@@ -93,7 +93,7 @@ polymer_ext {
     }
     title: {
       type: String
-      value: msg("Which of these sites you DO NOT use?")
+      value: msg("Which of these sites would you be okay to be redirected to?")
     }
     num_per_line: {
       type: Number

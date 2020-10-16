@@ -624,8 +624,10 @@ polymer_ext {
     to_send["intervention_completed"] = 1
     to_send["intervention_cancelled"] = 0
     localstorage_setjson("intervention_data_tosend", to_send)
+    this.send_intervention_data()
 
   end_stress_intervention: ->>
+    console.log("Ending intervention")
     this.stress_intervention_active = false
     this.stress_intervention_display = false
     this.ask_intervention_done = false
@@ -635,25 +637,27 @@ polymer_ext {
     localstorage_setstring("current_panel", "home")
     localstorage_setstring("panel_timer", (new Date()).getTime())
     localstorage_setbool('intervention_timed_out', false)
-    to_send = localstorage_getjson("intervention_data_tosend")
-    to_send["intervention_completed"] = 1
-    to_send["intervention_cancelled"] = 0
-    to_send["intervention_cancelled_stage"] = ""
-    localstorage_setjson("intervention_data_tosend", to_send)
-    this.send_intervention_data()
+
     localstorage_setbool('icon_nudge_active', false)
     localstorage_setstring('last_intervention', new Date().getTime())
     stress_level_before = 0
     stress_change = 0
     this.close_popup()
     #once_available("home_panel", this.remove_nudge_message())
+    localstorage_setjson("intervention_data_tosend", {})
 
 
   get_feedback_text: ->>
-    to_send = localstorage_getjson("intervention_data_tosend")
+    stored_data = localstorage_getjson("intervention_data_tosend")
+    to_send = {}
     to_send["written_feedback"] = this.$$('#written_feedback').value
+    to_send["date"] = stored_data["date"]
+    to_send["userid"] = stored_data["userid"]
+    to_send["intervention"] = stored_data["intervention_selected"]
     ##console.log(this.$$('#written_feedback').value)
-    localstorage_setjson("intervention_data_tosend", to_send)
+    #localstorage_setjson("intervention_data_tosend", to_send)
+    post_json(hso_server_url + "/postWrittenFeedback", to_send)
+
 
 
   send_intervention_feedback: ->>
@@ -670,21 +674,21 @@ polymer_ext {
 
   send_intervention_data: ->>
     post_json(hso_server_url + "/postInterventionData", localstorage_getjson("intervention_data_tosend"))
-    #console.log("Data sent: " + await JSON.stringify(localstorage_getjson("intervention_data_tosend")))
-    localstorage_setjson("intervention_data_tosend", {})
+    console.log("Data sent: " + await JSON.stringify(localstorage_getjson("intervention_data_tosend")))
+
 
   confirm_cancel: ->>
     if window.confirm("Are you sure you want to exit the intervention?")
       this.cancel_stress_intervention()
 
   cancel_stress_intervention: ->>
+    console.log("Cancelling intervention")
     this.stress_intervention_active = false
     this.stress_intervention_display = false
     this.ask_intervention_done = false
     this.intervention_stress_before = false
     this.intervention_stress_after = false
     this.intervention_end = false
-    localstorage_setstring("current_panel", "home")
     console.log("Cancelling stress intervention")
     #console.log(this.$$("input[name=stress_level]:checked").value)
     this.$$("input[name=stress_level]").value = 0
@@ -694,7 +698,7 @@ polymer_ext {
     to_send = localstorage_getjson("intervention_data_tosend")
     to_send["intervention_completed"] = 0
     to_send["intervention_cancelled"] = 1
-    to_send["intervention_cancelled_stage"] = localstorage_getstring("current_panel")
+    to_send["intervention_cancelled_stage"] = await localstorage_getstring("current_panel")
     localstorage_setjson("intervention_data_tosend", to_send)
     localstorage_setstring("current_panel", "home")
     localstorage_setstring("panel_timer", "")
