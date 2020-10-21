@@ -148,7 +148,7 @@ polymer_ext {
       value: true
     }
     stress_intervention_active: {
-      type: Boolean
+      type: Boolean,
     }
     stress_intervention_display: {
       type: Boolean
@@ -624,7 +624,6 @@ polymer_ext {
     to_send["intervention_completed"] = 1
     to_send["intervention_cancelled"] = 0
     localstorage_setjson("intervention_data_tosend", to_send)
-    this.send_intervention_data()
 
   end_stress_intervention: ->>
     console.log("Ending intervention")
@@ -660,10 +659,17 @@ polymer_ext {
 
 
 
-  send_intervention_feedback: ->>
-    once_available("written_feedback", this.get_feedback_text())
-    alert("Feedback Submitted")
-    this.$$('#written_feedback').value = ""
+  submit_feedback: ->>
+    #once_available("written_feedback", this.get_feedback_text())
+    feedback = window.prompt("Write down your feedback: ")
+    #this.$$('#written_feedback').value = ""
+    to_send = localstorage_getjson("intervention_data_tosend")
+    to_send["written_feedback"] = feedback
+    await localstorage_setjson("intervention_data_tosend", to_send)
+    #post_json(hso_server_url + "/postWrittenFeedback", to_send)
+    alert("Feedback Submitted!")
+    this.send_intervention_data()
+    this.end_stress_intervention()
 
   ask_another_intervention: ->>
     to_send = localstorage_getjson("intervention_data_tosend")
@@ -674,7 +680,7 @@ polymer_ext {
 
   send_intervention_data: ->>
     post_json(hso_server_url + "/postInterventionData", localstorage_getjson("intervention_data_tosend"))
-    console.log("Data sent: " + await JSON.stringify(localstorage_getjson("intervention_data_tosend")))
+    #console.log("Data sent: " + await JSON.stringify(localstorage_getjson("intervention_data_tosend")))
 
 
   confirm_cancel: ->>
@@ -747,8 +753,8 @@ polymer_ext {
     #chrome.browserAction.setBadgeBackgroundColor {color: '#000000'}
     self = this
     # CHANGED THIS LINE FOR HSO MVP PILOT
-    #is_habitlab_enabled().then (is_enabled) -> self.is_habitlab_disabled = !is_enabled
-    is_habitlab_disabled = true
+    is_habitlab_enabled().then (is_enabled) -> self.is_habitlab_disabled = !is_enabled
+    #is_habitlab_disabled = true
 
     #FILTER THIS FOR ONLY THE CURRENT GOAL SITE#
     await this.set_goals_and_interventions!

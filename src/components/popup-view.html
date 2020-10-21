@@ -221,16 +221,15 @@
         <paper-button class="paperbuttons" raised id="survey_button" on-click="survey_button_clicked"></paper-button>
 
         <template is="dom-if" if="{{!stress_intervention_active}}">
-          <paper-card class="intervention_panel" id="home_panel">
+          <paper-card class="intervention_panel" id="home_panel" style="height: 220px">
             <iron-icon  src="../icons/close_icon.png" style="float: right; padding: 5px; cursor: pointer" raised on-click="close_popup"></iron-icon>
 
             <div style="margin: 2%; font-size: 20px; text-align: left; font-weight: bold">Home Sweet Moment</div>
-            <div style="margin-top: 30%">
-              <div id="intro_message" style="margin-top: 30px; margin-botton: 60px; font-size: 25px; text-align: center">Take a sweet moment to destress.</div>
+            <div style="margin-top: 7%">
+              <div id="intro_message" style="margin-top: 30px; margin-bottom: 30px; font-size: 25px; text-align: center">Take a sweet moment to destress.</div>
               <paper-button class="stressIntervention_button" style="color:white" raised on-click="start_stress_intervention">BEGIN</paper-button>
             </div>
           </paper-card>
-        </template>
 
         <template is="dom-if" if="{{!is_habitlab_disabled}}">
         <paper-card>
@@ -318,6 +317,7 @@
 
         </paper-card>
 
+        </template>
         </template>
 
 
@@ -476,18 +476,19 @@
             <iron-icon src="../icons/close_icon.png" style="float: right; padding: 5px; cursor: pointer" raised on-click="end_stress_intervention"></iron-icon>
             <iron-icon style="float: left; padding: 5px; cursor: pointer" src="../icons/back_arrow.png" raised on-click="returnto_stress_after"></iron-icon>
 
-            <div style="margin-top: 16%">
+            <div style="margin-top: 25%">
               <div style="margin-left: 5%; margin-right: 5%">
                 <iron-icon style="display: inline-flex; width: 40px; height: 40px;" src="../icons/HSO_icons/submitted_icon.png"> </iron-icon>
                 <div style="display: inline; vertical-align: middle; font-size:25px;font-weight:700; margin-left: 1%">Submitted</div>
-                <div style="display: flex; margin-top: 1%; font-size: 20px; text-align: left">You've finished your sweet moment! You can leave your feedback below to improve our platform.</div>
+                <div style="display: flex; margin-top: 1%; font-size: 20px; text-align: left">You've finished your sweet moment! You can choose to leave your feedback to improve HSO.</div>
 
                 <paper-button class="stressIntervention_button" style="color:white" raised on-click="end_stress_intervention">Exit Intervention</paper-button>
-                <paper-button class="stressIntervention_button" style="color:white; margin-top: 2%; background-color: gray;" raised on-click="send_intervention_feedback">Submit Feedback</paper-button>
+                <paper-button class="stressIntervention_button" style="color:white; margin-top: 2%; background-color: gray;" raised on-click="submit_feedback">Submit Feedback</paper-button>
 
               </div>
+              <!--
               <paper-textarea id="written_feedback" value="{{writtenFeedbackText}}" rows="1" max-rows="1" style="border: solid; border-color: #C4C4C4; margin: auto; padding: 20px; width: 60%; text-align: center; margin-top: 3%" label="Feedback (optional)"></paper-textarea>
-
+              -->
             </div>
           </paper-card>
         </template>

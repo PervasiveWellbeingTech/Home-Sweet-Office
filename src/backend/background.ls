@@ -13,7 +13,7 @@ window.addEventListener "unhandledrejection", (evt) ->
   get_user_id
 } = require 'libs_backend/background_common'
 
-# Note: Background.ls runs once every time browser is initiatied
+# Note: Background.ls runs once every time browser is initiated
 hso_server_url = 'http://green-antonym-197023.wl.r.appspot.com' #'http://localhost:3000'
 disable_icon_changes = true # Remove habitlab icon changes
 disable_icon_timer = true # Remove habitlab icon timer
@@ -26,10 +26,13 @@ localStorage.setItem("intervention_timed_out", false)
 localStorage.setItem("click_rate_buffer", "[]")
 localStorage.setItem("scroll_rate_buffer", "[]")
 localStorage.setItem("panel_timer", "")
-# These shouldn't be here
-userid = get_user_id()
-profile_info = get_json(hso_server_url + "/getProfileInfo", "userid=" + userid)
-localStorage.setItem("nudge_time", profile_info['nudge_time'])
+localStorage.setItem("nudge_time", null)
+
+do !->>
+  console.log("Retrieving nudge time")
+  userid = await get_user_id()
+  profile_info = await get_json(hso_server_url + "/getProfileInfo", "userid=" + userid)
+  localStorage.setItem("nudge_time", profile_info['nudge_time'])
 
 do !->>
 
@@ -1873,7 +1876,7 @@ do !->>
   # Reset intervention if timer reaches threshold
   setInterval (->>
     curr_time = (new Date()).getTime()
-    console.log(curr_time)
+    #console.log(curr_time)
     baseline = await localStorage.getItem('panel_timer')
 
     # Different thresholds for each panel (higher for confirmation so user has time)
@@ -1885,7 +1888,7 @@ do !->>
       timeout_threshold = 20
     else
       timeout_threshold = 3
-    console.log(timeout_threshold)
+    #console.log(timeout_threshold)
 
     target_time = parseInt(baseline) + 60000 * timeout_threshold
     console.log(target_time)
