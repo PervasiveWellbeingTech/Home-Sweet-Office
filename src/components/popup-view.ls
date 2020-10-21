@@ -494,7 +494,7 @@ polymer_ext {
     console.log("Requesting intervention from server...")
     this.intervention_data_received = await JSON.parse(await get_json(hso_server_url + "/getIntervention", []))
     console.log("Intervention received: " + JSON.stringify(this.intervention_data_received))
-    await sleep(5000)
+    #await sleep(5000)
     localstorage_setjson("selected_intervention_data", this.intervention_data_received)
     this.show_stress_intervention()
 

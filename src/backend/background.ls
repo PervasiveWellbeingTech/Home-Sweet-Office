@@ -5,16 +5,11 @@ window.addEventListener "unhandledrejection", (evt) ->
 # localStorage.setItem("local_logging_server", true)
 
 ### HSO variables
-{
-    get_json
-    post_json
-} = require('libs_backend/ajax_utils')
-{
-  get_user_id
-} = require 'libs_backend/background_common'
+
 
 # Note: Background.ls runs once every time browser is initiated
 hso_server_url = 'http://green-antonym-197023.wl.r.appspot.com' #'http://localhost:3000'
+default_nudge_time = '30'
 disable_icon_changes = true # Remove habitlab icon changes
 disable_icon_timer = true # Remove habitlab icon timer
 # To be set once at start of session:
@@ -28,13 +23,25 @@ localStorage.setItem("scroll_rate_buffer", "[]")
 localStorage.setItem("panel_timer", "")
 localStorage.setItem("nudge_time", null)
 
-do !->>
-  console.log("Retrieving nudge time")
-  userid = await get_user_id()
-  profile_info = await get_json(hso_server_url + "/getProfileInfo", "userid=" + userid)
-  localStorage.setItem("nudge_time", profile_info['nudge_time'])
 
 do !->>
+
+  {
+      get_json
+      post_json
+  } = require('libs_backend/ajax_utils')
+
+  {
+    get_user_id
+  } = require 'libs_backend/background_common'
+
+  userid = await get_user_id()
+  profile_info = JSON.parse(await get_json(hso_server_url + "/getProfileInfo", "userid=" + userid))
+  if Object.keys(profile_info).length == 0
+    localStorage.setItem("nudge_time", default_nudge_time)
+  else
+    localStorage.setItem("nudge_time", profile_info.nudge_time)
+
 
   localStorage.removeItem 'cached_list_all_goals'
   localStorage.removeItem 'cached_list_all_interventions'
@@ -1891,7 +1898,7 @@ do !->>
     #console.log(timeout_threshold)
 
     target_time = parseInt(baseline) + 60000 * timeout_threshold
-    console.log(target_time)
+    #console.log(target_time)
     if (curr_time > target_time) and (localStorage.getItem('intervention_timed_out') === "false")
       #console.log("Session timed out")
       localStorage.setItem('intervention_timed_out', 'true')

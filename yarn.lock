@@ -4437,15 +4437,6 @@ gulp-yaml@^1.0.1:
     through2 "^2.0.0"
     xtend "^4.0.0"
 
-"gulp@github:gulpjs/gulp#4.0":
-  version "4.0.0-alpha.2"
-  resolved "https://codeload.github.com/gulpjs/gulp/tar.gz/e9e5ab7e70080e1bfb5650a4fdc4c8849e70b3e0"
-  dependencies:
-    glob-watcher "^3.0.0"
-    gulp-cli "^1.0.0"
-    undertaker "^1.0.0"
-    vinyl-fs "^2.0.0"
-
 gulplog@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/gulplog/-/gulplog-1.0.0.tgz#e28c4d45d05ecbbed818363ce8f9c5926229ffe5"
