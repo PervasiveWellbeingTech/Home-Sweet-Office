@@ -9,7 +9,7 @@ window.addEventListener "unhandledrejection", (evt) ->
 
 # Note: Background.ls runs once every time browser is initiated
 hso_server_url = 'http://green-antonym-197023.wl.r.appspot.com' #'http://localhost:3000'
-default_nudge_time = '30'
+default_nudge_time = '120'
 disable_icon_changes = true # Remove habitlab icon changes
 disable_icon_timer = true # Remove habitlab icon timer
 # To be set once at start of session:
@@ -21,7 +21,7 @@ localStorage.setItem("intervention_timed_out", false)
 localStorage.setItem("click_rate_buffer", "[]")
 localStorage.setItem("scroll_rate_buffer", "[]")
 localStorage.setItem("panel_timer", "")
-localStorage.setItem("nudge_time", null)
+localStorage.setItem("nudge_time", default_nudge_time)
 
 
 do !->>
@@ -37,9 +37,7 @@ do !->>
 
   userid = await get_user_id()
   profile_info = JSON.parse(await get_json(hso_server_url + "/getProfileInfo", "userid=" + userid))
-  if Object.keys(profile_info).length == 0
-    localStorage.setItem("nudge_time", default_nudge_time)
-  else
+  if Object.keys(profile_info).length > 0
     localStorage.setItem("nudge_time", profile_info.nudge_time)
 
 
