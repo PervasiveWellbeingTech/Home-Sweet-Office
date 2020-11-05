@@ -221,11 +221,11 @@
         <paper-button class="paperbuttons" raised id="survey_button" on-click="survey_button_clicked"></paper-button>
 
         <template is="dom-if" if="{{!stress_intervention_active}}">
-          <paper-card class="intervention_panel" id="home_panel" style="height: 220px">
+          <paper-card class="intervention_panel" id="home_panel" style="height: 500px">
             <iron-icon  src="../icons/close_icon.png" style="float: right; padding: 5px; cursor: pointer" raised on-click="close_popup"></iron-icon>
 
             <div style="margin: 2%; font-size: 20px; text-align: left; font-weight: bold">Home Sweet Moment</div>
-            <div style="margin-top: 7%">
+            <div style="margin-top: 28%">
               <div id="intro_message" style="margin-top: 30px; margin-bottom: 30px; font-size: 25px; text-align: center">Take a sweet moment to destress.</div>
               <paper-button class="stressIntervention_button" style="color:white" raised on-click="start_stress_intervention">BEGIN</paper-button>
             </div>
@@ -318,6 +318,7 @@
         </paper-card>
 
         </template>
+
         </template>
 
 
@@ -337,19 +338,21 @@
         <template is="dom-if" if="{{stress_intervention_display}}">
 
           <paper-card class="intervention_panel">
-            <iron-icon style="float: left; padding: 5px; cursor: pointer" src="../icons/back_arrow.png" raised on-click="returnto_stress_before"></iron-icon>
-            <iron-icon  src="../icons/close_icon.png" style="float: right; padding: 5px; cursor: pointer" raised on-click="confirm_cancel"></iron-icon>
+            <!--<iron-icon style="float: left; padding: 5px; cursor: pointer" src="../icons/back_arrow.png" raised on-click="returnto_stress_before"></iron-icon>-->
+            <!--<iron-icon  src="../icons/close_icon.png" style="float: right; padding: 5px; cursor: pointer" raised on-click="confirm_cancel"></iron-icon>-->
 
-              <div style="margin-top: 25%">
+              <div style="margin-top: 23%">
 
                   <div style="padding:0 0 0 5%;float:left;width:85%">
                       <img id="intervention_icon" style="float:left; width:10%;height:10%; margin-right: 10px" alt="Loading..."/>
                        <p id="intervention_title" style=" display: inline; margin-bottom:20px;margin-top:20px;font-size:25px;text-align:center"><b>Loading...</b></p>
                       <p id="intervention_duration" style="display: block; margin:10px 10px 5px 0;font-size:15px"></p>
                   </div>
-                  <div id="intervention_text" style="overflow-wrap: normal; display: inline-block; margin:3% 5% 0 5%;font-size:20px;text-align:left"></div>
+                  <div id="intervention_text" style="max-height: 100px; overflow-y: auto; overflow-wrap: normal; display: inline-block; margin:3% 5% 0 5%;font-size:20px;text-align:left"></div>
 
-              <paper-button id="intervention_go_button" class="stressIntervention_button" style="color:white; margin-bottom: 15%" raised on-click="click_intervention_link">Let's do it</paper-button>
+              <paper-button id="intervention_go_button" class="stressIntervention_button" style="color:white; margin-bottom: 0" raised on-click="click_intervention_link">Let's do it</paper-button>
+              <paper-button id="intervention_dismiss_button" class="stressIntervention_button" style="color:white; background-color: gray; margin-top: 2%" raised on-click="dismiss_intervention">I can't / don't want to do this right now.</paper-button>
+
               <!--
               <paper-button id="intervention_another_button" class="stressIntervention_button" raised on-click="get_stress_intervention">Give me another sweet moment</paper-button>
               -->
@@ -379,7 +382,7 @@
 
               <div id="confirmation_panel" style="margin-top: 5%; margin-left: 5%">
                 <div id="confirmation_title" style="overflow-wrap: normal; font-size: 25px; text-align: left"><b>Loading...</b></div>
-                <div id="confirmation_text" style="overflow-wrap: normal; font-size: 20px; text-align: left; margin-right: 5%"><b>Loading...</b></div>
+                <div id="confirmation_text" style="max-height: 100px; overflow-y: auto; overflow-wrap: normal; font-size: 20px; text-align: left; margin-right: 5%"><b>Loading...</b></div>
               </div>
 
               <paper-button id="confirmation_button" class="stressIntervention_button" style="color:white; margin-top: 8%" raised on-click="confirm_intervention_done">DONE</paper-button>

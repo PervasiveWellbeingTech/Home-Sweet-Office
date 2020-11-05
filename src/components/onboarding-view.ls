@@ -47,7 +47,7 @@ polymer_ext {
       type: Number
       value: do ->
         if (window.hashdata_unparsed == 'last')
-          output = 2
+          output = 3
           '''
           if localStorage.positive_goals_disabled == 'true'
             output -= 1
@@ -109,7 +109,7 @@ polymer_ext {
     last_slide_idx: {
       type: Number
       value: do ->
-        output = 2
+        output = 3
         '''
         if localStorage.positive_goals_disabled == 'true'
           output -= 1
@@ -362,7 +362,7 @@ polymer_ext {
       window.addEventListener 'mousewheel', this.mousewheel_listener_bound
       window.addEventListener 'keydown', this.keydown_listener_bound
 
-    this.$$('#goal_selector').set_sites_and_goals()
+    #this.$$('#goal_selector').set_sites_and_goals()
     this.once_available('#badges_received').then ->
       self.slide_changed()
       self.style.opacity = 1
@@ -456,7 +456,7 @@ polymer_ext {
     await load_css_file('sweetalert2')
     /*
     self = this
-    this.$$('#goal_selector').set_sites_and_goals()
+    #this.$$('#goal_selector').set_sites_and_goals()
     this.last_mousewheel_time = 0
     this.last_mousewheel_deltaY = 0
     this.keydown_listener_bound = this.keydown_listener.bind(this)

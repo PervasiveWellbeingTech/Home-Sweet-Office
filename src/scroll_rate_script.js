@@ -4,7 +4,7 @@ const checkScrollSpeed = (function(settings){
     settings = settings || {};
 
     let lastPos, newPos, timer, delta,
-        delay = settings.delay || 10;
+        delay = 250; //settings.delay || 10;
     let start = new Date();
 
     function clear() {
@@ -27,8 +27,12 @@ const checkScrollSpeed = (function(settings){
 })();
 
 
+
+
+
 document.addEventListener('scroll', function() {
-    //console.log(scroll_buffer);
+    let measurement = checkScrollSpeed();
+    console.log(measurement.toString());
     scroll_buffer.push(checkScrollSpeed());
     if (scroll_buffer.length > 100){
       //console.log(scroll_buffer);

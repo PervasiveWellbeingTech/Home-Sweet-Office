@@ -46,20 +46,19 @@
       }
     </style>
 
-    <div class="title">How often would you like to get reminded to take a stress management intervention?</div>
+    <div class="title">How often would you like to get reminded to take a stress management intervention? <br>The HSO icon will change colors to signal when to take another intervention</div>
 
     <paper-card class="papercard">
       <paper-radio-group attr-for-selected="value" on-selected-changed="selectedNudgechanged" class="radiobuttons" id="difficultyradiogroup">
-        <paper-radio-button name="button1" on-keydown="ignore_keydown" class="radiobutton" value=15><strong>15 mins</strong></paper-radio-button><br>
-        <paper-radio-button name="button2" on-keydown="ignore_keydown" class="radiobutton" value=30><strong>30 mins</strong></paper-radio-button><br>
-        <paper-radio-button name="button3" on-keydown="ignore_keydown" class="radiobutton" value=45><strong>45 mins</strong></paper-radio-button><br>
-        <paper-radio-button name="button4" on-keydown="ignore_keydown" class="radiobutton" value=60><strong>1 hour</strong></paper-radio-button><br>
-        <paper-radio-button name="button5" on-keydown="ignore_keydown" class="radiobutton" value=120><strong>2 hours</strong></paper-radio-button><br>
+        <paper-radio-button name="button1" on-keydown="ignore_keydown" class="radiobutton" value=60><strong>1 hour</strong></paper-radio-button><br>
+        <paper-radio-button name="button2" on-keydown="ignore_keydown" class="radiobutton" value=120><strong>2 hours</strong></paper-radio-button><br>
+        <paper-radio-button name="button3" on-keydown="ignore_keydown" class="radiobutton" value=180><strong>3 hours</strong></paper-radio-button><br>
+        <paper-radio-button name="button4" on-keydown="ignore_keydown" class="radiobutton" value=220><strong>4 hours</strong></paper-radio-button><br>
       </paper-radio-group>
     </paper-card>
 
 
-    <div class="title">Where are you right now?</div>
+    <div class="title">Where are you right now? This will help us recommend better interventions.</div>
 
     <paper-card class="papercard">
       <paper-radio-group on-selected-changed="selectedLocationchanged" class="radiobuttons" id="locationradiogroup">

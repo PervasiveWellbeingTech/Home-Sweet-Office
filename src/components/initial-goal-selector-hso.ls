@@ -61,7 +61,7 @@ swal = require 'sweetalert2'
 {polymer_ext} = require 'libs_frontend/polymer_utils'
 
 polymer_ext {
-  is: 'initial-goal-selector-hso'
+  is: 'initial-goal-selector'
   properties: {
     sites_and_goals: {
       type: Array
@@ -81,7 +81,7 @@ polymer_ext {
     },
     title_text: {
       type: String
-      value: msg("We use these sites for interventions. Uncheck the ones you don't have accounts for or you wouldn't like to use.")
+      value: msg("Below are some popular options, along with how much time you spend on them per day (on average).")
     }
     # title_text_bolded_portion: {
     #   type: String
@@ -93,7 +93,7 @@ polymer_ext {
     }
     title: {
       type: String
-      value: msg("Which of these sites would you be okay to be redirected to?")
+      value: msg("Which sites would you like to spend less time on?")
     }
     num_per_line: {
       type: Number
@@ -131,27 +131,22 @@ polymer_ext {
       value: false
     }
   }
-
   isdemo_changed: (isdemo) ->
     if isdemo
       this.set_sites_and_goals()
       document.body.style.backgroundColor = 'white'
-
   get_time_spent_for_domain: (domain, baseline_time_on_domains) ->
     if baseline_time_on_domains[domain]?
       minutes = baseline_time_on_domains[domain] / (1000*60)
       return (minutes).toPrecision(2) + ' mins'
     return '0 mins'
-
   limit_to_eight: (list) ->
     return list[0 til 8]
-
   delete_goal_clicked: (evt) ->>
     goal_name = evt.target.goal_name
     await remove_custom_goal_and_generated_interventions goal_name
     await this.set_sites_and_goals()
     this.fire 'need_rerender', {}
-
   disable_interventions_which_do_not_satisfy_any_goals: (goal_name) ->>
     enabled_goals = await get_enabled_goals()
     enabled_interventions = await get_enabled_interventions()
@@ -178,11 +173,9 @@ polymer_ext {
         interventions_list: interventions_to_disable
         prev_enabled_interventions: prev_enabled_interventions
       }
-
   time_updated: (evt, obj) ->>
     mins = Number (obj.item.innerText.trim ' ' .split ' ' .0)
     set_goal_target obj.item.class, mins
-
   get_daily_targets: ->>
     goals = await get_goals!
     for goal in Object.keys goals
@@ -191,14 +184,12 @@ polymer_ext {
       mins = await get_goal_target goal
       mins = mins/5 - 1
       this.index_of_daily_goal_mins[goal] = mins
-
   show_internal_names_of_goals: ->
     return localStorage.getItem('intervention_view_show_internal_names') == 'true'
-
   daily_goal_help_clicked: ->
     swal {
-      title: 'How will HSO use these sites?'
-      text: 'HSO will help you manage stress by showing you interventions, which might include doing short activities on these and other sites. '
+      title: 'How will HabitLab help me achieve these goals?'
+      text: 'HabitLab will help you achieve these goals by showing you a different nudge, like a news feed blocker or a delayed page loader, each time you visit your goal sites. (It will not block the site.)'
     }
 
   # more_than_zero_minutes: (goal,get_time_spent_for_domain,baseline_time_on_domains) ->
@@ -243,7 +234,6 @@ polymer_ext {
     evt.stopPropagation()
     newtab = evt.target.sitename.toLowerCase!
     this.fire 'need_tab_change', {newtab: newtab}
-
   get_icon_for_goal: (goal, goal_name_to_icon) ->
     if goal.icon?
       return goal.icon
@@ -256,7 +246,6 @@ polymer_ext {
     if goal.beta and localStorage.getItem('show_beta_goals_and_interventions') != 'true'
       return false
     return true
-
   set_sites_and_goals: ->>
     self = this
     [goal_name_to_info, enabled_goals] = await Promise.all [get_goals(), get_enabled_goals()]
@@ -281,7 +270,6 @@ polymer_ext {
         goal.enabled = (enabled_goals[goal.name] == true)
       list_of_sites_and_goals.push current_item
     self.sites_and_goals = list_of_sites_and_goals
-
     do !->>
       goal_name_to_icon_changed = false
       goal_name_to_new_icon_promises = {}
@@ -298,7 +286,6 @@ polymer_ext {
           self.goal_name_to_icon[goal_name] = icon
         self.goal_name_to_icon = JSON.parse JSON.stringify self.goal_name_to_icon
     return
-
   image_clicked: (evt) ->>
     goal_name = evt.target.goalname
     checked = evt.target.checked
@@ -336,21 +323,16 @@ polymer_ext {
 
     await self.set_sites_and_goals()
     self.fire 'goal_changed', {goal_name: goal_name}
-
   should_have_newline: (index, num_per_line) ->
     return (index % num_per_line) == 0
-
   sort_custom_sites_after_and_limit_to_eight: (sites_and_goals) ->
     return this.sort_custom_sites_after(sites_and_goals)[0 til 8]
-
   sort_custom_sites_after: (sites_and_goals) ->
     [custom_sites_and_goals,normal_sites_and_goals] = prelude.partition (-> it.goals.filter((.custom)).length > 0), sites_and_goals
     return normal_sites_and_goals.concat custom_sites_and_goals
-
   add_goal_clicked: (evt) ->
     this.add_custom_website_from_input()
     return
-
   # add_website_input_keydown: ->
   #    console.log('add_website_input_keydown called')
   #    console.log(evt)
@@ -373,7 +355,6 @@ polymer_ext {
       }
       return
     this.fire 'need_tab_change', {newtab: newtab}
-
   remove_clicked: (evt) ->>
     goal_name = evt.target.goal_name
     is_custom = evt.target.is_custom
@@ -426,7 +407,6 @@ polymer_ext {
     #this.goal_name_to_icon = JSON.parse JSON.stringify this.goal_name_to_icon
     #console.log 'checkpoint 7'
     return
-
   repaint_due_to_resize_once_in_view: ->
     self = this
     leftmost = null
@@ -449,7 +429,6 @@ polymer_ext {
       , 100
     else
       self.repaint_due_to_resize()
-
   repaint_due_to_resize: ->
     self = this
     leftmost = null
@@ -473,7 +452,6 @@ polymer_ext {
     parent_offset = $(self).offset()
     orig_offset = this.S('.flexcontainer').offset()
     this.S('.flexcontainer').offset({left: margin_needed + parent_offset.left, top: orig_offset.top})
-
   attached: ->>
     self = this
     load_css_file('bower_components/sweetalert2/dist/sweetalert2.css')

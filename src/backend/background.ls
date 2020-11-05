@@ -1154,15 +1154,18 @@ do !->>
       if tabs_to_listen_for_focus.has(tab.id)
         tabs_to_listen_for_focus.delete(tab.id)
       return
-    'log_click': (data) ->>
-      #console.log(data)
+
+    'log_clicks': (click_len) ->>
+      console.log(click_len)
       buffer = JSON.parse(localStorage.getItem("click_rate_buffer"))
       ## Log only last 50 clicks
-      if buffer.length >= 50
-        buffer = buffer.slice(1,51)
-      buffer.push(data)
+      #if buffer.length >= 50
+      #  buffer = buffer.slice(1,51)
+      buffer.push(click_len)
       localStorage.setItem("click_rate_buffer", JSON.stringify(buffer))
+      console.log(buffer)
       return
+
     'log_scroll': (data) ->>
       #console.log(data)
       buffer = JSON.parse(localStorage.getItem("scroll_rate_buffer"))
@@ -1868,15 +1871,74 @@ do !->>
         chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge9.svg')})
   ), 100
 
+  # Log click/scroll data every 15 mins
+  setInterval (->>
+    click_buffer = localStorage.getItem("click_rate_buffer")
+    scroll_buffer = localStorage.getItem("scroll_rate_buffer")
+
+    # Send data to log into db
+    console.log("Sending click_data and scroll_data to db...")
+    console.log(click_buffer)
+    console.log(scroll_buffer)
+    userid = await get_user_id()
+    click_data = {}
+    click_data["userid"] = userid
+    click_data["click_buffer"]= click_buffer
+    console.log(click_data)
+
+    scroll_data = {}
+    scroll_data["userid"] = userid
+    scroll_data["scroll_buffer"]= scroll_buffer
+    console.log(scroll_data)
+
+    # Log click data
+    post_json(hso_server_url + "/postClickData", JSON.stringify(click_data))
+
+    # Log scroll data
+    #post_json(hso_server_url + "/postScrollData", JSON.stringify(scroll_data))
+
+
+    localStorage.setItem("click_rate_buffer", "[]")
+    localStorage.setItem("scroll_rate_buffer", "[]")
+
+  ), 120000 #900000 # = 15 mins
+
   # Activating nudge after interval
   setInterval (->>
-    timeout_length = await localStorage.getItem('nudge_time') # in minutes
+    nudge_length = await localStorage.getItem('nudge_time') # in minutes
     curr_time = (new Date()).getTime()
     baseline = await localStorage.getItem('last_intervention')
-    target_time = parseInt(baseline) + 60000 * timeout_length # num of minutes
-    if (curr_time > target_time)
-      localStorage.setItem('icon_nudge_active', 'true')
-  ), 10000 # 1000 = one second
+
+    # If timer above nudge_time threshold activate nudge and change to stage 1 for 15 mins
+    # After 15 mins, turn off and wait nudge_time / 2
+    # After nudge_time / 2, change to stage 2 and wait for 15 mins
+    # After 15 mins, turn off and wait nudge time / 4
+    # After nudge_time / 4, change to stage 3 and leave until user takes intervention
+
+    first_stage_on = parseInt(baseline) + 60000 * nudge_length # num of minutes
+    first_stage_off = parseInt(baseline) + 60000 * (nudge_length + 15)
+    second_stage_on = parseInt(baseline) + 60000 * (nudge_length + 15 + (nudge_length/2))
+    second_stage_off = parseInt(baseline) + 60000 * (nudge_length + 15 + (nudge_length/2) + 15)
+    third_stage_on = parseInt(baseline) + 60000 * (nudge_length + 15 + (nudge_length/2) + 15 + (nudge_length/4))
+
+    console.log(first_stage_on, first_stage_off, second_stage_on, second_stage_off, third_stage_on)
+    nudge_active = 'false'
+
+    if (curr_time > third_stage_on)
+      nudge_active = 'true'
+    else if (curr_time > second_stage_off)
+      nudge_active = 'false'
+    else if (curr_time > second_stage_on)
+      nudge_active = 'true'
+    else if (curr_time > first_stage_off)
+      nudge_active = 'false'
+    else if (curr_time > first_stage_on)
+      nudge_active = 'true'
+    else
+      nudge_active = 'false'
+
+    localStorage.setItem('icon_nudge_active', nudge_active)
+  ), 60000 # 1000 = one second
 
   # Reset intervention if timer reaches threshold
   setInterval (->>
@@ -1915,4 +1977,4 @@ do !->>
       #console.log("Data sent: " + await JSON.stringify(localStorage.getItem("intervention_data_tosend")))
       localStorage.setItem("intervention_data_tosend", "{}")
 
-  ), 1000 # 1000 = one second
+  ), 60000 # 1000 = one second

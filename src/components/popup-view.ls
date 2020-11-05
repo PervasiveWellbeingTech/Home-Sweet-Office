@@ -577,6 +577,24 @@ polymer_ext {
     await if this.intervention_data_received.url !== "" then
       chrome.windows.create(url: this.intervention_data_received.url, top: 50px, left: 50px, width:1300, height:900)
 
+  dismiss_intervention: ->
+    if window.confirm("Are you sure you want to dismiss this sweet moment? You will have to exit the whole process.")
+      this.stress_intervention_display = false
+      this.ask_intervention_done = false
+      this.intervention_stress_before = false
+      this.intervention_stress_after = false
+      this.intervention_end = true
+      to_send = localstorage_getjson("intervention_data_tosend")
+      localstorage_setstring("current_panel", "intervention_end")
+
+      localstorage_setstring("panel_timer", (new Date()).getTime())
+      localstorage_setbool('intervention_timed_out', false)
+      localstorage_setbool('intervention_dismissed', true)
+      to_send["intervention_completed"] = 0
+      to_send["intervention_cancelled"] = 0
+      to_send["intervention_dismissed"] = 1
+      localstorage_setjson("intervention_data_tosend", to_send)
+
 
   update_confirmation_panel: ->>
     data = await localstorage_getjson("selected_intervention_data")
@@ -626,6 +644,7 @@ polymer_ext {
     localstorage_setjson("intervention_data_tosend", to_send)
 
   end_stress_intervention: ->>
+    await this.send_intervention_data()
     console.log("Ending intervention")
     this.stress_intervention_active = false
     this.stress_intervention_display = false
@@ -639,8 +658,7 @@ polymer_ext {
 
     localstorage_setbool('icon_nudge_active', false)
     localstorage_setstring('last_intervention', new Date().getTime())
-    stress_level_before = 0
-    stress_change = 0
+
     this.close_popup()
     #once_available("home_panel", this.remove_nudge_message())
     localstorage_setjson("intervention_data_tosend", {})
@@ -658,7 +676,6 @@ polymer_ext {
     post_json(hso_server_url + "/postWrittenFeedback", to_send)
 
 
-
   submit_feedback: ->>
     #once_available("written_feedback", this.get_feedback_text())
     feedback = window.prompt("Write down your feedback: ")
@@ -668,7 +685,6 @@ polymer_ext {
     await localstorage_setjson("intervention_data_tosend", to_send)
     #post_json(hso_server_url + "/postWrittenFeedback", to_send)
     alert("Feedback Submitted!")
-    this.send_intervention_data()
     this.end_stress_intervention()
 
   ask_another_intervention: ->>
@@ -697,7 +713,7 @@ polymer_ext {
     this.intervention_end = false
     console.log("Cancelling stress intervention")
     #console.log(this.$$("input[name=stress_level]:checked").value)
-    this.$$("input[name=stress_level]").value = 0
+    #this.$$("input[name=stress_level]").value = 0
     #this.$$("input[name=stress_level]:checked").prop('checked', false)
     stress_level_before = 0
     stress_change = null
@@ -712,9 +728,9 @@ polymer_ext {
 
   check_for_survey: ->>
     userid = await get_user_id()
-    console.log("Sending request for survey data from user" + userid)
+    #console.log("Sending request for survey data from user" + userid)
     survey_data = JSON.parse(await get_json(hso_server_url + "/getSurvey", "userid=" + userid))
-    console.log("Received data: " + JSON.stringify(survey_data))
+    #console.log("Received data: " + JSON.stringify(survey_data))
     if Object.keys(survey_data).length !== 0
       localstorage_setjson("survey_data", survey_data)
       once_available("survey_button", this.enable_survey_button())
@@ -753,8 +769,8 @@ polymer_ext {
     #chrome.browserAction.setBadgeBackgroundColor {color: '#000000'}
     self = this
     # CHANGED THIS LINE FOR HSO MVP PILOT
-    is_habitlab_enabled().then (is_enabled) -> self.is_habitlab_disabled = !is_enabled
-    #is_habitlab_disabled = true
+    #is_habitlab_enabled().then (is_enabled) -> self.is_habitlab_disabled = !is_enabled
+    is_habitlab_disabled = true
 
     #FILTER THIS FOR ONLY THE CURRENT GOAL SITE#
     await this.set_goals_and_interventions!
@@ -824,12 +840,12 @@ polymer_ext {
     survey_data = await localstorage_getjson("survey_data")
     if typeof(survey_data) === 'undefined' or survey_data === null
       localstorage_setjson("survey_data",{})
-      console.log("No previous survey data. Sending request for new...")
+      #console.log("No previous survey data. Sending request for new...")
       this.check_for_survey()
     else if Object.keys(survey_data).length !== 0
       once_available("survey_button", this.enable_survey_button())
     else
-      console.log("Survey data empty. Sending request for new...")
+      #console.log("Survey data empty. Sending request for new...")
       this.check_for_survey()
 
     once_available("userid_label", this.show_userid())

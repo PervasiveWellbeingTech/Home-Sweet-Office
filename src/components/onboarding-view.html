@@ -18,6 +18,9 @@
 <link rel="import" href="idea-generation-panel.html">
 <link rel="import" href="difficulty-selector.html">
 <link rel="import" href="difficulty-selector-hso.html">
+<link rel="import" href="difficulty-selector-2-hso.html">
+<link rel="import" href="difficulty-selector-3-hso.html">
+<link rel="import" href="difficulty-selector-4-hso.html">
 <link rel="import" href="difficulty-selector-survey.html">
 <link rel="import" href="stress-nudge-selector.html">
 <link rel="import" href="sync-view.html">
@@ -200,42 +203,46 @@
 
     <paper-dialog id="dialog">
       <h2>Done Setting Up HabitLab!</h2>
-      <p>This is the settings page, where you can manage your Nudges and track your progress.</p>
+      <p>You can close this tab and continue browsing. Click the HSO icon on the top right to get a Sweet Moment.</p>
     </paper-dialog>
 
 
-      <div id="screen2" slide-name="initial-goal-selector-hso" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
-        <!--<div id="screen2_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
-          <div style="margin-bottom: 50px">
-            <initial-goal-selector-hso is_onboarding="true" id="goal_selector" on-goal_changed="rerender_onboarding_badges" />
-          </div>
-        <!--</div>-->
-      </div>
+    <div id="screen2" slide-name="difficulty-selector-3-hso" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
+      <!--<div id="screen2b_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
+        <div style="margin-bottom: 200px">
+            <difficulty-selector-2-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector" />
+        </div>
+      <!--</div>-->
+    </div>
 
-    <template is="dom-if" if="{{!difficulty_selector_disabled}}">
+    <!--<template is="dom-if" if="{{!difficulty_selector_disabled}}">-->
       <div id="screen2b" slide-name="difficulty-selector-hso" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
         <!--<div id="screen2b_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
           <div style="margin-bottom: 200px">
-            <template is="dom-if" if="{{regular_difficulty_selector}}">
-              <difficulty-selector-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector" />
-            </template>
-            <template is="dom-if" if="{{!regular_difficulty_selector}}">
-              <difficulty-selector-hso />
-            </template>
+              <difficulty-selector-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector_1" />
           </div>
         <!--</div>-->
       </div>
-    </template>
+    <!--</template>-->
 
-    <template is="dom-if" if="{{!positive_goals_disabled}}">
-      <div id="screen3" slide-name="positive-goal-selector-hso" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
+    <div id="screen3" slide-name="difficulty-selector-2-hso" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
+      <!--<div id="screen2b_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
+        <div style="margin-bottom: 200px">
+            <difficulty-selector-4-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector_2" />
+        </div>
+      <!--</div>-->
+    </div>
+
+
+    <!--<template is="dom-if" if="{{!positive_goals_disabled}}">-->
+      <div id="screen4" slide-name="positive-goal-selector-hso" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
         <!--<div id="screen3_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
           <div style="margin-bottom: 100px">
-            <positive-goal-selector-hso is_onboarding="true" id="positive_goal_selector-hso" on-goal_changed="rerender_onboarding_badges" />
+            <difficulty-selector-3-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector_3" />
           </div>
         <!--</div>-->
       </div>
-    </template>
+    <!--</template>-->
 
     <template is="dom-if" if="{{true_statement}}">
       <div id="screen4" slide-name="onboarding-badges" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
