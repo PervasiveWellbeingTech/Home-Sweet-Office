@@ -2,6 +2,8 @@
 <link rel="import" href="../bower_components/polymer-themes/ice.html">
 <link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
 <link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+
 
 <dom-module id="difficulty-selector-4-hso">
   <template>
@@ -40,31 +42,36 @@
         color: white;
       }
 
+      .subtext {
+        font-size: 25px;
+        font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+      }
+
       .papercard {
         margin-top: 30px;
         border-radius: 30px;
       }
     </style>
 
-    <div class="title">Which of these sites are you okay with being redirected to for a Sweet Moment?</div>
+    <div class="title">Which of these sites are you okay with being redirected for a Sweet Moment?</div>
+    <div class="subtext">Uncheck those you don't have an account for or you wouldn't want to visit.</div>
 
     <paper-card class="papercard">
-      <paper-radio-group on-selected-changed="selectedNudgechanged" class="radiobuttons" id="difficultyradiogroup">
-        <paper-radio-button name="button" on-keydown="ignore_keydown" class="radiobutton" value=facebook><strong>Facebook</strong></paper-radio-button><br>
-        <paper-radio-button name="button" on-keydown="ignore_keydown" class="radiobutton" value=instagram><strong>Instagram</strong></paper-radio-button><br>
-        <paper-radio-button name="button" on-keydown="ignore_keydown" class="radiobutton" value=youtube><strong>Youtube</strong></paper-radio-button><br>
-        <paper-radio-button name="button" on-keydown="ignore_keydown" class="radiobutton" value=yelp><strong>Yelp</strong></paper-radio-button><br>
-        <paper-radio-button name="button" on-keydown="ignore_keydown" class="radiobutton" value=reddit><strong>Reddit</strong></paper-radio-button><br>
-        <paper-radio-button name="button" on-keydown="ignore_keydown" class="radiobutton" value=amazon><strong>Amazon</strong></paper-radio-button><br>
-        <paper-radio-button name="button" on-keydown="ignore_keydown" class="radiobutton" value=twitter><strong>Twitter</strong></paper-radio-button><br>
-        <paper-radio-button name="button" on-keydown="ignore_keydown" class="radiobutton" value=slack><strong>Slack</strong></paper-radio-button><br>
-        <paper-radio-button name="button" on-keydown="ignore_keydown" class="radiobutton" value=pinterest><strong>Pinterest</strong></paper-radio-button><br>
-        <paper-radio-button name="button" on-keydown="ignore_keydown" class="radiobutton" value=netflix><strong>Netflix</strong></paper-radio-button><br>
-        <paper-radio-button name="button" on-keydown="ignore_keydown" class="radiobutton" value=spotify><strong>Spotify</strong></paper-radio-button><br>
-
-
-
-      </paper-radio-group>
+      <!--<paper-radio-group on-selected-changed="selectedNudgechanged" class="radiobuttons" id="difficultyradiogroup">-->
+      <div class="radiobuttons" id="accepted_sites_boxes">
+        <paper-checkbox checked on-change="selectedNudgechanged" name="button1" on-keydown="ignore_keydown" class="radiobutton" value=facebook><strong>Facebook</strong></paper-checkbox><br>
+        <paper-checkbox checked on-change="selectedNudgechanged" name="button2" on-keydown="ignore_keydown" class="radiobutton" value=instagram><strong>Instagram</strong></paper-checkbox><br>
+        <paper-checkbox checked on-change="selectedNudgechanged" name="button3" on-keydown="ignore_keydown" class="radiobutton" value=youtube><strong>Youtube</strong></paper-checkbox><br>
+        <paper-checkbox checked on-change="selectedNudgechanged" name="button4" on-keydown="ignore_keydown" class="radiobutton" value=yelp><strong>Yelp</strong></paper-checkbox><br>
+        <paper-checkbox checked on-change="selectedNudgechanged" name="button5" on-keydown="ignore_keydown" class="radiobutton" value=reddit><strong>Reddit</strong></paper-checkbox><br>
+        <paper-checkbox checked on-change="selectedNudgechanged" name="button6" on-keydown="ignore_keydown" class="radiobutton" value=amazon><strong>Amazon</strong></paper-checkbox><br>
+        <paper-checkbox checked on-change="selectedNudgechanged" name="button7" on-keydown="ignore_keydown" class="radiobutton" value=twitter><strong>Twitter</strong></paper-checkbox><br>
+        <paper-checkbox checked on-change="selectedNudgechanged" name="button8" on-keydown="ignore_keydown" class="radiobutton" value=slack><strong>Slack</strong></paper-checkbox><br>
+        <paper-checkbox checked on-change="selectedNudgechanged" name="button9" on-keydown="ignore_keydown" class="radiobutton" value=pinterest><strong>Pinterest</strong></paper-checkbox><br>
+        <paper-checkbox checked on-change="selectedNudgechanged" name="button10" on-keydown="ignore_keydown" class="radiobutton" value=netflix><strong>Netflix</strong></paper-checkbox><br>
+        <paper-checkbox checked on-change="selectedNudgechanged" name="button11" on-keydown="ignore_keydown" class="radiobutton" value=spotify><strong>Spotify</strong></paper-checkbox><br>
+      </div>
+      <!--</paper-radio-group>-->
     </paper-card>
 
 

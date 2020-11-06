@@ -29,6 +29,7 @@ polymer_ext({
     }
     */
     let time_selected = evt.detail.value;
+    console.log(time_selected);
     localStorage.setItem("nudge_time", time_selected);
     /*
     let prev_enabled_interventions = await get_enabled_interventions()
@@ -62,6 +63,7 @@ polymer_ext({
     }
     */
     let location_selected = evt.detail.value;
+    console.log(location_selected)
     localStorage.setItem("install_location", location_selected);
     /*
     let prev_enabled_interventions = await get_enabled_interventions()

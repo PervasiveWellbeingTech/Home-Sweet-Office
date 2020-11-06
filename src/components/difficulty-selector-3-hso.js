@@ -28,11 +28,17 @@ polymer_ext({
       return
     }
     */
-    let sites_selected = evt.detail.value;
+    console.log("selected changed");
+    console.log(evt);
+    let site = evt.detail.value;
     let stressful_sites = await localStorage.getItem("stressful_sites");
-    stressful_sites.append(sites_selected);
     console.log(stressful_sites);
-    localStorage.setItem("stressful_sites", stressful_sites);
+    if (stressful_sites === null) {
+      localStorage.setItem("stressful_sites", [site]);
+    } else {
+      stressful_sites.append(site);
+      localStorage.setItem("stressful_sites", stressful_sites);
+    }
     /*
     let prev_enabled_interventions = await get_enabled_interventions()
     if (localStorage.difficulty_selector_userchoice == 'true') {

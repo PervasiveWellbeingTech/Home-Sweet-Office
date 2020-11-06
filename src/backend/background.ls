@@ -233,6 +233,10 @@ do !->>
     #  return
     localStorage.setItem('notfirstrun', true)
     localStorage.setItem('positive_goals_disabled', true)
+    ### HSO 
+    localStorage.setItem("stressful_sites", "[]")
+    localStorage.setItem("accepted_sites", "[]")
+    ###
     #localStorage.setItem('signin_disabled', true)
     await set_default_goals_enabled()
     await set_default_generic_interventions_enabled()

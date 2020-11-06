@@ -28,11 +28,16 @@ polymer_ext({
       return
     }
     */
-    let sites_selected = evt.detail.value;
-    let stressful_sites = await localStorage.getItem("stressful_sites");
-    stressful_sites.append(sites_selected);
-    console.log(stressful_sites);
-    localStorage.setItem("stressful_sites", stressful_sites);
+    console.log(evt);
+    let site = evt.detail.value;
+    let approved_sites = await localStorage.getItem("approved_sites");
+    console.log(approved_sites);
+    if (approved_sites === null) {
+      localStorage.setItem("approved_sites", [site]);
+    } else {
+      approved_sites.append(site);
+      localStorage.setItem("approved_sites", approved_sites);
+    }
     /*
     let prev_enabled_interventions = await get_enabled_interventions()
     if (localStorage.difficulty_selector_userchoice == 'true') {

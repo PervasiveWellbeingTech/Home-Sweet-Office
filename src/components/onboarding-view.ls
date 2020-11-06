@@ -181,6 +181,20 @@ polymer_ext {
       slidename = slide[0].getAttribute('slide-name')
     log_pagenav({tab: 'onboarding', prev_slide_idx: prev_slide_idx, slide_idx: this.slide_idx, slidename: slidename})
 
+##  getCheckedBoxes: (chkboxName)->
+##    checkboxes = document.getElementsByName(chkboxName)
+##    checkboxesChecked = []
+##    #loop over them all
+##    for (var i=0; i<checkboxes.length; i++)
+##       #And stick the checked ones onto an array...
+##       if (checkboxes[i].checked)
+##          checkboxesChecked.push(checkboxes[i])
+##    #Return the array if it is non-empty, or null
+##    if checkboxesChecked.length > 0
+##      return checkboxesChecked
+##    return null
+
+
   onboarding_complete: ->
     if localStorage.sync_with_mobile != 'true'
       localStorage.sync_with_mobile = 'false'
@@ -198,6 +212,11 @@ polymer_ext {
     #this.fire 'onboarding-complete', {}
 
     #### HSO #####
+    # Add stressful and accepted websites
+    #stressful_sites = this.getCheckedBoxes("stressful_sites_boxes")
+    #accepted_sites = this.getCheckedBoxes("accepted_sites_boxes")
+    localStorage.setItem("stressful_sites",{}) #stressful_sites)
+    localStorage.setItem("accepted_sites", {})#accepted_sites)
     this.send_profile_info()
 
   send_profile_info: ->>
@@ -207,8 +226,8 @@ polymer_ext {
       userid : await get_user_id(),
       install_time : new Date(),
       nudge_time : await localStorage.getItem("nudge_time"),
-      stressful_sites : [],
-      disabled_sites : [],
+      stressful_sites : await localStorage.getItem("stressful_sites"),
+      approved_sites : await localStorage.getItem("approved_sites"),
       current_location : await localStorage.getItem("install_location"),
       current_ip : ""
     }
@@ -320,11 +339,12 @@ polymer_ext {
     window.removeEventListener 'mousewheel', this.mousewheel_listener_bound
     window.removeEventListener 'resize', this.window_resized_bound
   window_resized: ->
-    if this.slide_idx == 1 # on the goal selector page
-      this.$.goal_selector.repaint_due_to_resize()
-      return
-    else if (this.slide_idx == 2) and this.$$('#positive_goal_selector')?
-      this.$$('#positive_goal_selector-hso').repaint_due_to_resize()
+    #if this.slide_idx == 1 # on the goal selector page
+      # Turn off for HSO
+      #this.$.goal_selector.repaint_due_to_resize()
+      #return
+    #else if (this.slide_idx == 2) and this.$$('#positive_goal_selector')?
+      #this.$$('#positive_goal_selector-hso').repaint_due_to_resize()
     current_height = 400
     target_height = window.innerHeight - 80
     current_width = 600
@@ -448,10 +468,10 @@ polymer_ext {
     # this.$$('#initial_goal_selector').repaint_due_to_resize_once_in_view()
     # this.$.goal_selector.repaint_due_to_resize_once_in_view()
     # this.$.positive_goal_selector-hso.repaint_due_to_resize_once_in_view()
-    this.$$('#goal_selector').repaint_due_to_resize_once_in_view()
+    #this.$$('#goal_selector').repaint_due_to_resize_once_in_view()
     this.once_available('#positive_goal_selector-hso').then ->
       self.$$('#positive_goal_selector-hso').set_sites_and_goals()
-      self.$$('#positive_goal_selector-hso').repaint_due_to_resize_once_in_view()
+      #self.$$('#positive_goal_selector-hso').repaint_due_to_resize_once_in_view()
     this.insert_iframe_for_setting_userid()
     await load_css_file('sweetalert2')
     /*
@@ -472,7 +492,7 @@ polymer_ext {
       if not localStorage.getItem('enable_debug_terminal')?
         localStorage.setItem('enable_debug_terminal', 'true')
     console.log('calling set_sites_and_goals')
-    self.$.goal_selector.repaint_due_to_resize_once_in_view()
+    #self.$.goal_selector.repaint_due_to_resize_once_in_view()
     this.insert_iframe_for_setting_userid()
     */
 }, [{
