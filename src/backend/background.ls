@@ -14,6 +14,7 @@ disable_icon_changes = true # Remove habitlab icon changes
 disable_icon_timer = true # Remove habitlab icon timer
 # To be set once at start of session:
 localStorage.setItem('icon_nudge_active', false)
+localStorage.setItem('icon_notif_active', false)
 localStorage.setItem('browser_session_start', (new Date()).getTime())
 # last_intervention timer set same as browser_session_start at start of session
 localStorage.setItem('last_intervention', (new Date()).getTime())
@@ -29,17 +30,27 @@ do !->>
   {
       get_json
       post_json
+      set_json
+
   } = require('libs_backend/ajax_utils')
 
   {
     get_user_id
   } = require 'libs_backend/background_common'
 
+  # Call database for profile information
   userid = await get_user_id()
   profile_info = JSON.parse(await get_json(hso_server_url + "/getProfileInfo", "userid=" + userid))
   if Object.keys(profile_info).length > 0
     localStorage.setItem("nudge_time", profile_info.nudge_time)
 
+  # Call database for survey
+  survey_data = JSON.parse(await get_json(hso_server_url + "/getSurvey", "userid=" + userid))
+  if Object.keys(survey_data).length !== 0
+    localStorage.setItem("survey_data", JSON.stringify(survey_data))
+    localStorage.setItem("icon_notif_active", "true")
+  else
+    localStorage.setItem("icon_notif_active", "false")
 
   localStorage.removeItem 'cached_list_all_goals'
   localStorage.removeItem 'cached_list_all_interventions'
@@ -233,7 +244,7 @@ do !->>
     #  return
     localStorage.setItem('notfirstrun', true)
     localStorage.setItem('positive_goals_disabled', true)
-    ### HSO 
+    ### HSO
     localStorage.setItem("stressful_sites", "[]")
     localStorage.setItem("accepted_sites", "[]")
     ###
@@ -1790,89 +1801,91 @@ do !->>
 
   ### HSO nudge animation
   setInterval (->>
-
-    if (localStorage.getItem('icon_nudge_active') == "false")
-      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_blue.svg')})
-    else
+    if (localStorage.getItem('icon_nudge_active') == "true")
       d = new Date()
       time_interval = d.getTime() # Get date integer
       time_interval = time_interval % 10000 # Only get up to seconds
       time_interval = Math.round(time_interval / 100.00) # Discard last two digits
       time_interval = time_interval % 50
       if (time_interval < 4)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge9.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge9.svg')})
       else if (time_interval == 4)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge8.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge8.svg')})
       else if (time_interval == 5)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge7.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge7.svg')})
       else if (time_interval == 6)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge6.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge6.svg')})
       else if (time_interval == 7)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge5.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge5.svg')})
       else if (time_interval == 8)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge4.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge4.svg')})
       else if (time_interval == 9)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge3.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge3.svg')})
       else if (time_interval == 10)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge2.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge2.svg')})
       else if (time_interval == 11)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge1.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge1.svg')})
       else if (time_interval <= 15)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge0.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge0.svg')})
       else if (time_interval == 16)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge1.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge1.svg')})
       else if (time_interval == 17)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge2.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge2.svg')})
       else if (time_interval == 18)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge3.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge3.svg')})
       else if (time_interval == 19)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge4.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge4.svg')})
       else if (time_interval == 20)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge5.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge5.svg')})
       else if (time_interval == 21)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge6.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge6.svg')})
       else if (time_interval == 22)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge7.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge7.svg')})
       else if (time_interval == 23)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge8.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge8.svg')})
       else if (time_interval <= 27)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge9.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge9.svg')})
       else if (time_interval == 28)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge8.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge8.svg')})
       else if (time_interval == 29)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge7.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge7.svg')})
       else if (time_interval == 30)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge6.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge6.svg')})
       else if (time_interval == 31)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge5.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge5.svg')})
       else if (time_interval == 32)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge4.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge4.svg')})
       else if (time_interval == 33)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge3.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge3.svg')})
       else if (time_interval == 34)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge2.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge2.svg')})
       else if (time_interval == 36)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge1.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge1.svg')})
       else if (time_interval <= 40)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge0.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge0.svg')})
       else if (time_interval == 41)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge1.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge1.svg')})
       else if (time_interval == 42)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge2.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge2.svg')})
       else if (time_interval == 43)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge3.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge3.svg')})
       else if (time_interval == 44)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge4.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge4.svg')})
       else if (time_interval == 45)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge5.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge5.svg')})
       else if (time_interval == 46)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge6.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge6.svg')})
       else if (time_interval == 47)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge7.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge7.svg')})
       else if (time_interval == 48)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge8.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge8.svg')})
       else if (time_interval >= 49)
-        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/logo_nudge9.svg')})
+        chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_nudge9.svg')})
+    else if (localStorage.getItem('icon_notif_active') == "true")
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_notif.svg')})
+    else
+      chrome.browserAction.setIcon({path: chrome.extension.getURL('icons/HSO_icons/icon_blue.svg')})
+
   ), 100
 
   # Log click/scroll data every 15 mins
@@ -1906,6 +1919,21 @@ do !->>
     localStorage.setItem("scroll_rate_buffer", "[]")
 
   ), 120000 #900000 # = 15 mins
+
+
+### Check for survey every 6 hours
+  setInterval (->>
+    userid = await get_user_id()
+    survey_data = JSON.parse(await get_json(hso_server_url + "/getSurvey", "userid=" + userid))
+    if Object.keys(survey_data).length !== 0
+      localStorage.setItem("survey_data", JSON.stringify(survey_data))
+      localStorage.setItem("icon_notif_active", "true")
+    else
+      localStorage.setItem("survey_data", "{}")
+      localStorage.setItem("icon_notif_active", "false")
+  ), 21600000 # = 6 hrs
+
+
 
   # Activating nudge after interval
   setInterval (->>

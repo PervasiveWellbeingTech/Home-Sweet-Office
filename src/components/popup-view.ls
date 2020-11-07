@@ -726,14 +726,15 @@ polymer_ext {
     localstorage_setstring("panel_timer", "")
     this.send_intervention_data()
 
-  check_for_survey: ->>
-    userid = await get_user_id()
+  #check_for_survey: ->>
+    #userid = await get_user_id()
     #console.log("Sending request for survey data from user" + userid)
-    survey_data = JSON.parse(await get_json(hso_server_url + "/getSurvey", "userid=" + userid))
+    #survey_data = JSON.parse(await get_json(hso_server_url + "/getSurvey", "userid=" + userid))
     #console.log("Received data: " + JSON.stringify(survey_data))
-    if Object.keys(survey_data).length !== 0
-      localstorage_setjson("survey_data", survey_data)
-      once_available("survey_button", this.enable_survey_button())
+    #if Object.keys(survey_data).length !== 0
+    #  localstorage_setjson("survey_data", survey_data)
+    #  localstorage_setbool("icon_notif_active", true)
+    #  once_available("survey_button", this.enable_survey_button())
 
   enable_survey_button: ->>
     survey_data = await localstorage_getjson("survey_data")
@@ -841,12 +842,13 @@ polymer_ext {
     if typeof(survey_data) === 'undefined' or survey_data === null
       localstorage_setjson("survey_data",{})
       #console.log("No previous survey data. Sending request for new...")
-      this.check_for_survey()
+      #this.check_for_survey()
     else if Object.keys(survey_data).length !== 0
+      localstorage_setbool('icon_notif_active', true)
       once_available("survey_button", this.enable_survey_button())
-    else
+    #else
       #console.log("Survey data empty. Sending request for new...")
-      this.check_for_survey()
+      #this.check_for_survey()
 
     once_available("userid_label", this.show_userid())
 
