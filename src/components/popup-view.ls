@@ -754,7 +754,7 @@ polymer_ext {
     userid = await get_user_id()
     chrome.tabs.create {url: survey_data.url + '?habitlab_userid=' + userid + '&click_location=dropdown'}
     post_json(hso_server_url + "/surveyClicked", {"_id": survey_data._id, "userid":userid,"click_location":"dropdown"})
-    this.disable_survey_button()
+    #this.disable_survey_button()
 
   close_popup: ->
     window.close()

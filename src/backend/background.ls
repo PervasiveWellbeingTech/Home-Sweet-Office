@@ -23,7 +23,7 @@ localStorage.setItem("click_rate_buffer", "[]")
 localStorage.setItem("scroll_rate_buffer", "[]")
 localStorage.setItem("panel_timer", "")
 localStorage.setItem("nudge_time", default_nudge_time)
-
+localStorage.setItem("survey_data", "{}")
 
 do !->>
 
@@ -50,6 +50,7 @@ do !->>
     localStorage.setItem("survey_data", JSON.stringify(survey_data))
     localStorage.setItem("icon_notif_active", "true")
   else
+    localStorage.setItem("survey_data", {})
     localStorage.setItem("icon_notif_active", "false")
 
   localStorage.removeItem 'cached_list_all_goals'
