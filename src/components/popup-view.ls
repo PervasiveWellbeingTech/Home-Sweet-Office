@@ -452,7 +452,9 @@ polymer_ext {
     this.$$("input[name=stress_level]:checked").value = stress_level_before
 
   set_nudge_message: ->>
+    #this.$$('#intro_message').css({'margin-top':'0px'})
     this.$$('#intro_message').innerHTML = "Seems like you've been browsing for a while. Take a moment to destress."
+
 
   remove_nudge_message: ->>
     this.$$('#intro_message').innerHTML = "Take a sweet moment to destress."
@@ -770,8 +772,8 @@ polymer_ext {
     #chrome.browserAction.setBadgeBackgroundColor {color: '#000000'}
     self = this
     # CHANGED THIS LINE FOR HSO MVP PILOT
-    #is_habitlab_enabled().then (is_enabled) -> self.is_habitlab_disabled = !is_enabled
-    is_habitlab_disabled = true
+    is_habitlab_enabled().then (is_enabled) -> self.is_habitlab_disabled = !is_enabled
+    #is_habitlab_disabled = true
 
     #FILTER THIS FOR ONLY THE CURRENT GOAL SITE#
     await this.set_goals_and_interventions!

@@ -47,7 +47,7 @@ polymer_ext {
       type: Number
       value: do ->
         if (window.hashdata_unparsed == 'last')
-          output = 3
+          output = 10
           '''
           if localStorage.positive_goals_disabled == 'true'
             output -= 1
@@ -109,7 +109,7 @@ polymer_ext {
     last_slide_idx: {
       type: Number
       value: do ->
-        output = 3
+        output = 10
         '''
         if localStorage.positive_goals_disabled == 'true'
           output -= 1
@@ -276,6 +276,11 @@ polymer_ext {
       return
     this.SM('.onboarding_complete').hide()
 
+  end_onboarding: ->
+    #window.close()
+    this.fire 'onboarding-complete', {}
+
+
   rerender_onboarding_badges: ->
     this.$$('#badges_received').rerender()
   get_icon: (img_path) ->
@@ -355,6 +360,7 @@ polymer_ext {
     this.SM('.inner_slide').css({
       transform: 'scale(' + scale + ')'
     })
+
   attached: ->
     this.window_resized()
   insert_iframe_for_setting_userid: ->>

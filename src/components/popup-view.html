@@ -221,19 +221,22 @@
         <paper-button class="paperbuttons" raised id="survey_button" on-click="survey_button_clicked"></paper-button>
 
         <template is="dom-if" if="{{!stress_intervention_active}}">
-          <paper-card class="intervention_panel" id="home_panel" style="height: 500px">
+
+          <paper-card class="intervention_panel" id="home_panel" style="height: 180px; margin-top: 0"> <!-- Change height if Habitlab enabled-->
             <iron-icon  src="../icons/close_icon.png" style="float: right; padding: 5px; cursor: pointer" raised on-click="close_popup"></iron-icon>
 
-            <div style="margin: 2%; font-size: 20px; text-align: left; font-weight: bold">Home Sweet Moment</div>
-            <div style="margin-top: 28%">
-              <div id="intro_message" style="margin-top: 30px; margin-bottom: 30px; font-size: 25px; text-align: center">Take a sweet moment to destress.</div>
-              <paper-button class="stressIntervention_button" style="color:white" raised on-click="start_stress_intervention">BEGIN</paper-button>
+            <div style="margin: 1%; font-size: 15px; text-align: left; font-weight: bold">Home Sweet Moment</div>
+            <div style="margin-top: 5%"><!-- Change margin-top if Habilab enabled -->
+              <div id="intro_message" style="margin-top: 1%; margin-bottom: 30px; font-size: 25px; text-align: center">Take a sweet moment to destress.</div>
+              <paper-button class="stressIntervention_button" style="color:white; margin-top: 3%" raised on-click="start_stress_intervention">BEGIN</paper-button>
             </div>
           </paper-card>
 
+
+
         <template is="dom-if" if="{{!is_habitlab_disabled}}">
         <paper-card>
-          <div style="margin: 5px 0 0 5px; font-size: 12px; text-align: left; font-weight: bold">Productivity</div>
+          <div style="margin: 5px 0 0 5px; font-size: 15px; text-align: left; font-weight: bold">Productivity</div>
           <paper-tabs selected="{{selected_tab_idx}}">
             <paper-tab>Active Nudge</paper-tab>
             <paper-tab>Available Goals and Nudges</paper-tab>
@@ -288,7 +291,7 @@
 
         <paper-card>
           <graph-donut-top-sites style="margin-bottom: 10px"></graph-donut-top-sites>
-          <!--
+
           <paper-tabs selected="{{selected_graph_tab}}">
             <paper-tab>Usage Statistics</paper-tab>
             <paper-tab>Select Graphs to Display</paper-tab>
@@ -313,7 +316,6 @@
                 </sortable-js>
               </div>
             </iron-page>
-          -->
 
         </paper-card>
 

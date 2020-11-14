@@ -3,6 +3,7 @@
 <link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
 <link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
 <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 
 <dom-module id="difficulty-selector-3-hso">
   <template>
@@ -36,6 +37,16 @@
         text-align: left;
         color: white;
       }
+      .add_button {
+        left: 38%;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-size: 15px;
+        background-color:rgb(81, 167, 249);
+        color: white;
+      }
 
       .subtext {
         font-size: 20px;
@@ -44,16 +55,32 @@
 
       .radiobutton {
         color: white;
+        text-align: center;
+      }
+      
+      .added_site_button {
+        list-style: none;
+        color: black;
+        text-align: left;
+        width:17px;
+        height: 17px;
       }
 
       .papercard {
         margin-top: 30px;
         border-radius: 30px;
       }
+
+      .addIcon {
+        color: gray;
+        height: 40px;
+        width: 40px;
+        padding-right: 5px;
+      }
     </style>
 
     <div class="title">Which of these sites are stressful?</div>
-    <div class="subtext">Check the ones that have caused you stress or you think could cause it in the future.</div>
+    <div class="subtext">Check the ones that cause you stress or add another site below.</div>
 
     <paper-card class="papercard">
       <!--<paper-radio-group on-selected-changed="selectedNudgechanged" class="radiobuttons" id="difficultyradiogroup">-->
@@ -66,7 +93,11 @@
         <paper-checkbox name="button" on-change="selectedNudgechanged" on-keydown="ignore_keydown" class="radiobutton" value=twitter><strong>Twitter</strong></paper-checkbox><br>
         <paper-checkbox name="button" on-change="selectedNudgechanged" on-keydown="ignore_keydown" class="radiobutton" value=slack><strong>Slack</strong></paper-checkbox><br>
       </div>
-
+      <div class="radiobuttons">
+        <paper-input id="site_input" style="width:25em; text-align: center" label = "Add Site (Ex: www.sitename.com)">
+        </paper-input>
+        <paper-button class="add_button" on-click="add_stressful_site">Add Site</paper-button>
+      </div>
       <!--</paper-radio-group>-->
     </paper-card>
 

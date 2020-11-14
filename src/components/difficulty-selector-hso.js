@@ -23,15 +23,11 @@ const {
 polymer_ext({
   is: 'difficulty-selector-hso',
   selectedNudgechanged: async function(evt) {
-    /*
+
     if (this.ignoreselectedchanged == true) {
       return
     }
-    */
-    let time_selected = evt.detail.value;
-    console.log(time_selected);
-    localStorage.setItem("nudge_time", time_selected);
-    /*
+
     let prev_enabled_interventions = await get_enabled_interventions()
     if (localStorage.difficulty_selector_userchoice == 'true') {
       await enabledisable_interventions_based_on_difficulty(difficulty)
@@ -53,19 +49,14 @@ polymer_ext({
     }
     await add_log_interventions(log_intervention_info)
     this.fire('difficulty-changed', {difficulty: difficulty})
-    */
+
   },
   selectedLocationchanged: async function(evt) {
-    /*
+
     if (this.ignoreselectedchanged == true) {
 
       return
     }
-    */
-    let location_selected = evt.detail.value;
-    console.log(location_selected)
-    localStorage.setItem("install_location", location_selected);
-    /*
     let prev_enabled_interventions = await get_enabled_interventions()
     if (localStorage.difficulty_selector_userchoice == 'true') {
       await enabledisable_interventions_based_on_difficulty(difficulty)
@@ -87,7 +78,7 @@ polymer_ext({
     }
     await add_log_interventions(log_intervention_info)
     this.fire('difficulty-changed', {difficulty: difficulty})
-    */
+
   },
 
   ignore_keydown: function(evt) {
@@ -97,15 +88,15 @@ polymer_ext({
   },
 
   ready: async function(evt) {
-    //if (localStorage.user_chosen_difficulty != null) {
+    if (localStorage.user_chosen_difficulty != null) {
       //await once_available('')
-      /*
+
       this.ignoreselectedchanged = true
       await this.once_available('#difficultyradiogroup')
       this.$$('#difficultyradiogroup').selected = localStorage.user_chosen_difficulty
       this.ignoreselectedchanged = false
-      */
-  //  }
+
+    }
   }
 
 }, {

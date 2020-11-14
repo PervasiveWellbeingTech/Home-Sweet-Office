@@ -1,0 +1,97 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer-themes/ice.html">
+<link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+
+<dom-module id="difficulty-selector-5-hso">
+  <template>
+    <style>
+       :host {
+        display: block;
+        width: 100%;
+        height: 100%;
+        --paper-radio-button-label-color: white;
+        --paper-radio-button: {
+          color: white;
+        };
+      }
+
+      .title {
+        font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-size: 35px;
+        padding-top: 5%;
+        padding-bottom: 20px;
+        text-align: center;
+        font-weight: 400;
+        /*text-shadow: 1px 1px 2px #346da3; */
+      }
+
+      .radiobuttons {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+        font-size: 20px;
+        text-align: left;
+        color: white;
+      }
+
+      .subtext {
+        font-size: 20px;
+        font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+      }
+
+      .radiobutton {
+        color: white;
+      }
+
+      .papercard {
+        margin-top: 30px;
+        border-radius: 20px;
+      }
+      .icon_image {
+        margin-top: 2%;
+        width: 8%;
+      }
+      .nudge_fade_image {
+        margin-top: 10%;
+        width: 15%;
+      }
+      .nudge_notif_image {
+        margin-top: 10%;
+        width: 15%;
+      }
+      .verticalLine {
+        border-right: solid white;
+      }
+      .half {
+        height: 30%;
+        width: 50%;
+        position: fixed;
+        margin-top: 5%;
+        overflow-x: hidden;
+        padding-top: 0;
+      }
+      .right-side{
+        right:0;
+      }
+      .left-side{
+        left:0;
+      }
+    </style>
+
+    <div class="title">The HSO icon will change throughout the day.</div>
+    <img class="icon_image" src="icons/HSO_icons/icon_blue.svg">
+
+    <div class="half left-side verticalLine">
+      <div class="subtext">It will fade between red and yellow <br> to remind you to click for a Sweet Moment.</div>
+      <img class="nudge_fade_image" src="icons/HSO_icons/HSO-icon-nudge.gif">
+    </div>
+    <div class="half right-side">
+      <div class="subtext">It will show a small red circle <br> when a survey or announcement is available.</div>
+      <img class="nudge_notif_image" src="icons/HSO_icons/icon_notif.png">
+    </div>
+
+  </template>
+  <script src="difficulty-selector-5-hso.js"></script>
+</dom-module>
