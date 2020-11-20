@@ -26,7 +26,7 @@ polymer_ext({
     if (this.ignoreselectedchanged == true) {
       return
     }
-    let difficulty = evt.detail.value
+    let difficulty = evt.detail.value;
     let prev_enabled_interventions = await get_enabled_interventions()
     if (localStorage.difficulty_selector_userchoice == 'true') {
       await enabledisable_interventions_based_on_difficulty(difficulty)

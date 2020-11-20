@@ -47,7 +47,7 @@ polymer_ext {
       type: Number
       value: do ->
         if (window.hashdata_unparsed == 'last')
-          output = 10
+          output = 8
           '''
           if localStorage.positive_goals_disabled == 'true'
             output -= 1
@@ -88,15 +88,15 @@ polymer_ext {
     },
     signin_disabled: {
       type: Boolean
-      value: false #localStorage.signin_disabled == 'true'
+      value: localStorage.signin_disabled == 'true'
     },
     difficulty_selector_disabled: {
       type: Boolean
-      value: false #localStorage.difficulty_selector_disabled == 'true'
+      value: localStorage.difficulty_selector_disabled == 'true'
     },
     idea_voting_disabled: {
       type: Boolean
-      value: false #localStorage.idea_voting_disabled == 'true'
+      value: localStorage.idea_voting_disabled == 'true'
     },
     true_statement: {
       type: Boolean,
@@ -104,12 +104,12 @@ polymer_ext {
     },
     regular_difficulty_selector: {
       type: Boolean,
-      value: true #localStorage.difficulty_selector_survey != 'true',
+      value: localStorage.difficulty_selector_survey != 'true',
     },
     last_slide_idx: {
       type: Number
       value: do ->
-        output = 10
+        output = 8
         '''
         if localStorage.positive_goals_disabled == 'true'
           output -= 1
@@ -181,20 +181,6 @@ polymer_ext {
       slidename = slide[0].getAttribute('slide-name')
     log_pagenav({tab: 'onboarding', prev_slide_idx: prev_slide_idx, slide_idx: this.slide_idx, slidename: slidename})
 
-##  getCheckedBoxes: (chkboxName)->
-##    checkboxes = document.getElementsByName(chkboxName)
-##    checkboxesChecked = []
-##    #loop over them all
-##    for (var i=0; i<checkboxes.length; i++)
-##       #And stick the checked ones onto an array...
-##       if (checkboxes[i].checked)
-##          checkboxesChecked.push(checkboxes[i])
-##    #Return the array if it is non-empty, or null
-##    if checkboxesChecked.length > 0
-##      return checkboxesChecked
-##    return null
-
-
   onboarding_complete: ->
     if localStorage.sync_with_mobile != 'true'
       localStorage.sync_with_mobile = 'false'
@@ -209,7 +195,6 @@ polymer_ext {
     # $('#pagepiling').pagepiling.setAllowScrolling(false)
     # $('#pagepiling').pagepiling.setKeyboardScrolling(false)
     $('body').css('overflow', 'auto')
-    #this.fire 'onboarding-complete', {}
 
     #### HSO #####
     # Add stressful and accepted websites
@@ -218,6 +203,9 @@ polymer_ext {
     localStorage.setItem("stressful_sites",{}) #stressful_sites)
     localStorage.setItem("accepted_sites", {})#accepted_sites)
     this.send_profile_info()
+
+
+    this.fire 'onboarding-complete', {}
 
   send_profile_info: ->>
     ###### HSO #############
@@ -244,13 +232,14 @@ polymer_ext {
   next_slide: (evt) ->
     if this.animation_inprogress
       return
-
-    #if localStorage.difficulty_selector_forcedchoice == 'true'
-    #  if localStorage.difficulty_selector_disabled != 'true'
-    #    if this.slide_idx == 1 and not localStorage.user_chosen_difficulty?
-    #      if evt?
-    #        swal('Please choose a difficulty level')
-    #      return
+    /*
+    if localStorage.difficulty_selector_forcedchoice == 'true'
+      if localStorage.difficulty_selector_disabled != 'true'
+        if this.slide_idx == 1 and not localStorage.user_chosen_difficulty?
+          if evt?
+            swal('Please choose a difficulty level')
+          return
+    */
     last_slide_idx = this.SM('.slide').length - 1
     if this.slide_idx == last_slide_idx
       return
@@ -286,10 +275,10 @@ polymer_ext {
   get_icon: (img_path) ->
     return chrome.extension.getURL('icons/' + img_path)
   keydown_listener: (evt) ->
-    #if evt.which == 39 or evt.which == 40 or evt.which == 13
-    #  this.next_slide(true)
-    #else if evt.which == 37 or evt.which == 38
-    #  this.prev_slide()
+    if evt.which == 39 or evt.which == 40 or evt.which == 13
+      this.next_slide(true)
+    else if evt.which == 37 or evt.which == 38
+      this.prev_slide()
   mousewheel_listener: (evt) ->
     if this.animation_inprogress
       evt.preventDefault()
@@ -344,12 +333,12 @@ polymer_ext {
     window.removeEventListener 'mousewheel', this.mousewheel_listener_bound
     window.removeEventListener 'resize', this.window_resized_bound
   window_resized: ->
-    #if this.slide_idx == 1 # on the goal selector page
+    if this.slide_idx == 1 # on the goal selector page
       # Turn off for HSO
-      #this.$.goal_selector.repaint_due_to_resize()
-      #return
-    #else if (this.slide_idx == 2) and this.$$('#positive_goal_selector')?
-      #this.$$('#positive_goal_selector-hso').repaint_due_to_resize()
+      this.$.goal_selector.repaint_due_to_resize()
+      return
+    else if (this.slide_idx == 2) and this.$$('#positive_goal_selector')?
+      this.$$('#positive_goal_selector-hso').repaint_due_to_resize()
     current_height = 400
     target_height = window.innerHeight - 80
     current_width = 600
@@ -388,7 +377,7 @@ polymer_ext {
       window.addEventListener 'mousewheel', this.mousewheel_listener_bound
       window.addEventListener 'keydown', this.keydown_listener_bound
 
-    #this.$$('#goal_selector').set_sites_and_goals()
+    this.$$('#goal_selector').set_sites_and_goals()
     this.once_available('#badges_received').then ->
       self.slide_changed()
       self.style.opacity = 1
@@ -471,18 +460,18 @@ polymer_ext {
       # developer mode
       if not localStorage.getItem('enable_debug_terminal')?
         localStorage.setItem('enable_debug_terminal', 'true')
-    # this.$$('#initial_goal_selector').repaint_due_to_resize_once_in_view()
+    this.$$('#initial_goal_selector').repaint_due_to_resize_once_in_view()
     # this.$.goal_selector.repaint_due_to_resize_once_in_view()
     # this.$.positive_goal_selector-hso.repaint_due_to_resize_once_in_view()
-    #this.$$('#goal_selector').repaint_due_to_resize_once_in_view()
+    this.$$('#goal_selector').repaint_due_to_resize_once_in_view()
     this.once_available('#positive_goal_selector-hso').then ->
       self.$$('#positive_goal_selector-hso').set_sites_and_goals()
-      #self.$$('#positive_goal_selector-hso').repaint_due_to_resize_once_in_view()
+      self.$$('#positive_goal_selector-hso').repaint_due_to_resize_once_in_view()
     this.insert_iframe_for_setting_userid()
     await load_css_file('sweetalert2')
     /*
     self = this
-    #this.$$('#goal_selector').set_sites_and_goals()
+    this.$$('#goal_selector').set_sites_and_goals()
     this.last_mousewheel_time = 0
     this.last_mousewheel_deltaY = 0
     this.keydown_listener_bound = this.keydown_listener.bind(this)
@@ -498,7 +487,7 @@ polymer_ext {
       if not localStorage.getItem('enable_debug_terminal')?
         localStorage.setItem('enable_debug_terminal', 'true')
     console.log('calling set_sites_and_goals')
-    #self.$.goal_selector.repaint_due_to_resize_once_in_view()
+    self.$.goal_selector.repaint_due_to_resize_once_in_view()
     this.insert_iframe_for_setting_userid()
     */
 }, [{

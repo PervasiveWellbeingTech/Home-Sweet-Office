@@ -247,6 +247,7 @@ polymer_ext {
     button.innerHTML = survey_data.button_text
     button.style.display = "inline-block"
     button.disabled = false
+    this.$$('#surveycard').style.display = 'block'
 
   disable_survey_button: ->>
     localstorage_setjson("survey_data", {})
@@ -260,6 +261,8 @@ polymer_ext {
     chrome.tabs.create {url: survey_data.url + '?habitlab_userid=' + userid + '&click_location=settings'}
     post_json(hso_server_url + "/surveyClicked", {"_id": survey_data._id, "userid":userid,"click_location":"settings"})
     this.disable_survey_button()
+
+
 
   show_randomize_button: ->
     return localStorage.getItem('intervention_view_show_randomize_button') == 'true'

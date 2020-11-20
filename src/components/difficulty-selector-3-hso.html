@@ -29,16 +29,20 @@
       }
 
       .radiobuttons {
-        padding-left: 20px;
+        padding-left: 30%;
         padding-right: 20px;
         padding-bottom: 20px;
         padding-top: 20px;
         font-size: 20px;
         text-align: left;
-        color: white;
+        color: black;
+        list-style-type:none;
+        font-weight: 550;
+        margin:0;
+        overflow-x: auto;
       }
+
       .add_button {
-        left: 38%;
         padding-left: 20px;
         padding-right: 20px;
         padding-bottom: 10px;
@@ -57,18 +61,24 @@
         color: white;
         text-align: center;
       }
-      
+
       .added_site_button {
-        list-style: none;
-        color: black;
+        list-style-type:none;
         text-align: left;
-        width:17px;
-        height: 17px;
+        font-weight: 550;
+        margin:0;
+      }
+
+      .checkbox_class{
+        width: 18px;
+        height:18px;
+        margin:5px 8px 0 0;
       }
 
       .papercard {
         margin-top: 30px;
         border-radius: 30px;
+        width:30%;
       }
 
       .addIcon {
@@ -93,8 +103,8 @@
         <paper-checkbox name="button" on-change="selectedNudgechanged" on-keydown="ignore_keydown" class="radiobutton" value=twitter><strong>Twitter</strong></paper-checkbox><br>
         <paper-checkbox name="button" on-change="selectedNudgechanged" on-keydown="ignore_keydown" class="radiobutton" value=slack><strong>Slack</strong></paper-checkbox><br>
       </div>
-      <div class="radiobuttons">
-        <paper-input id="site_input" style="width:25em; text-align: center" label = "Add Site (Ex: www.sitename.com)">
+      <div style="text-align: center; padding: 0 20px 20px 20px">
+        <paper-input id="site_input" style="text-align:center" label="Add Site (Ex: www.sitename.com)">
         </paper-input>
         <paper-button class="add_button" on-click="add_stressful_site">Add Site</paper-button>
       </div>

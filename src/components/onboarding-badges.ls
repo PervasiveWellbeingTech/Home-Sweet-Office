@@ -15,10 +15,10 @@
   list_goal_info_for_enabled_goals
 } = require 'libs_backend/goal_utils'
 
-{   
-  get_enabled_goals  
+{
+  get_enabled_goals
   get_goal_info
-  list_site_info_for_sites_for_which_goals_are_enabled  
+  list_site_info_for_sites_for_which_goals_are_enabled
   add_enable_custom_goal_reduce_time_on_domain
   set_goal_enabled_manual
   set_goal_disabled_manual
@@ -70,35 +70,35 @@ polymer_ext {
 
     #logo_glow_url: {
     #  type: String,
-    #  value: chrome.extension.getURL('icons/badges/habitlab_glow.svg')      
+    #  value: chrome.extension.getURL('icons/badges/habitlab_glow.svg')
     #}
     #logo_glow_blend_url: {
     #  type: String,
-    #  value: chrome.extension.getURL('icons/badges/glow_blend.svg')      
+    #  value: chrome.extension.getURL('icons/badges/glow_blend.svg')
     #}
     #logo_glow_black_url: {
     #  type: String,
-    #  value: chrome.extension.getURL('icons/badges/habitlab_glow_black.svg')     
+    #  value: chrome.extension.getURL('icons/badges/habitlab_glow_black.svg')
     #}
     logo_glow_black_bubbles: {
       type: String,
-      value: chrome.extension.getURL('icons/badges/habitlab_glow_black_bubbles.svg')     
+      value: chrome.extension.getURL('icons/badges/habitlab_glow_black_bubbles.svg')
     }
     #logo_offline_url: {
     #  type: String,
-    #  value: chrome.extension.getURL('icons/badges/logo_offline.svg')     
+    #  value: chrome.extension.getURL('icons/badges/logo_offline.svg')
     #}
     # heart_white_url: {
     #   type: String,
-    #   value: chrome.extension.getURL('icons/badges/heart_white.svg')     
+    #   value: chrome.extension.getURL('icons/badges/heart_white.svg')
     # }
     heart_empty_url: {
       type: String,
-      value: chrome.extension.getURL('icons/badges/heart.svg')     
+      value: chrome.extension.getURL('icons/badges/heart.svg')
     }
     generic_url: {
       type: String,
-      value: chrome.extension.getURL('icons/generic_goal_icon.svg')     
+      value: chrome.extension.getURL('icons/generic_goal_icon.svg')
     }
     unlock_icon_url:{
       type: String,
@@ -127,7 +127,7 @@ polymer_ext {
       type: Array
     }
     goal_intervention_info_list:{
-      type: Array 
+      type: Array
     }
     generic_interventions:{
       type:Array
@@ -200,7 +200,7 @@ polymer_ext {
   # helpOpen: (evt) ->
   #   console.log(evt)
   #   this.$.animated.open()
-  #   return   
+  #   return
 
   # bounce_object: (evt) ->
   #   bounce = new Bounce()
@@ -215,7 +215,7 @@ polymer_ext {
   #   });
   #   bounce.applyTo(this.SM('.badges'))
   #   return
-  
+
   # bounce_hearts: (evt) ->
   #   bounce2 = new Bounce()
   #   bounce2.rotate({

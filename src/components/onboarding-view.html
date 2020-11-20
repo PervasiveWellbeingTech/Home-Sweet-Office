@@ -204,19 +204,26 @@
       #screen5_scroll_wrapper::-webkit-scrollbar {
         display: none;
       }
+      .slide_num {
+        text-align: right;
+        color: white;
+        font-size: 15px;
+        font-size: 20px;
+        margin: 3% 5% 0 0;
+      }
     </style>
 
     <irb-dialog id="irbdialog" shown_in_context="onboarding"></irb-dialog>
 
     <paper-dialog id="dialog">
-      <h2>Done Setting Up HSO!</h2>
-      <p>You can close this tab and continue browsing. Click the HSO icon at any time to get a Sweet Moment.</p>
+      <h2>Done Setting Up HSM!</h2>
+      <p>You can close this tab and continue browsing. Click the HSM icon at any time to get a Sweet Moment.</p>
       <paper-button class="get_started_button" on-click="end_onboarding">Return to browsing</paper-button>
 
     </paper-dialog>
 
 
-    <div id="screen2" slide-name="difficulty-selector-6-hso" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
+    <div id="screen2" slide-name="welcome_slide" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
       <!--<div id="screen2b_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
         <div style="margin-bottom: 200px">
             <difficulty-selector-6-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector" />
@@ -224,35 +231,39 @@
       <!--</div>-->
     </div>
 
-    <div id="screen3" slide-name="difficulty-selector-3-hso" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
+    <div id="screen3" slide-name="icon_pin_slide" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
       <!--<div id="screen2b_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
         <div style="margin-bottom: 200px">
+            <div class="slide_num"> 1/8 </div>
             <difficulty-selector-2-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector" />
         </div>
       <!--</div>-->
     </div>
 
-    <div id="screen4" slide-name="difficulty-selector-5-hso" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
+    <div id="screen4" slide-name="icon_explain_slide" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
       <!--<div id="screen2b_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
         <div style="margin-bottom: 200px">
+            <div class="slide_num"> 2/8 </div>
             <difficulty-selector-5-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector_5" />
         </div>
       <!--</div>-->
     </div>
 
     <!--<template is="dom-if" if="{{!difficulty_selector_disabled}}">-->
-      <div id="screen5" slide-name="difficulty-selector-hso" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
+      <div id="screen5" slide-name="nudge_location_slide" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
         <!--<div id="screen2b_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
           <div style="margin-bottom: 200px">
-              <difficulty-selector-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector_1" />
+            <div class="slide_num"> 3/8 </div>
+            <difficulty-selector-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector_1" />
           </div>
         <!--</div>-->
       </div>
     <!--</template>-->
 
-    <div id="screen6" slide-name="difficulty-selector-2-hso" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
+    <div id="screen6" slide-name="valid_sites_slide" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
       <!--<div id="screen2b_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
         <div style="margin-bottom: 200px">
+            <div class="slide_num"> 4/8 </div>
             <difficulty-selector-4-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector_2" />
         </div>
       <!--</div>-->
@@ -260,9 +271,10 @@
 
 
     <!--<template is="dom-if" if="{{!positive_goals_disabled}}">-->
-      <div id="screen7" slide-name="positive-goal-selector-hso" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
+      <div id="screen7" slide-name="stressful_sites_slide" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
         <!--<div id="screen3_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
           <div style="margin-bottom: 100px">
+            <div class="slide_num"> 5/8 </div>
             <difficulty-selector-3-hso on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector_3" />
           </div>
         <!--</div>-->
@@ -274,27 +286,34 @@
 <!--------------------------->
 
       <div id="screen8" slide-name="initial-goal-selector" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
-        <div id="screen2_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">
-          <div style="margin-bottom: 50px">
+        <!--<div id="screen2_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
+          <div style="margin-bottom: 50px; left: 0px">
+            <div class="slide_num"> 6/8 </div>
             <initial-goal-selector is_onboarding="true" id="goal_selector" on-goal_changed="rerender_onboarding_badges" />
           </div>
-        </div>
+        <!--</div>-->
       </div>
 
     <template is="dom-if" if="{{!difficulty_selector_disabled}}">
       <div id="screen8b" slide-name="difficulty-selector" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
-        <div id="screen2b_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">
+        <!--<div id="screen2b_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
           <div style="margin-bottom: 200px">
+            <div class="slide_num"> 7/8 </div>
+            <difficulty-selector on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector" />
+            <!--
             <template is="dom-if" if="{{regular_difficulty_selector}}">
               <difficulty-selector on-difficulty-changed="rerender_badges" is_onboarding="true" id="difficulty_selector" />
             </template>
             <template is="dom-if" if="{{!regular_difficulty_selector}}">
               <difficulty-selector-survey />
             </template>
+            -->
           </div>
-        </div>
+        <!--</div>-->
       </div>
     </template>
+
+    <!-- Disabled positive goals for HSM
 
     <template is="dom-if" if="{{!positive_goals_disabled}}">
       <div id="screen9" slide-name="positive-goal-selector" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
@@ -305,14 +324,16 @@
         </div>
       </div>
     </template>
+    -->
 
     <template is="dom-if" if="{{true_statement}}">
       <div id="screen10" slide-name="onboarding-badges" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
-        <div id="screen4_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">
+        <!--<div id="screen4_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">-->
           <div style="margin-bottom: 170px">
+            <div class="slide_num"> 8/8 </div>
             <onboarding-badges id="badges_received" />
           </div>
-        </div>
+        <!--</div>-->
       </div>
     </template>
 
@@ -329,6 +350,8 @@
     </template>
     -->
 
+    <!-- Disabled since we are not monitoring user input for nudges
+
     <template is="dom-if" if="{{!idea_voting_disabled}}">
       <div id="screen11" class="slide" style="width: 100vw; height: 100vh; overflow: auto; background-color:rgb(81, 167,249)">
         <div id="screen5_scroll_wrapper" class="scroll_wrapper" style="width: 100vw; height: 100vh; overflow-y: auto; overflow-x: hidden">
@@ -339,14 +362,16 @@
       </div>
     </template>
 
+    -->
+
 <!---------------------------->
 
     <template is="dom-if" if="{{is_not_equal_to_any(slide_idx, 0, last_slide_idx)}}">
       <div class="bottom-bar">
         <div style="display:inline-table; text-align: center;align-items:center; padding-right:20px;padding-left:0px;padding-bottom:20px; color: white; width: 100%; height: 100%">
           <div class="prevnext_button_container">
-            <paper-button class="prevnext_button" on-click="prev_slide">
-              <iron-icon icon="arrow-upward" style="margin-left: 0; margin-right: 5px"></iron-icon> {{msg("Previous")}}</paper-button>
+            <paper-button class="prevnext_button" style="margin-left: 0; margin-right: 5px" on-click="prev_slide">
+              <iron-icon icon="arrow-upward" ></iron-icon> {{msg("Previous")}}</paper-button>
             <paper-button class="prevnext_button" on-click="next_slide">
               <iron-icon icon="arrow-downward" style="margin-left: 5px"></iron-icon> {{msg("Next")}}</paper-button>
           </div>
@@ -373,10 +398,10 @@
       <div class="bottom-bar">
         <div style="display:inline-table; text-align: center;align-items:center; padding-right:20px;padding-left:0px;padding-bottom:20px; color: white; width: 100%; height: 100%">
           <div class="prevnext_button_container">
-            <paper-button class="prevnext_button" on-click="prev_slide">
-              <iron-icon icon="arrow-upward" style="margin-left: 0; margin-right: 5px"></iron-icon> {{msg("Previous")}}</paper-button>
-            <paper-button class="prevnext_button" on-click="onboarding_complete">
-              <iron-icon icon="check" style="min-width: 400px; margin-left: 5px"></iron-icon> {{msg("Start Using HSO")}}
+            <paper-button class="prevnext_button" style="margin-left: 0; margin-right: 5px" on-click="prev_slide">
+              <iron-icon icon="arrow-upward"></iron-icon> {{msg("Previous")}}</paper-button>
+            <paper-button class="prevnext_button" style="width: 350px" on-click="onboarding_complete">
+              <iron-icon icon="check" style="margin-right: 5px"></iron-icon> {{msg("Start Using HSM")}}
             </paper-button>
           </div>
         </div>

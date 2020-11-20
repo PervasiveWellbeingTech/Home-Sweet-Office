@@ -191,7 +191,7 @@
     </custom-style>
 
     <paper-dialog id="alignedDialog" style="background-color:rgba(255,255,255,0.85);" no-overlap horizontal-align="left" vertical-align="top">
-      <h2 style=" font-size:12px;padding-top:5px;margin:auto;margin-top:0px;margin-bottom:5px;color:#323f4b;">Add a new stressful website (example: www.cnn.com)</h2>
+      <h2 style=" font-size:12px;padding-top:5px;margin:auto;margin-top:0px;margin-bottom:5px;color:#323f4b;">Add a new website (example: www.cnn.com)</h2>
       <div style="display: flex; margin:auto; margin-top:0px;margin-left:0px; margin-right:0px; margin-bottom:0px;padding-left:10px; padding-right:10px;padding-bottom:0px">
 
         <vaadin-combo-box on-value-changed="valueChange" id="add_website_input" change="change_called" custom-value-set="custom_value_set_called"
@@ -226,7 +226,7 @@
           <div style="font-family: Verdana, Geneva, 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;margin: auto; font-size: 16px; text-align: center; padding-left:65px; padding-right:65px; padding-top: 16px; margin-bottom: 30px;">{{title_text}}</div>
           <!-- <div style="font-family: Verdana, Geneva, 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;margin: auto; font-size: 16px; margin-bottom: 30px; text-align: center; padding-left:65px; padding-right:65px;">{{title_text_bolded_portion}}</div> -->
         </div>
-        <div class="flexcontainer wrap row">
+        <div class="flexcontainer wrap row" style="left:0px">
 
           <div style="margin-bottom:0px;">
             <div class="siteicon siteiconadd" on-click="openBy">

@@ -28,14 +28,34 @@ polymer_ext({
       return
     }
     */
+
+
+    // Get value
+
+    // if checked
+    // add sitename to list of approved_sites
+    // setItem
+
+    // if unchecked
+    // get list of approved_sites
+    // remove value
+    // setItem
+
+
+
+
+
     console.log(evt);
     let site = evt.detail.value;
+    console.log(site);
+    site = this.value;
+    console.log(site);
     let approved_sites = await localStorage.getItem("approved_sites");
     console.log(approved_sites);
     if (approved_sites === null) {
       localStorage.setItem("approved_sites", [site]);
     } else {
-      approved_sites.append(site);
+      approved_sites.push(site);
       localStorage.setItem("approved_sites", approved_sites);
     }
     /*
@@ -79,6 +99,9 @@ polymer_ext({
       this.ignoreselectedchanged = false
       */
   //  }
+  // Eventually we would like to be able to change this list of sites so that they update with the intervention list
+    let approved_sites = ['facebook', 'instagram', 'youtube', 'yelp', 'reddit', 'amazon','twitter', 'slack','pinterest', 'netflix', 'spotify']
+    localStorage.setItem("approved_sites", approved_sites);
   }
 
 }, {

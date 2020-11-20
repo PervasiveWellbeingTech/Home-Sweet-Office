@@ -23,80 +23,32 @@ const {
 polymer_ext({
   is: 'difficulty-selector-hso',
   selectedNudgechanged: async function(evt) {
-
-    if (this.ignoreselectedchanged == true) {
-      return
-    }
-
-    let prev_enabled_interventions = await get_enabled_interventions()
-    if (localStorage.difficulty_selector_userchoice == 'true') {
-      await enabledisable_interventions_based_on_difficulty(difficulty)
-    }
-
-    localStorage.user_chosen_difficulty = difficulty
-    setvar_experiment('user_chosen_difficulty', difficulty)
-    send_feature_option({feature: 'difficuty', page: 'onboarding-view', difficulty: difficulty})
-    let log_intervention_info = {
-      type: 'difficulty_selector_changed_onboarding',
-      difficulty_changes_interventions: false,
-      page: 'onboarding-view',
-      subpage: 'difficulty-selector-hso',
-      category: 'difficulty_change',
-      difficulty: difficulty,
-      manual: true,
-      url: window.location.href,
-      prev_enabled_interventions: prev_enabled_interventions,
-    }
-    await add_log_interventions(log_intervention_info)
-    this.fire('difficulty-changed', {difficulty: difficulty})
-
+    // get value of menu
+    // update value in
+    var nudge_time = evt.detail.value;
+    console.log(nudge_time);
+    localStorage.setItem('nudge_time', nudge_time);
   },
   selectedLocationchanged: async function(evt) {
-
-    if (this.ignoreselectedchanged == true) {
-
-      return
-    }
-    let prev_enabled_interventions = await get_enabled_interventions()
-    if (localStorage.difficulty_selector_userchoice == 'true') {
-      await enabledisable_interventions_based_on_difficulty(difficulty)
-    }
-
-    localStorage.user_chosen_difficulty = difficulty
-    setvar_experiment('user_chosen_difficulty', difficulty)
-    send_feature_option({feature: 'difficuty', page: 'onboarding-view', difficulty: difficulty})
-    let log_intervention_info = {
-      type: 'difficulty_selector_changed_onboarding',
-      difficulty_changes_interventions: false,
-      page: 'onboarding-view',
-      subpage: 'difficulty-selector-hso',
-      category: 'difficulty_change',
-      difficulty: difficulty,
-      manual: true,
-      url: window.location.href,
-      prev_enabled_interventions: prev_enabled_interventions,
-    }
-    await add_log_interventions(log_intervention_info)
-    this.fire('difficulty-changed', {difficulty: difficulty})
-
+    let user_location = evt.detail.value;
+    console.log(user_location);
+    localStorage.setItem('install_location', user_location);
   },
 
   ignore_keydown: function(evt) {
-    evt.preventDefault()
+    //evt.preventDefault()
     //evt.stopPropagation()
-    return false
+    //return false
   },
 
   ready: async function(evt) {
+    /*
     if (localStorage.user_chosen_difficulty != null) {
       //await once_available('')
-
-      this.ignoreselectedchanged = true
-      await this.once_available('#difficultyradiogroup')
-      this.$$('#difficultyradiogroup').selected = localStorage.user_chosen_difficulty
-      this.ignoreselectedchanged = false
+      ret
 
     }
+    */
   }
 
 }, {

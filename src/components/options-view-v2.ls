@@ -171,11 +171,12 @@ polymer_ext {
       self.$$('#siteview_' + goal_sitename).rerender()
     return
   onboarding_completed: ->
-    swal({
-      title: "Done Setting Up HabitLab!",
-      text: "This is the settings page, where you can manage your Nudges and track your progress.",
-      confirmButtonColor: "#3C5A96"
-    });
+    #swal({
+    #  title: "Done Setting Up Home Sweet Moment!",
+    #    text: "This is the settings page, where you can manage your settings and track your progress.",
+    #    confirmButtonColor: "#3C5A96"
+  #  });
+    return
 
   on_goal_changed: (evt) ->
     this.rerender()
@@ -264,7 +265,7 @@ polymer_ext {
   ready: ->>
     this.$$('#irbdialog').open_if_needed()
     ##self = this
-    ##this.$$('#goal_selector').set_sites_and_goals()
+    #this.$$('#goal_selector').set_sites_and_goals()
     await this.rerender()
     if not this.have_options_page_hash and not this.selected_tab_idx?
       this.selected_tab_idx = 0

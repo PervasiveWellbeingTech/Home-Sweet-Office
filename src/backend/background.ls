@@ -45,12 +45,13 @@ do !->>
     localStorage.setItem("nudge_time", profile_info.nudge_time)
 
   # Call database for survey
-  survey_data = JSON.parse(await get_json(hso_server_url + "/getSurvey", "userid=" + userid))
-  if Object.keys(survey_data).length !== 0
+  survey_data = await get_json(hso_server_url + "/getSurvey", "userid=" + userid)
+  survey_data = JSON.parse(survey_data)
+  if Object.keys(survey_data).length > 0
     localStorage.setItem("survey_data", JSON.stringify(survey_data))
     localStorage.setItem("icon_notif_active", "true")
   else
-    localStorage.setItem("survey_data", {})
+    localStorage.setItem("survey_data", "{}")
     localStorage.setItem("icon_notif_active", "false")
 
   localStorage.removeItem 'cached_list_all_goals'
@@ -728,9 +729,6 @@ do !->>
           });
         });
       })();
-
-      ## Mouse rate recorder
-
 
       SystemJS.import_multi(['libs_common/intervention_info', 'libs_frontend/intervention_log_utils'], function(intervention_info_setter_lib, log_utils) {
         intervention_info_setter_lib.set_intervention(intervention);
@@ -1910,10 +1908,10 @@ do !->>
     console.log(scroll_data)
 
     # Log click data
-    post_json(hso_server_url + "/postClickData", JSON.stringify(click_data))
+    post_json(hso_server_url + "/postClickData", click_data)
 
     # Log scroll data
-    #post_json(hso_server_url + "/postScrollData", JSON.stringify(scroll_data))
+    post_json(hso_server_url + "/postScrollData", scroll_data)
 
 
     localStorage.setItem("click_rate_buffer", "[]")

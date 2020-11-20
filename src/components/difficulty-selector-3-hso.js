@@ -28,15 +28,19 @@ polymer_ext({
       return
     }
     */
-    console.log("selected changed");
-    console.log(evt);
+    //console.log("selected changed");
+    //console.log(evt);
     let site = evt.detail.value;
-    let stressful_sites = JSON.parse(await localStorage.getItem("stressful_sites"));
-    console.log(stressful_sites);
+    //console.log(site);
+    let stressful = this.value;
+    //console.log(stressful);
+    let stressful_sites = await localStorage.getItem("stressful_sites");
+    //console.log(stressful_sites);
+    //console.log(JSON.parse(stressful_sites));
     if (stressful_sites === null) {
       localStorage.setItem("stressful_sites", [site]);
     } else {
-      stressful_sites.push(site);
+      //stressful_sites.push("");
       localStorage.setItem("stressful_sites", JSON.stringify(stressful_sites));
     }
     /*
@@ -70,25 +74,26 @@ polymer_ext({
     return false;
   },
   add_stressful_site: async function(evt){
-    console.log("User wants to add stressful site");
+    //console.log("User wants to add stressful site");
     var input = this.$.site_input.value;
     var site = "";
+    var url_regex = /^(((?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
     // If input empty or input doesn't match format don't add
     if(input == ""){
       alert("No site added. Please add a site in the correct format before submitting.");
-    } else if (! /www\.[a-zA-Z0-9_]*.[\S]*/i.test(input)) {
+    } else if (! url_regex.test(input)) {
       alert("Incorrect format. Please add a site in the correct format before submitting.");
     } else {
       // // Add checkbox with sitename as label and input as value
       // // make sure it is checked
       // // Also add delete option
       // // And add site to stressful sites list with setItem
-      console.log("Adding site: ");
-      console.log(input);
+      //console.log("Adding site: ");
+      //console.log(input);
       var sitename = input.split(".")[1];
-      console.log(sitename);
+      //console.log(sitename);
       var stressful_sites = JSON.parse( await localStorage.getItem("stressful_sites"));
-      console.log(stressful_sites);
+      //console.log(stressful_sites);
       if (stressful_sites === null) {
         localStorage.setItem("stressful_sites", [input]);
       } else {
@@ -98,14 +103,16 @@ polymer_ext({
       var checkbox_list = document.getElementById('stressful_sites_boxes'); //ul
       var li = document.createElement('li');//li
 
-
-      var checkbox = document.createElement('input');
+      var checkbox = document.createElement('paper-checkbox');
           checkbox.type = "checkbox";
-          checkbox.value = 1;
-          checkbox.name = sitename;
+          checkbox.value = sitename;
+          checkbox.name = "button";
+          checkbox.checked = true;
+          //checkbox.classList.add('checkbox_class');
+      li.classList.add('added_site_button');
       li.appendChild(checkbox);
       li.appendChild(document.createTextNode(sitename));
-      li.classList.add('added_site_button');
+
       checkbox_list.appendChild(li);
 
     }

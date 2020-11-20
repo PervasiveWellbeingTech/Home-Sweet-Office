@@ -452,7 +452,7 @@ polymer_ext {
     this.$$("input[name=stress_level]:checked").value = stress_level_before
 
   set_nudge_message: ->>
-    #this.$$('#intro_message').css({'margin-top':'0px'})
+    #this.$$('#intro_message').css({'margin-top':'0px', 'margin-bottom': '0px'})
     this.$$('#intro_message').innerHTML = "Seems like you've been browsing for a while. Take a moment to destress."
 
 
@@ -790,7 +790,6 @@ polymer_ext {
     # Check localstorage for current panel
     panel = localstorage_getstring("current_panel")
 
-    #console.log(panel)
     if typeof(panel) === 'undefined' or panel === null
       localstorage_setstring("current_panel", "home")
       panel = "home"
@@ -799,7 +798,6 @@ polymer_ext {
     if localstorage_getbool('intervention_timed_out')
       localstorage_setbool('intervention_timed_out', false)
       panel = "home"
-
 
     # If intervention data undefined, set to empty object
     if localstorage_getjson("intervention_data_tosend") === null
@@ -842,14 +840,14 @@ polymer_ext {
     # Check if survey available to update button
     survey_data = await localstorage_getjson("survey_data")
     if typeof(survey_data) === 'undefined' or survey_data === null
-      localstorage_setjson("survey_data",{})
-      #console.log("No previous survey data. Sending request for new...")
+      localstorage_setjson("survey_data", {})
+      console.log("No previous survey data. Sending request for new...")
       #this.check_for_survey()
     else if Object.keys(survey_data).length !== 0
       localstorage_setbool('icon_notif_active', true)
       once_available("survey_button", this.enable_survey_button())
-    #else
-      #console.log("Survey data empty. Sending request for new...")
+    else
+      console.log("Survey data empty. Sending request for new...")
       #this.check_for_survey()
 
     once_available("userid_label", this.show_userid())

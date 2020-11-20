@@ -101,23 +101,23 @@ polymer_ext {
     }
     icon_check_url:{
       type: String,
-      value: chrome.extension.getURL('icons/icon_check_bluewhite.png') 
+      value: chrome.extension.getURL('icons/icon_check_bluewhite.png')
     }
     icon_gear_url:{
       type: String,
-      value: chrome.extension.getURL('icons/icon_gear_bluewhite.png') 
+      value: chrome.extension.getURL('icons/icon_gear_bluewhite.png')
     }
     icon_add_url: {
       type: String,
-      value: chrome.extension.getURL('icons/plus.png') 
+      value: chrome.extension.getURL('icons/plus.png')
     }
     delete_url: {
       type: String,
-      value: chrome.extension.getURL('icons/delete.svg') 
+      value: chrome.extension.getURL('icons/delete.svg')
     }
     configure_url: {
       type: String,
-      value: chrome.extension.getURL('icons/configure.svg') 
+      value: chrome.extension.getURL('icons/configure.svg')
     }
     baseline_time_on_domains: {
       type: Object
@@ -179,7 +179,7 @@ polymer_ext {
   get_daily_targets: ->>
     goals = await get_goals!
     for goal in Object.keys goals
-      if goal == "debug/all_interventions" 
+      if goal == "debug/all_interventions"
         continue
       mins = await get_goal_target goal
       mins = mins/5 - 1
@@ -188,13 +188,13 @@ polymer_ext {
     return localStorage.getItem('intervention_view_show_internal_names') == 'true'
   daily_goal_help_clicked: ->
     swal {
-      title: 'How will HabitLab help me achieve these goals?'
-      text: 'HabitLab will help you achieve these goals by showing you a different nudge, like a news feed blocker or a delayed page loader, each time you visit your goal sites. (It will not block the site.)'
+      title: 'How will Home Sweet Moment help me achieve these goals?'
+      text: 'HSM will help you achieve these goals by showing you a different nudge, like a news feed blocker or a delayed page loader, each time you visit your goal sites. (It will not block the site.)'
     }
 
-  # more_than_zero_minutes: (goal,get_time_spent_for_domain,baseline_time_on_domains) ->    
+  # more_than_zero_minutes: (goal,get_time_spent_for_domain,baseline_time_on_domains) ->
   #   if baseline_time_on_domains[domain]?
-  #     if (baseline_time_on_domains[domain] / (1000*60)) > 0 
+  #     if (baseline_time_on_domains[domain] / (1000*60)) > 0
   #       return true
   #   return false
 
@@ -228,7 +228,7 @@ polymer_ext {
     domain = this.$$('#add_website_input').value.trim()
     this.add_custom_website_from_input()
     return
-  
+
   settings_goal_clicked: (evt) ->
     evt.preventDefault()
     evt.stopPropagation()
@@ -265,7 +265,7 @@ polymer_ext {
     for sitename in list_of_sites
       current_item = {sitename: sitename}
       current_item.goals = prelude.sort-by (.name), sitename_to_goals[sitename]
-      
+
       for goal in current_item.goals
         goal.enabled = (enabled_goals[goal.name] == true)
       list_of_sites_and_goals.push current_item
@@ -293,8 +293,8 @@ polymer_ext {
     self = this
     if not checked
       await set_goal_enabled_manual goal_name
-      
-      check_if_first_goal = ->>       
+
+      check_if_first_goal = ->>
         if !localStorage.first_goal?
           localStorage.first_goal = 'has enabled a goal before'
           #add_toolbar_notification!
@@ -307,7 +307,7 @@ polymer_ext {
           #     type: 'success'
           #     confirmButtonText: 'See it in action'
           #   }
-            
+
           #   set_override_enabled_interventions_once('facebook/show_user_info_interstitial')
           #   all_goals = await get_goals()
           #   goal_info = all_goals[goal_name]
@@ -320,11 +320,11 @@ polymer_ext {
     #await this.disable_interventions_which_do_not_satisfy_any_goals(goal_name)
     #if checked
     #  await enable_interventions_because_goal_was_enabled(goal_name)
-    
+
     await self.set_sites_and_goals()
     self.fire 'goal_changed', {goal_name: goal_name}
   should_have_newline: (index, num_per_line) ->
-    return (index % num_per_line) == 0 
+    return (index % num_per_line) == 0
   sort_custom_sites_after_and_limit_to_eight: (sites_and_goals) ->
     return this.sort_custom_sites_after(sites_and_goals)[0 til 8]
   sort_custom_sites_after: (sites_and_goals) ->
@@ -469,7 +469,7 @@ polymer_ext {
       #favicon_data = domain_to_favicon[domain] #await get_favicon_data_for_domain(domain)
       #baseline_time_on_domains_array.push({
       #  domain: domain
-      #  #time: time 
+      #  #time: time
       #  #favicon: favicon_data
       #})
     #console.log('finished fetching favicons')

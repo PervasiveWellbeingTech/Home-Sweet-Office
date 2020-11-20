@@ -1,11 +1,11 @@
 manifest_version: 2
-name: Home Sweet Office
-short_name: HSO
+name: Home Sweet Moment
+short_name: HSM
 default_locale: en
 description: >-
-  Home Sweet Office delivers interventions to help you manage your stress
+  Home Sweet Moment delivers interventions to help you manage your stress
   while browsing the web
-version: 1.0.0
+version: 1.1.0
 minimum_chrome_version: 55.0.0.0
 permissions:
   - tabs
