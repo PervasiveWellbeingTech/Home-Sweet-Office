@@ -39,7 +39,7 @@
     </style>
     <div style="font-size: 22px; color:#5a5a5a; margin-bottom: 10px;">Today's five most visited sites by minutes spent</div>
     <template is="dom-if" if="{{graph_has_data}}">
-      <chart-doughnut data="[[donutdata]]" style="width: 100%"></chart-doughnut>
+      <chart-doughnut data="[[donutdata]]" style="width: 70%"></chart-doughnut>
     </template>
     <template is="dom-if" if="{{!graph_has_data}}">
       <h5>No sites visited yet - come back later.</h5>

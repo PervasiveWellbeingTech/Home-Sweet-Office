@@ -21,21 +21,21 @@
     </style>
 
     <div class="card-content">
-      <div>You are running Home Sweet Moment version {{current_version}}</div>
+      <div>You are running Home Sweet Office version {{current_version}}</div>
       <template is="dom-if" if="{{devmode}}">
-        <div>You are running Home Sweet Moment in developer mode.</div>
-        <div>To get updates, uninstall Home Sweet Moment and <a href="https://habitlab.github.io/chrome" target="_blank" style="color: black; text-decoration: underline;">install the stable release</a></div>
+        <div>You are running Home Sweet Office in developer mode.</div>
+        <div>To get updates, uninstall Home Sweet Office and <a href="https://habitlab.github.io/chrome" target="_blank" style="color: black; text-decoration: underline;">install the stable release</a></div>
       </template>
       <template is="dom-if" if="{{preview}}">
-        <div>You are running a preview release of Home Sweet Moment.</div>
+        <div>You are running a preview release of Home Sweet Office.</div>
         <div>If having issues, uninstall and switch to the <a href="https://habitlab.github.io/chrome" target="_blank" style="color: black; text-decoration: underline;">stable release</a></div>
       </template>
       <template is="dom-if" if="{{unofficial}}">
         <div>You are running an unofficial release.</div>
-        <div>To get updates, uninstall Home Sweet Moment and <a href="https://habitlab.github.io/chrome" target="_blank" style="color: black; text-decoration: underline;">install the stable release</a></div>
+        <div>To get updates, uninstall Home Sweet Office and <a href="https://habitlab.github.io/chrome" target="_blank" style="color: black; text-decoration: underline;">install the stable release</a></div>
       </template>
       <template is="dom-if" if="{{is_update_available_or_installable}}">
-        <div>A new version of Home Sweet Moment is available ({{available_update_version}})</div>
+        <div>A new version of Home Sweet Office is available ({{available_update_version}})</div>
         <template is="dom-if" if="{{is_update_installable}}">
           <div style="height: 10px"></div>
           <paper-button class="button" on-click="install_update_now">Install Update Now</paper-button>
@@ -49,7 +49,7 @@
       <template is="dom-if" if="{{!is_update_available_or_installable}}">
         <template is="dom-if" if="{{have_checked_for_updates}}">
           <template is="dom-if" if="{{!is_update_available}}">
-            <div>You are running the latest version of Home Sweet Moment</div>
+            <div>You are running the latest version of Home Sweet Office</div>
           </template>
         </template>
         <div style="height: 10px"></div>

@@ -221,13 +221,13 @@
 
         <template is="dom-if" if="{{!stress_intervention_active}}">
 
-          <paper-card class="intervention_panel" id="home_panel" style="height: 180px; margin-top: 0"> <!-- Change height if Habitlab enabled-->
+          <paper-card class="intervention_panel" id="home_panel" style="height: 130px; margin-top: 0"> <!-- Change height if Habitlab enabled-->
             <iron-icon  src="../icons/close_icon.png" style="float: right; padding: 5px; cursor: pointer" raised on-click="close_popup"></iron-icon>
 
-            <div style="margin: 1%; font-size: 15px; text-align: left; font-weight: bold">Sweet Moment</div>
-            <div style="margin-top: 5%"><!-- Change margin-top if Habilab enabled -->
-              <div id="intro_message" style="margin-top: 1%; font-size: 25px; text-align: center">Take a sweet moment to destress.</div>
-              <paper-button class="stressIntervention_button" style="color:white; margin-top: 3%" raised on-click="start_stress_intervention">BEGIN</paper-button>
+            <div style="margin: 1%; font-size: 15px; text-align: left; font-weight: bold">Stress Management</div>
+            <div style="margin-top: 2%"><!-- Change margin-top if Habilab enabled -->
+              <div id="intro_message" style="font-size: 20px; text-align: center">Take a sweet moment to destress.</div>
+              <paper-button class="stressIntervention_button" style="color:white; margin-top: 2%" raised on-click="start_stress_intervention">BEGIN</paper-button>
             </div>
           </paper-card>
 

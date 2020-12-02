@@ -27,9 +27,6 @@ const checkScrollSpeed = (function(settings){
 })();
 
 
-
-
-
 document.addEventListener('scroll', function() {
     let measurement = checkScrollSpeed();
     console.log(measurement.toString());
