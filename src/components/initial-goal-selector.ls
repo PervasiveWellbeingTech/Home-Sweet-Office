@@ -81,7 +81,7 @@ polymer_ext {
     },
     title_text: {
       type: String
-      value: msg("Below are some popular options, along with how much time you spend on them per day (on average).")
+      value: msg("Below are some popular options that you can choose from. You can also add your own.")
     }
     # title_text_bolded_portion: {
     #   type: String
@@ -188,8 +188,8 @@ polymer_ext {
     return localStorage.getItem('intervention_view_show_internal_names') == 'true'
   daily_goal_help_clicked: ->
     swal {
-      title: 'How will Home Sweet Moment help me achieve these goals?'
-      text: 'HSM will help you achieve these goals by showing you a different nudge, like a news feed blocker or a delayed page loader, each time you visit your goal sites. (It will not block the site.)'
+      title: 'How will Home Sweet Office help me achieve these goals?'
+      text: 'HSO will help you achieve these goals by showing you a different nudge, like a news feed blocker or a delayed page loader, each time you visit your goal sites. (It will not block the site.)'
     }
 
   # more_than_zero_minutes: (goal,get_time_spent_for_domain,baseline_time_on_domains) ->

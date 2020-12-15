@@ -40,11 +40,7 @@ polymer_ext({
     // get list of approved_sites
     // remove value
     // setItem
-
-
-
-
-
+    console.log(this);
     console.log(evt);
     let site = evt.detail.value;
     console.log(site);
