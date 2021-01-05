@@ -1,5 +1,7 @@
 # Home Sweet Office
 
+This is the grant branch.
+
 [HSO](link?) is a Chrome extension to help you build manage stress and build better habits online. HSO aims to help people achieve their goals online (ie, waste less time on Facebook) and manage their stress by trying out different interventions in their browsers and seeing what works best.
 
 ## Users
