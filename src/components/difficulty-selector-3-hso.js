@@ -22,50 +22,36 @@ const {
 
 polymer_ext({
   is: 'difficulty-selector-3-hso',
+  properties: {
+    stressful_array: {
+      type: Array,
+      value: []
+    }
+  },
   selectedNudgechanged: async function(evt) {
     /*
     if (this.ignoreselectedchanged == true) {
       return
     }
     */
-    //console.log("selected changed");
-    //console.log(evt);
-    let site = evt.detail.value;
-    //console.log(site);
-    let stressful = this.value;
-    //console.log(stressful);
-    let stressful_sites = await localStorage.getItem("stressful_sites");
-    //console.log(stressful_sites);
-    //console.log(JSON.parse(stressful_sites));
-    if (stressful_sites === null) {
-      localStorage.setItem("stressful_sites", [site]);
-    } else {
-      //stressful_sites.push("");
-      localStorage.setItem("stressful_sites", JSON.stringify(stressful_sites));
-    }
-    /*
-    let prev_enabled_interventions = await get_enabled_interventions()
-    if (localStorage.difficulty_selector_userchoice == 'true') {
-      await enabledisable_interventions_based_on_difficulty(difficulty)
-    }
 
-    localStorage.user_chosen_difficulty = difficulty
-    setvar_experiment('user_chosen_difficulty', difficulty)
-    send_feature_option({feature: 'difficuty', page: 'onboarding-view', difficulty: difficulty})
-    let log_intervention_info = {
-      type: 'difficulty_selector_changed_onboarding',
-      difficulty_changes_interventions: false,
-      page: 'onboarding-view',
-      subpage: 'difficulty-selector-hso',
-      category: 'difficulty_change',
-      difficulty: difficulty,
-      manual: true,
-      url: window.location.href,
-      prev_enabled_interventions: prev_enabled_interventions,
+    let site = evt.target.value.toString();
+    let in_list = evt.target.checked;
+    console.log(site);
+    console.log(this.stressful_array);
+    if (in_list){
+      console.log("adding site");
+      this.stressful_array.push(site);
+    } else {
+      console.log("removing site");
+      console.log(this.stressful_array);
+      var index = this.stressful_array.indexOf(site);
+      if (index > -1) {
+        this.stressful_array.splice(index, 1);
+      }
     }
-    await add_log_interventions(log_intervention_info)
-    this.fire('difficulty-changed', {difficulty: difficulty})
-    */
+    console.log(this.stressful_array);
+    localStorage.setItem("stressful_sites", this.stressful_array);
   },
 
   ignore_keydown: function(evt) {
@@ -73,10 +59,10 @@ polymer_ext({
     //evt.stopPropagation()
     return false;
   },
+
   add_stressful_site: async function(evt){
     //console.log("User wants to add stressful site");
     var input = this.$.site_input.value;
-    var site = "";
     var url_regex = /^(((?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
     // If input empty or input doesn't match format don't add
     if(input == ""){
@@ -92,6 +78,7 @@ polymer_ext({
       //console.log(input);
       var sitename = input.split(".")[1];
       //console.log(sitename);
+      /*
       var stressful_sites = JSON.parse( await localStorage.getItem("stressful_sites"));
       //console.log(stressful_sites);
       if (stressful_sites === null) {
@@ -100,21 +87,28 @@ polymer_ext({
         stressful_sites.push(input);
         localStorage.setItem("stressful_sites", JSON.stringify(stressful_sites));
       }
-      var checkbox_list = document.getElementById('stressful_sites_boxes'); //ul
-      var li = document.createElement('li');//li
+      */
+      const index = this.stressful_array.indexOf(input);
+      // If not already in index
+      if (index == -1){
+        this.stressful_array.push(input);
+        var checkbox_list = document.getElementById('stressful_sites_boxes'); //ul
+        var li = document.createElement('li');//li
 
-      var checkbox = document.createElement('paper-checkbox');
-          checkbox.type = "checkbox";
-          checkbox.value = sitename;
-          checkbox.name = "button";
-          checkbox.checked = true;
-          //checkbox.classList.add('checkbox_class');
-      li.classList.add('added_site_button');
-      li.appendChild(checkbox);
-      li.appendChild(document.createTextNode(sitename));
+        var checkbox = document.createElement('paper-checkbox');
+            checkbox.type = "checkbox";
+            checkbox.value = input;
+            checkbox.name = "button";
+            checkbox.checked = true;
+            checkbox.onchange = this.selectedNudgechanged;
+            //checkbox.classList.add('checkbox_class');
+        li.classList.add('added_site_button');
+        li.appendChild(checkbox);
+        li.appendChild(document.createTextNode(input));
 
-      checkbox_list.appendChild(li);
-
+        checkbox_list.appendChild(li);
+      }
+      localStorage.setItem("stressful_sites", this.stressful_array);
     }
   },
 

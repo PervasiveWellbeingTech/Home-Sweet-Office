@@ -249,7 +249,7 @@
         <paper-card id = "title" style = "color:white" class="papercard">
 
 
-          <paper-card id="surveycard" style ="display: none; color:white; padding-bottom: 10px" class="papercard">
+          <paper-card id="surveycard" style ="color:white; padding-bottom: 10px" class="papercard">
             <div> Study Surveys </div>
             <div class="card-content" style="padding-bottom: 10px"> Optional surveys for academic research will be shown here if available.</div>
             <paper-button class="paperbuttons" raised id="survey_button" on-click="survey_button_clicked"></paper-button>
@@ -348,12 +348,15 @@
         <paper-button id="positive-goals-button" class="next-button" on-click="goals_set">Next</paper-button>
       </paper-card>
     </template>
+
+    <!-- HSO is not syncing with mobile devices---
     <template is="dom-if" if="{{!sync_enabled}}" class="intro" style="display: none">
       <paper-card style="color:white" class="papercard">
         <div style="color:white; padding-top: 30px; padding-bottom: 16px; font-size: 30px">Sync Data Across Devices</div>
         <sync-view id="sync_data"></sync-view>
       </paper-card>
     </template>
+  -->
 
       <!--<div id="intro3" class="intro" style="display:none;">
         <paper-card heading="How will HabitLab help me achieve these goals?" class="papercard">
@@ -423,27 +426,30 @@
         </paper-card>
       </div> -->
 
-
+      <!-- No need for idea generation
       <div id="intro8" class="intro" style="display: none;">
         <paper-card style ="color:white;" class="papercard">
           <idea-generation-panel id="idea_generation"></idea-generation-panel>
         </paper-card>
       </div>
+      -->
 
-
+      <!-- No need to create and edit nudges
       <div id="intro7" class="intro" style="display: none;">
         <paper-card style ="color:white;" class="papercard">
           <div style="color: white; padding-top: 30px; padding-bottom: 16px; font-size: 30px">Create and Edit Nudges</div>
           <advanced-features id="advanced_features"></advanced-features>
         </paper-card>
       </div>
-
+    -->
+    <!-- No misc options
       <div id="intro9" class="intro" style="display: none;">
         <paper-card style ="color:white;" class="papercard">
           <div style="color: white; padding-top: 30px; padding-bottom: 16px; font-size: 30px">Misc Options</div>
           <misc-options id="misc_options"></misc-options>
         </paper-card>
       </div>
+      -->
 
       <div id="intro6" class="intro" style="display: none;">
         <paper-card style = "color:white;" class="papercard">

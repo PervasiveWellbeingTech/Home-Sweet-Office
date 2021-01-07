@@ -198,9 +198,9 @@ do !->>
         return
     num_times_notification_already_shown := num_times_notification_already_shown + 1
     num_times_to_pause_before_next_notification := Math.pow(2, num_times_notification_already_shown + 1)
-    notification = new Notification 'Finish setting up HabitLab', {
+    notification = new Notification 'Finish setting up HSO', {
       icon: chrome.extension.getURL('icons/icon_128.png')
-      body: 'Click here to finish setting up HabitLab'
+      body: 'Click here to finish setting up HSO'
       requireInteraction: true
     }
     close_notification = notification.close.bind(notification)
@@ -1170,7 +1170,7 @@ do !->>
       return
 
     'log_clicks': (click_len) ->>
-      console.log(click_len)
+      #console.log(click_len)
       buffer = JSON.parse(localStorage.getItem("click_rate_buffer"))
       ## Log only last 50 clicks
       #if buffer.length >= 50
@@ -1893,27 +1893,28 @@ do !->>
     scroll_buffer = localStorage.getItem("scroll_rate_buffer")
 
     # Send data to log into db
-    console.log("Sending click_data and scroll_data to db...")
-    console.log(click_buffer)
-    console.log(scroll_buffer)
+    #console.log("Sending click_data and scroll_data to db...")
+    #console.log(click_buffer)
+    #console.log(scroll_buffer)
     userid = await get_user_id()
-    click_data = {}
-    click_data["userid"] = userid
-    click_data["click_buffer"]= click_buffer
-    console.log(click_data)
 
-    scroll_data = {}
-    scroll_data["userid"] = userid
-    scroll_data["scroll_buffer"]= scroll_buffer
-    console.log(scroll_data)
+    # Log click data if not empty
+    if click_buffer !== "[]"
+      click_data = {}
+      click_data["userid"] = userid
+      click_data["click_buffer"]= click_buffer
+      #console.log(click_data)
+      post_json(hso_server_url + "/postClickData", click_data)
 
-    # Log click data
-    post_json(hso_server_url + "/postClickData", click_data)
+    # Log scroll data if not emtpy
+    if scroll_buffer !== "[]"
+      scroll_data = {}
+      scroll_data["userid"] = userid
+      scroll_data["scroll_buffer"]= scroll_buffer
+      #console.log(scroll_data)
+      post_json(hso_server_url + "/postScrollData", scroll_data)
 
-    # Log scroll data
-    post_json(hso_server_url + "/postScrollData", scroll_data)
-
-
+    # Reset buffers
     localStorage.setItem("click_rate_buffer", "[]")
     localStorage.setItem("scroll_rate_buffer", "[]")
 

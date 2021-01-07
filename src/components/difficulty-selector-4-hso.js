@@ -22,6 +22,12 @@ const {
 
 polymer_ext({
   is: 'difficulty-selector-4-hso',
+  properties: {
+    approved_array: {
+      type: Array,
+      value: ['facebook', 'instagram', 'youtube', 'yelp', 'reddit', 'amazon','twitter', 'slack','pinterest', 'netflix', 'spotify']
+    }
+  },
   selectedNudgechanged: async function(evt) {
     /*
     if (this.ignoreselectedchanged == true) {
@@ -29,31 +35,21 @@ polymer_ext({
     }
     */
 
-
-    // Get value
-
-    // if checked
-    // add sitename to list of approved_sites
-    // setItem
-
-    // if unchecked
-    // get list of approved_sites
-    // remove value
-    // setItem
-    console.log(this);
-    console.log(evt);
-    let site = evt.detail.value;
-    console.log(site);
-    site = this.value;
-    console.log(site);
-    let approved_sites = await localStorage.getItem("approved_sites");
-    console.log(approved_sites);
-    if (approved_sites === null) {
-      localStorage.setItem("approved_sites", [site]);
+    let site = evt.target.value;
+    let in_list = evt.target.checked;
+    if (in_list){
+      //console.log("adding site");
+      this.approved_array.push(site);
     } else {
-      approved_sites.push(site);
-      localStorage.setItem("approved_sites", approved_sites);
+      //console.log("removing site");
+      const index = this.approved_array.indexOf(site);
+      if (index > -1) {
+        this.approved_array.splice(index, 1);
+      }
     }
+    //console.log(this.approved_array);
+
+    localStorage.setItem("approved_sites", this.approved_array);
     /*
     let prev_enabled_interventions = await get_enabled_interventions()
     if (localStorage.difficulty_selector_userchoice == 'true') {
@@ -96,8 +92,7 @@ polymer_ext({
       */
   //  }
   // Eventually we would like to be able to change this list of sites so that they update with the intervention list
-    let approved_sites = ['facebook', 'instagram', 'youtube', 'yelp', 'reddit', 'amazon','twitter', 'slack','pinterest', 'netflix', 'spotify']
-    localStorage.setItem("approved_sites", approved_sites);
+    localStorage.setItem("approved_sites", this.approved_array);
   }
 
 }, {

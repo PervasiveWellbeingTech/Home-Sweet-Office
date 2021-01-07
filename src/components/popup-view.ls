@@ -452,7 +452,7 @@ polymer_ext {
     this.$$("input[name=stress_level]:checked").value = stress_level_before
 
   set_nudge_message: ->>
-    #this.$$('#intro_message').css({'margin-top':'0px', 'margin-bottom': '1%', 'font-size': '17px'})
+    this.$$('#intro_message').css({'margin-top':'0', 'margin-bottom': '1%', 'font-size': '18px'})
     this.$$('#intro_message').innerHTML = "Seems like you've been browsing for a while. Take a moment to destress."
 
 

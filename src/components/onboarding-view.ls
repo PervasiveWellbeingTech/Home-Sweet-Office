@@ -198,10 +198,6 @@ polymer_ext {
 
     #### HSO #####
     # Add stressful and accepted websites
-    #stressful_sites = this.getCheckedBoxes("stressful_sites_boxes")
-    #accepted_sites = this.getCheckedBoxes("accepted_sites_boxes")
-    localStorage.setItem("stressful_sites",{}) #stressful_sites)
-    localStorage.setItem("accepted_sites", {})#accepted_sites)
     this.send_profile_info()
 
 
