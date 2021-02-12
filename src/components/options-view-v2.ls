@@ -79,7 +79,7 @@ polymer_ext {
   }
   compute_sidebar_items: (enabled_goal_info_list, goal_name_to_icon) ->
     default_icon = chrome.extension.getURL('icons/loading.gif')
-    output = [{name: msg('Overview'), icon: chrome.extension.getURL('icons/results.svg')}, {name: msg('Settings'), icon: chrome.extension.getURL('icons/configure_black.svg')}]
+    output = [{name: msg('Productivity'), icon: chrome.extension.getURL('icons/results.svg')},{name: msg('Settings'), icon: chrome.extension.getURL('icons/configure_black.svg')}]
     for x in enabled_goal_info_list
       output.push {name: x.sitename_printable, icon: x.icon ? goal_name_to_icon[x.name] ? default_icon}
     output.push({name: msg('Help / FAQ'), icon: chrome.extension.getURL('icons/help.svg')})
@@ -171,11 +171,11 @@ polymer_ext {
       self.$$('#siteview_' + goal_sitename).rerender()
     return
   onboarding_completed: ->
-    #swal({
-    #  title: "Done Setting Up Home Sweet Moment!",
-    #    text: "This is the settings page, where you can manage your settings and track your progress.",
-    #    confirmButtonColor: "#3C5A96"
-  #  });
+    swal({
+        title: "Done Setting Up Home Sweet Moment!",
+        text: "This is the settings page, where you can manage your settings and track your progress.",
+        confirmButtonColor: "#3C5A96"
+    });
     return
 
   on_goal_changed: (evt) ->

@@ -526,6 +526,11 @@ polymer_ext {
     this.$$('#intervention_text').innerHTML = data.text
     this.$$('#intervention_duration').innerHTML = data.duration
     this.$$('#intervention_title').innerHTML = "<b>Task: " + data.name + "<b>"
+    console.log(data.url)
+    if data.url !== ""
+      console.log("Changing button to add url")
+      console.log(data.url)
+      this.$$('#intervention_button_text').innerHTML="Let's do it.<br>(Open " + data.url + ")"
     #console.log("../icons/HSO_icons/" + this.icons[data.type])
     this.$$('#intervention_icon').src = "../icons/HSO_icons/" + this.icons[data.type]
 

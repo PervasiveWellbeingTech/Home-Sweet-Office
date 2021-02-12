@@ -22,18 +22,25 @@
 
     <div class="card-content">
       <div>You are running Home Sweet Office version {{current_version}}</div>
+      <!--
       <template is="dom-if" if="{{devmode}}">
         <div>You are running Home Sweet Office in developer mode.</div>
         <div>To get updates, uninstall Home Sweet Office and <a href="https://habitlab.github.io/chrome" target="_blank" style="color: black; text-decoration: underline;">install the stable release</a></div>
       </template>
+    -->
       <template is="dom-if" if="{{preview}}">
-        <div>You are running a preview release of Home Sweet Office.</div>
-        <div>If having issues, uninstall and switch to the <a href="https://habitlab.github.io/chrome" target="_blank" style="color: black; text-decoration: underline;">stable release</a></div>
+        <div>You are running a preview release of Home Sweet Office.</div>\
+    <!--
+        <div>If you are having issues, uninstall and switch to the <a href="https://habitlab.github.io/chrome" target="_blank" style="color: black; text-decoration: underline;">stable release</a></div>
       </template>
+    -->
+  <!--
       <template is="dom-if" if="{{unofficial}}">
         <div>You are running an unofficial release.</div>
         <div>To get updates, uninstall Home Sweet Office and <a href="https://habitlab.github.io/chrome" target="_blank" style="color: black; text-decoration: underline;">install the stable release</a></div>
       </template>
+    -->
+  <!--
       <template is="dom-if" if="{{is_update_available_or_installable}}">
         <div>A new version of Home Sweet Office is available ({{available_update_version}})</div>
         <template is="dom-if" if="{{is_update_installable}}">
@@ -46,6 +53,7 @@
               style="font-family: Courier New, Courier, monospace">Update Extensions Now</span>.</div>
         </template>
       </template>
+    -->
       <template is="dom-if" if="{{!is_update_available_or_installable}}">
         <template is="dom-if" if="{{have_checked_for_updates}}">
           <template is="dom-if" if="{{!is_update_available}}">

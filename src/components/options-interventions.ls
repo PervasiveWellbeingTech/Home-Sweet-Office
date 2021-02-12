@@ -198,13 +198,13 @@ polymer_ext {
     this.$$('#popup-button').style.display = 'none'
     swal {
       title: 'Tutorial Complete!'
-      text: 'That\'s all you need to know to start using HabitLab. If you\'d like, you can configure more options and view the list of interventions for each goal at the bottom of this page.'
+      text: 'That\'s all you need to know to start using HSO. If you\'d like, you can configure more options and view the list of interventions for each goal at the bottom of this page.'
       type: 'success'
       allowOutsideClick: false
       allowEscapeKey: false
-      #showCancelButton: true
+      showCancelButton: true
       #confirmButtonText: 'Visit Facebook to see an intervention in action'
-      #cancelButtonText: 'Close'
+      cancelButtonText: 'Close'
     }
     this.$$('#configurations').style.display = "block"
     # this.$$('#intro3').style.display = "block"
@@ -222,6 +222,7 @@ polymer_ext {
 
   ready: ->>
     this.rerender()
+    this.show_swal()
     load_css_file('bower_components/sweetalert2/dist/sweetalert2.css')
 
     survey_data = localstorage_getjson("survey_data")

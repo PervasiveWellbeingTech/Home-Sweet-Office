@@ -11,6 +11,7 @@
           width: 100%;
           padding: 10px 20px;
           margin-top: 0px;
+          font-weight: bold;
         }
         ;
       }
@@ -25,18 +26,23 @@
 
       .title {
         font-size: 38px;
+        font-weight: 600;
         margin-top: 0.3em;
         margin-bottom: 20px;
+      }
+      .card_title{
+        font-weight: bold;
       }
 
       .paper-card {
         width: 100%;
         margin-left: 20px;
         margin-right: 20px;
+        font-weight: bold;
       }
-
       .card-content {
         font-size: 20px;
+        font-weight: normal;
       }
     </style>
 
@@ -44,30 +50,40 @@
 
       <div class="title" style="color: white">Help / FAQ</div>
 
-      <paper-card heading="I have an idea for an intervention or goal!" class="paper-card">
+      <!--
+      <paper-card heading="I have an idea for an intervention or goal!" class="paper-card card_title">
         <div class="card-content">
           <a href="https://www.reddit.com/r/habitlab/" target="_blank">Submit your idea to our idea incubator on Reddit</a> or try implementing it yourself with the
           <a href="index.html?tag=intervention-editor" target="_blank">nudge editor</a>.
         </div>
       </paper-card>
+      -->
 
-      <paper-card heading="I have feedback / I found a bug!" class="paper-card">
+      <!--
+      <paper-card heading="I have feedback / I found a bug!" class="paper-card card_title">
         <div class="card-content">
           <a href="#help" on-click="submit_feedback_clicked">Click here to submit feedback</a> and it will be sent to our
           <a href="https://github.com/habitlab/habitlab/issues">bug tracker</a>.
         </div>
       </paper-card>
+      -->
+      <paper-card heading="What is a nudge?" class="paper-card card_title">
+        <div class="card-content">
+        A nudge is an indirect suggestion to prompt a certain, often positive behavior. In HSO, we use productivity nudges on your selected sites to help you be more productive.
+        We also change the HSO icon to encourage you to do a stress intervention.
+        </div>
+      </paper-card>
 
-      <paper-card heading="I am not seeing any nudges on a page" class="paper-card">
+      <paper-card heading="I am not seeing any nudges on a page" class="paper-card card_title">
         <div class="card-content">
           Make sure you have set a goal to reduce time spent on that page. You can set goals on the <a on-click="change_tab"
             newtab="settings" href="https://habitlab.github.io/to?q=options#settings">settings tab</a>.
         </div>
       </paper-card>
 
-      <paper-card heading="How do I disable a nudge?" class="paper-card">
+      <paper-card heading="How do I disable a nudge?" class="paper-card card_title">
         <div class="card-content">
-          To disable a nudge for just one visit, click on the <img id="iconimg" src="{{get_icon()}}">in the Chrome toolbar
+          To disable a nudge for just one visit, click on the HSO icon in the Chrome toolbar
           when the nudge is active, and press "Turn Off".
           <br><br> To disable a nudge for future visits, go to the tab for the site on which the nudge operates (ie, <a on-click="change_tab"
             newtab="facebook" href="https://habitlab.github.io/to?q=options#facebook">Facebook</a>), and click "Off" next
@@ -75,9 +91,9 @@
         </div>
       </paper-card>
 
-      <paper-card heading="How do I temporarily disable all nudges?" class="paper-card">
+      <paper-card heading="How do I temporarily disable all nudges?" class="paper-card card_title">
         <div class="card-content">
-          You can disable all nudges for the rest of the day by clicking the <img id="iconimg" src="{{get_icon()}}">in the
+          You can disable all nudges for the rest of the day by clicking the HSO icon in the
           Chrome toolbar, and click "Turn Off HSO Today".
           <br><br> You can also set HSO to only deploy nudges during work hours on the <a on-click="change_tab" newtab="settings"
             href="https://habitlab.github.io/to?q=options#settings">settings tab</a>.
@@ -85,14 +101,14 @@
       </paper-card>
 
       <!--
-      <paper-card heading="How does HSO work?" class="paper-card">
+      <paper-card heading="How does HSO work?" class="paper-card card_title">
         <div class="card-content">
           HSO will help you achieve your goals by showing you a different <i>nudge</i>, like a news feed blocker or a delayed page loader, each time you visit your goal sites.
         </div>
       </paper-card>
       -->
 
-      <paper-card heading="Why do I see a different nudge on each visit?" class="paper-card">
+      <paper-card heading="Why do I see a different nudge on each visit?" class="paper-card card_title">
         <div class="card-content">
           HSO will help you achieve your goals by showing you a different <i>nudge</i>, like a news feed blocker or
           a delayed page loader, each time you visit your goal sites.
@@ -105,7 +121,7 @@
         </div>
       </paper-card>
 
-      <paper-card heading="How does HSO choose which nudges to show me?" class="paper-card">
+      <paper-card heading="How does HSO choose which nudges to show me?" class="paper-card card_title">
         <div class="card-content">
           Each visit, HSO will test a new nudge and measure how much time you spend on the site. Then it determines the efficacy
           of each nudge by comparing the time spent per visit when that nudge was deployed, compared to when other nudges
@@ -115,30 +131,32 @@
         </div>
       </paper-card>
 
-      <paper-card heading="How can I access the dashboard?" class="paper-card">
+      <paper-card heading="How can I access the dashboard?" class="paper-card card_title">
         <div class="card-content">
-          You can access the dashboard and settings page by clicking the <img id="iconimg" src="{{get_icon()}}">in the Chrome
+          You can access the dashboard and settings page by clicking the HSO icon in the Chrome
           toolbar, where you also can see progress on your goals.<br><br>
         </div>
       </paper-card>
 
-      <paper-card heading="How can I make a nudge always shown when I visit a page?" class="paper-card">
+      <paper-card heading="How can I make a nudge always shown when I visit a page?" class="paper-card card_title">
         <div class="card-content">
           Disable all the other nudges for that site.
         </div>
       </paper-card>
 
-      <paper-card heading="How can I make multiple nudges shown when I visit a page?" class="paper-card">
+      <paper-card heading="How can I make multiple nudges shown when I visit a page?" class="paper-card card_title">
         <div class="card-content">
           Not currently supported. As a workaround, you can use the <a href="index.html?tag=intervention-editor" target="_blank">nudge editor</a>          to create a new nudge that shows multiple nudges at once.
         </div>
       </paper-card>
 
-      <paper-card heading="My question was not answered / Contact us" class="paper-card">
+      <!--
+      <paper-card heading="My question was not answered / Contact us" class="paper-card card_title">
         <div class="card-content">
           <a href="https://github.com/habitlab/habitlab/issues" target="_blank">Report an issue on Github</a> or <a href="mailto:{{mailing_list}}" target="_blank">email us</a> and we will get back to you!
         </div>
       </paper-card>
+      -->
 
     </div>
 

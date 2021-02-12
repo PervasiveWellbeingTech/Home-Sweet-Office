@@ -149,14 +149,24 @@
           color:white;
         }
 
+        .title{
+          color:white;
+          font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+          text-align:center;
+          font-weight:600;
+          font-size: 38px;
+          margin-top: 0.3em;
+          margin-bottom: 20px;
+          /*text-shadow: 1px 1px 2px #346da3; */
+        }
         #title{
           color:white;
           font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-          font-size: 30px;
-          padding-top: 30px;
-          padding-bottom: 20px;
           text-align:center;
           font-weight:400;
+          font-size: 30px;
+          margin-top: 0.3em;
+          margin-bottom: 20px;
           /*text-shadow: 1px 1px 2px #346da3; */
         }
 
@@ -245,9 +255,9 @@
     </custom-style>
 
     <div class="card-container">
+      <div class="title" style="color:white ">Settings</div>
       <div id="intro1" class="intro" style="display: none;">
-        <paper-card id = "title" style = "color:white" class="papercard">
-
+        <paper-card id="title" style = "color:white" class="papercard">
 
           <paper-card id="surveycard" style ="color:white; padding-bottom: 10px" class="papercard">
             <div> Study Surveys </div>
@@ -453,14 +463,14 @@
 
       <div id="intro6" class="intro" style="display: none;">
         <paper-card style = "color:white;" class="papercard">
-          <div style="color: white; padding-top: 30px; padding-bottom: 16px; font-size: 30px">Home Sweet Office Updates</div>
+          <div style="color: white; padding-top: 30px; font-size: 30px">Home Sweet Office Updates</div>
           <update-check id="habitlab_updates"></update-check>
         </paper-card>
       </div>
 
       <div id="intro5" class="intro" style="display: none;">
         <paper-card style ="color:white;" class="papercard">
-          <div style="color: white; padding-top: 30px; padding-bottom: 16px; font-size: 30px">Logging and Privacy</div>
+          <div style="color: white; padding-top: 30px; font-size: 30px">Logging and Privacy</div>
           <privacy-options id="privacy_options"></privacy-options>
         </paper-card>
       </div>

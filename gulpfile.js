@@ -487,6 +487,7 @@
           if (intervention_name.startsWith(generic_intervention_category_with_slash)) {
             generic_intervention = intervention_name;
             make_absolute_path = fn$;
+            //console.log(intervention_name_to_info[generic_intervention]);
             intervention_info = JSON.parse(JSON.stringify(intervention_name_to_info[generic_intervention]));
             intervention_name = goal_info.sitename + '/' + generic_intervention.substr(generic_intervention_category_with_slash.length);
             intervention_info.generic_intervention = generic_intervention;

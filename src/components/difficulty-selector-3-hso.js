@@ -51,7 +51,7 @@ polymer_ext({
       }
     }
     console.log(this.stressful_array);
-    localStorage.setItem("stressful_sites", this.stressful_array);
+    localStorage.setItem("stressful_sites", JSON.stringify(this.stressful_array));
   },
 
   ignore_keydown: function(evt) {
@@ -102,13 +102,14 @@ polymer_ext({
             checkbox.checked = true;
             checkbox.onchange = this.selectedNudgechanged;
             //checkbox.classList.add('checkbox_class');
+
         li.classList.add('added_site_button');
         li.appendChild(checkbox);
         li.appendChild(document.createTextNode(input));
 
         checkbox_list.appendChild(li);
       }
-      localStorage.setItem("stressful_sites", this.stressful_array);
+      localStorage.setItem("stressful_sites", JSON.stringify(this.stressful_array));
     }
   },
 
@@ -122,6 +123,7 @@ polymer_ext({
       this.ignoreselectedchanged = false
       */
   //  }
+    localStorage.setItem("stressful_sites", JSON.stringify(this.stressful_array));
   }
 
 }, {

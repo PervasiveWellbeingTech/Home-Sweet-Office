@@ -193,7 +193,6 @@
         }
 
         .intervention_panel{
-          margin-top: 5%;
           width: 100%;
           height: 500px;
         }
@@ -209,24 +208,26 @@
         <!--
         <paper-toggle-button checked="{{is_habitlab_disabled}}" style="float: left; margin-top: 5px; margin-left: 5px" on-change="disable_habitlab_changed"><span style="color: white">Turn Off HabitLab Today</span></paper-toggle-button>
         -->
-
+        <div>
+        <p id="userid_label" style="color:white; display: inline-block; float: left;"> Userid: </p>
         <div class="flexcontainer">
           <paper-button class="paperbuttons" raised id="debugButton" style="display: none" on-click="debug_button_clicked">Debug</paper-button>
-          <paper-button class="paperbuttons" raised id="feedbackButton" on-click="submit_feedback_clicked">Feedback</paper-button>
+          <paper-button class="paperbuttons" raised id="feedbackButton" style="display:none" on-click="submit_feedback_clicked">Feedback</paper-button>
           <paper-button class="paperbuttons" raised on-click="results_button_clicked">Results</paper-button>
           <paper-button class="paperbuttons" raised on-click="settings_button_clicked">Settings</paper-button>
         </div>
+      </div>
 
         <paper-button class="paperbuttons" raised id="survey_button" on-click="survey_button_clicked"></paper-button>
 
         <template is="dom-if" if="{{!stress_intervention_active}}">
 
-          <paper-card class="intervention_panel" id="home_panel" style="height: 130px; margin-top: 0"> <!-- Change height if Habitlab enabled-->
+          <paper-card class="intervention_panel" id="home_panel" style="height: 120px; margin-top: 0"> <!-- Change height if Habitlab enabled-->
             <iron-icon  src="../icons/close_icon.png" style="float: right; padding: 5px; cursor: pointer" raised on-click="close_popup"></iron-icon>
 
             <div style="margin: 1%; font-size: 15px; text-align: left; font-weight: bold">Stress Management</div>
             <div style="margin-top: 2%"><!-- Change margin-top if Habilab enabled -->
-              <div id="intro_message" style="font-size: 20px; text-align: center; margin-bottom: 2%">Take a sweet moment to destress.</div>
+              <div id="intro_message" style="font-size: 18px; text-align: center; margin-bottom: 2%">Take a sweet moment to destress.</div>
               <paper-button class="stressIntervention_button" style="color:white;margin-top:0%" raised on-click="start_stress_intervention">BEGIN</paper-button>
             </div>
           </paper-card>
@@ -289,7 +290,7 @@
         </paper-card>
 
         <paper-card>
-          <graph-donut-top-sites style="margin-bottom: 10px"></graph-donut-top-sites>
+          <graph-donut-top-sites style="margin-bottom: 0px"></graph-donut-top-sites>
           <!--
           <paper-tabs selected="{{selected_graph_tab}}">
             <paper-tab>Usage Statistics</paper-tab>
@@ -352,7 +353,9 @@
                   </div>
                   <div id="intervention_text" style="max-height: 100px; overflow-y: auto; overflow-wrap: normal; display: inline-block; margin:3% 5% 0 5%;font-size:20px;text-align:left"></div>
 
-              <paper-button id="intervention_go_button" class="stressIntervention_button" style="color:white; margin-bottom: 0" raised on-click="click_intervention_link">Let's do it</paper-button>
+              <paper-button id="intervention_go_button" class="stressIntervention_button" style="color:white; margin-bottom: 0" raised on-click="click_intervention_link">
+                <p id="intervention_button_text">Let's do it</p>
+                </paper-button>
               <paper-button id="intervention_dismiss_button" class="stressIntervention_button" style="color:white; background-color: gray; margin-top: 2%" raised on-click="dismiss_intervention">I can't / don't want to do this right now.</paper-button>
 
               <!--
@@ -403,37 +406,37 @@
               </div>
 
                 <div id="stress_meter" align="center" style="margin-top: 5%">
-                    <label class="stress_button" id="green_button">
-                    <input type="radio" name="stress_level" value=-3 >
-                    <img src="../icons/HSO_icons/circle_green.png" width=50 height=50/>
-                    </label>
-                    <label class="stress_button" id="green_button">
-                    <input type="radio" name="stress_level" value=-2 >
-                    <img src="../icons/HSO_icons/circle_green.png" width=50 height=50/>
+                  <label class="stress_button" id="brown_button">
+                  <input type="radio" name="stress_level" value=1>
+                  <img src="../icons/HSO_icons/circle_brown.png" width=50 height=50/>
                   </label>
-                    <label class="stress_button" id="green_button">
-                    <input type="radio" name="stress_level" value=-1 >
-                    <img src="../icons/HSO_icons/circle_green.png" width=50 height=50 />
+                  <label class="stress_button" id="brown_button">
+                  <input type="radio" name="stress_level" value=2 >
+                  <img src="../icons/HSO_icons/circle_brown.png" width=50 height=50/>
                   </label>
-                    <label class="stress_button" id="gray_button">
-                    <input type="radio" name="stress_level" value=0 checked>
-                    <img src="../icons/HSO_icons/circle_gray.png" width=50 height=50 />
+                  <label class="stress_button" id="brown_button">
+                  <input type="radio"  name="stress_level" value=3 >
+                  <img src="../icons/HSO_icons/circle_brown.png" width=50 height=50/>
                   </label>
-                    <label class="stress_button" id="brown_button">
-                    <input type="radio" name="stress_level" value=1>
-                    <img src="../icons/HSO_icons/circle_brown.png" width=50 height=50/>
+                  <label class="stress_button" id="gray_button">
+                  <input type="radio" name="stress_level" value=0 checked>
+                  <img src="../icons/HSO_icons/circle_gray.png" width=50 height=50 />
                   </label>
-                    <label class="stress_button" id="brown_button">
-                    <input type="radio" name="stress_level" value=2 >
-                    <img src="../icons/HSO_icons/circle_brown.png" width=50 height=50/>
+                  <label class="stress_button" id="green_button">
+                  <input type="radio" name="stress_level" value=-3 >
+                  <img src="../icons/HSO_icons/circle_green.png" width=50 height=50/>
                   </label>
-                    <label class="stress_button" id="brown_button">
-                    <input type="radio"  name="stress_level" value=3 >
-                    <img src="../icons/HSO_icons/circle_brown.png" width=50 height=50/>
+                  <label class="stress_button" id="green_button">
+                  <input type="radio" name="stress_level" value=-2 >
+                  <img src="../icons/HSO_icons/circle_green.png" width=50 height=50/>
                   </label>
-                  <div style="display:inline-block;margin-left: -3%; width:83%">
-                    <p style="float: left; font-size: 15px;">Not Stressed <br> At All</p>
-                    <p style="float: right; font-size: 15px;">Very <br> Stressed</p>
+                  <label class="stress_button" id="green_button">
+                  <input type="radio" name="stress_level" value=-1 >
+                  <img src="../icons/HSO_icons/circle_green.png" width=50 height=50 />
+                  </label>
+                  <div style="display:inline-block;margin-left:3%; width:83%">
+                    <p style="float: left; font-size: 15px;">Very<br>Stressed</p>
+                    <p style="float: right; font-size: 15px;">Not Stressed<br>At All</p>
                   </div>
               </div>
 
@@ -498,7 +501,6 @@
           </paper-card>
         </template>
 
-        <p id="userid_label" style="color:white; float: right;"> Userid: </p>
 
         </div>
       </div>

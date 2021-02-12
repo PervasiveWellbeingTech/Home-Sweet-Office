@@ -47,7 +47,7 @@ polymer_ext {
       type: Number
       value: do ->
         if (window.hashdata_unparsed == 'last')
-          output = 8
+          output = 9
           '''
           if localStorage.positive_goals_disabled == 'true'
             output -= 1
@@ -109,7 +109,7 @@ polymer_ext {
     last_slide_idx: {
       type: Number
       value: do ->
-        output = 8
+        output = 9
         '''
         if localStorage.positive_goals_disabled == 'true'
           output -= 1

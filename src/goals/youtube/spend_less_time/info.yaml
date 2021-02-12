@@ -11,8 +11,6 @@ interventions:
   - youtube/remove_recommended
   #- generic/make_user_wait
   - generic/block_after_interval_per_visit
-  - generic/instagram_redirect
-  - generic/do_jumping_jacks
   #- generic/close_tab_timer
   #- generic/scroll_blocker
   #- generic/show_user_info_interstitial
@@ -28,8 +26,6 @@ default_interventions:
   - youtube/remove_recommended
   #- generic/make_user_wait
   - generic/block_after_interval_per_visit
-  - generic/instagram_redirect
-  - generic/do_jumping_jacks
   #- stress_interventions/redirect_to_instagram
   #- generic/close_tab_timer
   #- generic/scroll_blocker

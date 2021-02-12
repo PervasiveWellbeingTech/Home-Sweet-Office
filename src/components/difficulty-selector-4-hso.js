@@ -49,7 +49,7 @@ polymer_ext({
     }
     //console.log(this.approved_array);
 
-    localStorage.setItem("approved_sites", this.approved_array);
+    localStorage.setItem("approved_sites", JSON.stringify(this.approved_array));
     /*
     let prev_enabled_interventions = await get_enabled_interventions()
     if (localStorage.difficulty_selector_userchoice == 'true') {
@@ -92,7 +92,7 @@ polymer_ext({
       */
   //  }
   // Eventually we would like to be able to change this list of sites so that they update with the intervention list
-    localStorage.setItem("approved_sites", this.approved_array);
+    localStorage.setItem("approved_sites", JSON.stringify(this.approved_array));
   }
 
 }, {

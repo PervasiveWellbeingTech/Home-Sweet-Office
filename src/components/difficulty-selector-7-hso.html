@@ -1,0 +1,72 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer-themes/ice.html">
+<link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+
+<dom-module id="difficulty-selector-7-hso">
+  <template>
+    <style>
+       :host {
+        display: block;
+        width: 100%;
+        height: 100%;
+        --paper-radio-button-label-color: white;
+        --paper-radio-button: {
+          color: white;
+        };
+      }
+
+      .title {
+        font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-size: 45px;
+        padding-top: 7%;
+        text-align: center;
+        font-weight: 400;
+        /*text-shadow: 1px 1px 2px #346da3; */
+      }
+
+      .subtext {
+        font-size: 25px;
+        font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        padding-top: 1%;
+      }
+
+      .icon_image{
+        width:20%;
+        margin-top: 4%;
+      }
+      .radiobuttons {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+        font-size: 20px;
+        text-align: left;
+        color: white;
+      }
+
+      .radiobutton {
+        color: white;
+      }
+      .papercard {
+        margin-top: 5%;
+        border-radius: 30px;
+      }
+
+    </style>
+
+
+  <div class="title">Where are you right now?</div>
+  <div class="subtext">This will help us recommend better interventions.</div>
+
+  <paper-card class="papercard">
+    <paper-radio-group on-selected-changed="selectedLocationchanged" class="radiobuttons" id="locationradiogroup">
+      <paper-radio-button name="home" on-keydown="ignore_keydown" class="radiobutton" ><strong>HOME</strong></paper-radio-button><br>
+      <paper-radio-button name="office" on-keydown="ignore_keydown" class="radiobutton" ><strong>OFFICE</strong></paper-radio-button><br>
+      <paper-radio-button name="other" on-keydown="ignore_keydown" class="radiobutton" ><strong>OTHER</strong></paper-radio-button><br>
+    </paper-radio-group>
+  </paper-card>
+
+  </template>
+  <script src="difficulty-selector-7-hso.js"></script>
+</dom-module>

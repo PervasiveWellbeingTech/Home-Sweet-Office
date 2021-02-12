@@ -21,30 +21,30 @@ const {
 } = require('libs_backend/db_utils')
 
 polymer_ext({
-  is: 'difficulty-selector-hso',
-  selectedNudgechanged: async function(evt) {
-    // get value of menu
-    // update value in
-    var nudge_time = evt.detail.value;
-    console.log(nudge_time);
-    localStorage.setItem('nudge_time', nudge_time);
-  },
-
+  is: 'difficulty-selector-7-hso',
 
   ignore_keydown: function(evt) {
-    //evt.preventDefault()
+    evt.preventDefault()
     //evt.stopPropagation()
-    //return false
+    return false
+  },
+
+  selectedLocationchanged: async function(evt) {
+    let user_location = evt.detail.value;
+    console.log(user_location);
+    localStorage.setItem('install_location', user_location);
   },
 
   ready: async function(evt) {
-    /*
-    if (localStorage.user_chosen_difficulty != null) {
+    //if (localStorage.user_chosen_difficulty != null) {
       //await once_available('')
-      ret
-
-    }
-    */
+      /*
+      this.ignoreselectedchanged = true
+      await this.once_available('#difficultyradiogroup')
+      this.$$('#difficultyradiogroup').selected = localStorage.user_chosen_difficulty
+      this.ignoreselectedchanged = false
+      */
+  //  }
   }
 
 }, {
