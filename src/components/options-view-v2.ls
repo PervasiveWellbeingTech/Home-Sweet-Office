@@ -170,12 +170,12 @@ polymer_ext {
     , ->
       self.$$('#siteview_' + goal_sitename).rerender()
     return
-  onboarding_completed: ->
-    swal({
-        title: "Done Setting Up Home Sweet Moment!",
-        text: "This is the settings page, where you can manage your settings and track your progress.",
-        confirmButtonColor: "#3C5A96"
-    });
+  #onboarding_completed: ->
+  #  swal({
+  #      title: "Done Setting Up Home Sweet Moment!",
+  #      text: "This is the settings page, where you can manage your settings and track your progress.",
+  #      confirmButtonColor: "#3C5A96"
+  #  });
     return
 
   on_goal_changed: (evt) ->

@@ -17,6 +17,9 @@
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="initial-goal-selector.html">
 <link rel="import" href="positive-goal-selector.html">
+<link rel="import" href="difficulty-selector-hso.html">
+<link rel="import" href="difficulty-selector-3-hso.html">
+<link rel="import" href="difficulty-selector-4-hso.html">
 <link rel="import" href="privacy-options.html">
 <link rel="import" href="misc-options.html">
 <link rel="import" href="update-check.html">
@@ -336,14 +339,13 @@
           <paper-button class="next-button" id="done-btn" on-click="intro3_read">Next</paper-button>
           -->
 
-
-
-
-
-
-
         </paper-card>
       </div>
+
+    <paper-card class="papercard" heading="{{title_text}}">
+      <!--<div style="padding: 16px; font-size: 24px; font-weight: 400; color: black">What goals should HabitLab help you achieve? <iron-icon icon="help-outline" on-click="goals_help_icon_clicked" style="margin-bottom: 5px; cursor: pointer"></iron-icon></div>-->
+      <difficulty-selector-hso id="difficulty-selector-hso" />
+    </paper-card>
 
     <paper-card class="papercard" heading="{{title_text}}">
       <!--<div style="padding: 16px; font-size: 24px; font-weight: 400; color: black">What goals should HabitLab help you achieve? <iron-icon icon="help-outline" on-click="goals_help_icon_clicked" style="margin-bottom: 5px; cursor: pointer"></iron-icon></div>-->
@@ -351,13 +353,15 @@
       <paper-button id="goals-button" class="next-button" on-click="goals_set">Next</paper-button>
     </paper-card>
 
-    <template is="dom-if" if="{{!positive_goals_disabled}}">
-      <paper-card class="papercard" heading="{{title_text}}">
-        <!--<div style="padding: 16px; font-size: 24px; font-weight: 400; color: black">What goals should HabitLab help you achieve? <iron-icon icon="help-outline" on-click="goals_help_icon_clicked" style="margin-bottom: 5px; cursor: pointer"></iron-icon></div>-->
-        <positive-goal-selector id="positive_goal_selector" />
-        <paper-button id="positive-goals-button" class="next-button" on-click="goals_set">Next</paper-button>
-      </paper-card>
-    </template>
+    <paper-card class="papercard" heading="{{title_text}}">
+      <!--<div style="padding: 16px; font-size: 24px; font-weight: 400; color: black">What goals should HabitLab help you achieve? <iron-icon icon="help-outline" on-click="goals_help_icon_clicked" style="margin-bottom: 5px; cursor: pointer"></iron-icon></div>-->
+      <difficulty-selector-3-hso id="difficulty-selector-3-hso" />
+    </paper-card>
+
+    <paper-card class="papercard" heading="{{title_text}}">
+      <!--<div style="padding: 16px; font-size: 24px; font-weight: 400; color: black">What goals should HabitLab help you achieve? <iron-icon icon="help-outline" on-click="goals_help_icon_clicked" style="margin-bottom: 5px; cursor: pointer"></iron-icon></div>-->
+      <difficulty-selector-4-hso id="difficulty-selector-4-hso" />
+    </paper-card>
 
     <!-- HSO is not syncing with mobile devices---
     <template is="dom-if" if="{{!sync_enabled}}" class="intro" style="display: none">
