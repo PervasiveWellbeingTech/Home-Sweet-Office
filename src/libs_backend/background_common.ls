@@ -216,6 +216,10 @@ export get_active_tab_info = ->>
     return tabs[0]
   return
 
+export get_all_tabs_info = ->>
+  tabs = await new Promise -> chrome.tabs.query {currentWindow: true}, it
+  return tabs
+
 export get_active_tab_url = ->>
   active_tab_info = await get_active_tab_info()
   return active_tab_info.url
@@ -323,34 +327,34 @@ export chrome_get_token = ->>
   redirectUri =  chrome.identity.getRedirectURL('oauth2')
   #redirectUri = 'chrome-extension://bleifeoekkfhicamkpadfoclfhfmmina'
 
-  url = 'https://accounts.google.com/o/oauth2/auth' + 
-            #'&response_type=id_token' + 
+  url = 'https://accounts.google.com/o/oauth2/auth' +
+            #'&response_type=id_token' +
             #'&response_type=code' +
             '?response_type=id_token' +
             #'?response_type=code' +
-            '&access_type=offline' + 
+            '&access_type=offline' +
             '&client_id=' + clientId +
             #'&redirect_uri=urn:ietf:wg:oauth:2.0:oob:auto' +
             #'&redirect_uri=urn:ietf:wg:oauth:2.0:oob' +
-            '&redirect_uri=' + redirectUri + 
+            '&redirect_uri=' + redirectUri +
             #'&redirect_uri=http://localhost:3000/_oauth/google' +
             #'&redirect_uri=postmessage' +
             '&scope=' + scopes
 
 
-  
+
   result = await new Promise (resolve, reject) -> chrome.identity.launchWebAuthFlow(
     {
       'url': url
       'interactive':true
     },
     (redirectedTo) ->
-      if (chrome.runtime.lastError) 
+      if (chrome.runtime.lastError)
         console.log 'have error'
         # Example: Authorization page could not be loaded.
         console.log chrome.runtime.lastError.message
         reject 'error'
-      else 
+      else
         response = redirectedTo.split('#', 2)[1];
         # Example: id_token=<YOUR_BELOVED_ID_TOKEN>&authuser=0&hd=<SOME.DOMAIN.PL>&session_state=<SESSION_SATE>&prompt=<PROMPT>
         resolve response

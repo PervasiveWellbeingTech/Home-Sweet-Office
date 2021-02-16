@@ -29,6 +29,7 @@ get_screenshot_utils = ->>
   list_currently_loaded_interventions
   list_currently_loaded_interventions_for_tabid
   get_active_tab_info
+  get_all_tabs_info
   disable_interventions_in_active_tab
   open_debug_page_for_tab_id
 } = require 'libs_backend/background_common'
@@ -430,7 +431,9 @@ polymer_ext {
     localstorage_setstring("current_panel", "stress_before")
     localstorage_setstring("panel_timer", (new Date()).getTime())
     localstorage_setbool('intervention_timed_out', false)
-    if (await localstorage_getbool('icon_nudge_active'))
+    nudge_active = 0
+    if (localstorage_getbool('icon_nudge_active'))
+      nudge_active = 1
       once_available("home_panel", this.set_nudge_message())
     #console.log(localstorage_getstring("current_panel", "stress_before"))
     # Create object to send to database
@@ -438,15 +441,16 @@ polymer_ext {
     #console.log(localstorage_getjson("intervention_data_tosend"))
     to_send = localstorage_getjson("intervention_data_tosend")
     # Add contextual data
-    to_send["contextual_info"] = {}
     to_send["date"] = new Date()
     to_send["userid"] = await get_user_id()
-    to_send["interventions_shown"] = []
+    to_send["nudge_active"] = nudge_active
     #console.log("Click rate buffer: ", await localstorage_getjson("click_rate_buffer"))
     #console.log(typeof(await localstorage_getjson("click_rate_buffer")))
-    to_send["contextual_info"]["click_rate_buffer"] = await localstorage_getjson("click_rate_buffer")
-    to_send["contextual_info"]["scroll_rate_buffer"] = await localstorage_getjson("scroll_rate_buffer")
-    to_send["contextual_info"]["current_tab_info"] = await get_active_tab_info()
+    # VVV Not using contextual info object anymore
+    to_send["click_rate_buffer"] = await localstorage_getjson("click_rate_buffer")
+    to_send["scroll_rate_buffer"] = await localstorage_getjson("scroll_rate_buffer")
+    to_send["current_tab_info"] = await get_active_tab_info()
+    to_send["all_tabs_info"] = await get_all_tabs_info()
     localstorage_setjson("intervention_data_tosend", to_send)
     console.log(localstorage_getjson("intervention_data_tosend"))
     this.$$("input[name=stress_level]:checked").value = stress_level_before
@@ -599,8 +603,7 @@ polymer_ext {
       localstorage_setbool('intervention_timed_out', false)
       localstorage_setbool('intervention_dismissed', true)
       to_send["intervention_completed"] = 0
-      to_send["intervention_cancelled"] = 0
-      to_send["intervention_dismissed"] = 1
+      to_send["intervention_cancelled"] = 1
       localstorage_setjson("intervention_data_tosend", to_send)
 
 
