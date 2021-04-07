@@ -239,8 +239,20 @@ polymer_ext {
     last_slide_idx = this.SM('.slide').length - 1
     # Add popup to ensure user pins icon to browser
     #if this.slide_idx == 1
-    #swal("Did you make sure the icon is pinned? You can't get interventions without it!")
-    #  return
+      #swal({
+      #   title: "Wait!",
+      #   text: "Did you pin the icon to your browser? It's important!",
+      #   confirmButtonText: "Yes"
+      #   showCancelButton: True
+      #   cancelButtonText: "Not yet"
+         #function(isConfirm)
+        #if (isConfirm)
+        #      swal("yes, do it!")
+        #  else
+        #      swal("cannel!")
+        #
+      #})
+      #return
     if this.slide_idx == last_slide_idx
       return
     # $.fn.pagepiling.moveSectionDown();

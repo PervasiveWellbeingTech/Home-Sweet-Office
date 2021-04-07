@@ -21,6 +21,7 @@ localStorage.setItem('last_intervention', (new Date()).getTime())
 localStorage.setItem("intervention_timed_out", false)
 localStorage.setItem("click_rate_buffer", "[]")
 localStorage.setItem("scroll_rate_buffer", "[]")
+localStorage.setItem("scroll_rate_dates", "[]")
 localStorage.setItem("panel_timer", "")
 localStorage.setItem("nudge_time", default_nudge_time)
 localStorage.setItem("survey_data", "{}")
@@ -1177,18 +1178,27 @@ do !->>
       #  buffer = buffer.slice(1,51)
       buffer.push(click_len)
       localStorage.setItem("click_rate_buffer", JSON.stringify(buffer))
-      console.log(buffer)
+      #console.log(buffer)
       return
 
     'log_scroll': (data) ->>
+      scroll_dates = data["scroll_dates"]
+      buffer_data = data["scroll_buffer"]
+      # data is a list
       #console.log(data)
-      buffer = JSON.parse(localStorage.getItem("scroll_rate_buffer"))
-      if buffer.length >= 1000
-        buffer = buffer.slice(1,1001)
+      curr_dates = JSON.parse(localStorage.getItem("scroll_rate_dates"))
+      curr_buffer = JSON.parse(localStorage.getItem("scroll_rate_buffer"))
+      #if buffer.length >= 1000
+      #  buffer = buffer.slice(1,1001)
       #console.log(buffer)
-      buffer = buffer.concat(data)
+      dates_update = curr_dates.concat(scroll_dates)
+      buffer_update = curr_buffer.concat(buffer_data)
+      #console.log(dates_update)
+      #console.log(buffer_update)
+      localStorage.setItem("scroll_rate_buffer", JSON.stringify(buffer_update))
+      localStorage.setItem("scroll_rate_dates", JSON.stringify(dates_update))
+      #buffer.push(data)
       #console.log(buffer)
-      localStorage.setItem("scroll_rate_buffer", JSON.stringify(buffer))
       return
   }
 
@@ -1698,7 +1708,8 @@ do !->>
 
   export open_habitlab_uninstall_url = ->>
     uninstall_url = await get_habitlab_uninstall_url()
-    chrome.tabs.create {url: uninstall_url}
+    # Disabled for HSO:
+    #chrome.tabs.create {url: uninstall_url}
 
   if (not developer_mode) # not developer mode
     await set_habitlab_uninstall_url()
@@ -1891,6 +1902,7 @@ do !->>
   setInterval (->>
     click_buffer = localStorage.getItem("click_rate_buffer")
     scroll_buffer = localStorage.getItem("scroll_rate_buffer")
+    scroll_dates = localStorage.getItem("scroll_rate_dates")
 
     # Send data to log into db
     #console.log("Sending click_data and scroll_data to db...")
@@ -1910,13 +1922,15 @@ do !->>
     if scroll_buffer !== "[]"
       scroll_data = {}
       scroll_data["userid"] = userid
-      scroll_data["scroll_buffer"]= scroll_buffer
+      scroll_data["scroll_buffer"] = scroll_buffer
+      scroll_data["scroll_dates"] = scroll_dates
       #console.log(scroll_data)
       post_json(hso_server_url + "/postScrollData", scroll_data)
 
     # Reset buffers
     localStorage.setItem("click_rate_buffer", "[]")
     localStorage.setItem("scroll_rate_buffer", "[]")
+    localStorage.setItem("scroll_rate_dates", "[]")
 
   ), 120000 #900000 # = 15 mins
 

@@ -1,11 +1,14 @@
-let scroll_buffer = []
+let scroll_buffer = [];
+let scroll_dates = [];
+let start = 0;
 
-const checkScrollSpeed = (function(settings){
+var checkScrollSpeed = (function(settings){
     settings = settings || {};
 
     let lastPos, newPos, timer, delta,
         delay = 250; //settings.delay || 10;
-    let start = new Date();
+
+    //let start = new Date();
 
     function clear() {
         lastPos = null;
@@ -22,19 +25,25 @@ const checkScrollSpeed = (function(settings){
         lastPos = newPos;
         clearTimeout(timer);
         timer = setTimeout(clear, delay);
-        return {start, delta};
+        return delta;
     };
 })();
 
 
 document.addEventListener('scroll', function() {
+    start = new Date();
     let measurement = checkScrollSpeed();
-    console.log(measurement.toString());
-    scroll_buffer.push(checkScrollSpeed());
-    if (scroll_buffer.length > 100){
+    scroll_dates.push(start);
+    scroll_buffer.push(measurement);
+    console.log(scroll_dates);
+    console.log(scroll_buffer);
+    if (scroll_buffer.length >= 100){
+      //console.log("Scroll buffer 100 long. Record and wipe");
       //console.log(scroll_buffer);
-      let message = {type: 'log_scroll', data: scroll_buffer};
+      let message = {type: 'log_scroll', data: {"scroll_dates" : scroll_dates, "scroll_buffer": scroll_buffer}};
       chrome.runtime.sendMessage(message);
-      scroll_buffer = []
+      scroll_dates = [];
+      scroll_buffer = [];
+      //console.log(scroll_buffer);
     }
 });

@@ -441,6 +441,7 @@ polymer_ext {
     #console.log(localstorage_getjson("intervention_data_tosend"))
     to_send = localstorage_getjson("intervention_data_tosend")
     # Add contextual data
+    #to_send["top_sites"] = chrome.topSites.get()
     to_send["date"] = new Date()
     to_send["userid"] = await get_user_id()
     to_send["nudge_active"] = nudge_active
@@ -451,9 +452,10 @@ polymer_ext {
     to_send["scroll_rate_buffer"] = await localstorage_getjson("scroll_rate_buffer")
     to_send["current_tab_info"] = await get_active_tab_info()
     to_send["all_tabs_info"] = await get_all_tabs_info()
+    to_send["num_tabs"] = to_send["all_tabs_info"].length
     localstorage_setjson("intervention_data_tosend", to_send)
-    console.log(localstorage_getjson("intervention_data_tosend"))
-    this.$$("input[name=stress_level]:checked").value = stress_level_before
+    #console.log(localstorage_getjson("intervention_data_tosend"))
+    #this.$$("input[name=stress_level]:checked").value = stress_level_before
 
   set_nudge_message: ->>
     this.$$('#intro_message').css({'margin-top':'0', 'margin-bottom': '1%', 'font-size': '18px'})
@@ -497,10 +499,22 @@ polymer_ext {
     localstorage_setstring("current_panel", "intervention_loading")
     localstorage_setstring("panel_timer", (new Date()).getTime())
     localstorage_setbool('intervention_timed_out', false)
-    console.log("Requesting intervention from server...")
+    #console.log("Requesting intervention from server...")
     userid = await get_user_id()
-    this.intervention_data_received = await JSON.parse(await get_json(hso_server_url + "/getIntervention", "userid=" + userid))
-    console.log("Intervention received: " + JSON.stringify(this.intervention_data_received))
+    data_tosend = localstorage_getjson("intervention_data_tosend")
+    contextual_info = {}
+    contextual_info["date"] = data_tosend["date"]
+    contextual_info["nudge_active"] = data_tosend["nudge_active"]
+    contextual_info["num_tabs"] = data_tosend["num_tabs"]
+    contextual_info["stress_before"] = data_tosend["stress_before"]
+    contextual_info["userid"] = data_tosend["userid"]
+    contextual_info["curr_url"] = data_tosend["current_tab_info"]["url"]
+    contextual_info["curr_title"] = data_tosend["current_tab_info"]["curr_title"]
+    contextual_info["window_h"] = data_tosend["current_tab_info"]["height"]
+    contextual_info["window_w"] = data_tosend["current_tab_info"]["width"]
+    localstorage_setjson("contextual_info", contextual_info)
+    this.intervention_data_received = await JSON.parse(await get_json(hso_server_url + "/getIntervention", contextual_info))
+    #console.log("Intervention received: " + JSON.stringify(this.intervention_data_received))
     #await sleep(5000)
     localstorage_setjson("selected_intervention_data", this.intervention_data_received)
     this.show_stress_intervention()
@@ -519,30 +533,46 @@ polymer_ext {
       positive_psychology: 'positive_psych.png'
       productivity: 'Productivity.png'
       somatic: 'somatic.png'
+    this.int_type_text=
+      cognitive_behavioral: 'Cognitive Behavioral'
+      meta_cognitive: 'Meta-Cognitive'
+      positive_psychology: 'Positive Psychology'
+      productivity: 'Productivity'
+      somatic: 'Somatic'
+    this.int_type_detail =
+      cognitive_behavioral: 'Master Mind'
+      meta_cognitive: 'Wise Heart'
+      positive_psychology: 'Food For The Soul'
+      productivity: 'Work Wise'
+      somatic: 'Body Health'
     localstorage_setstring("current_panel", "intervention_display")
     localstorage_setstring("panel_timer", (new Date()).getTime())
     localstorage_setbool('intervention_timed_out', false)
-    console.log("Updating panel with intervention...")
+    #console.log("Updating panel with intervention...")
     once_available("intervention_panel", this.update_intervention_panel())
 
   update_intervention_panel: ->>
     data = await localstorage_getjson("selected_intervention_data")
-    console.log("Intervention data to display (Should match prev. data): " + JSON.stringify(data))
+    #console.log("Intervention data to display (Should match prev. data): " + JSON.stringify(data))
     this.$$('#intervention_text').innerHTML = data.text
-    this.$$('#intervention_duration').innerHTML = data.duration
-    this.$$('#intervention_title').innerHTML = "<b>Task: " + data.name + "<b>"
-    console.log(data.url)
-    if data.url !== ""
-      console.log("Changing button to add url")
-      console.log(data.url)
-      this.$$('#intervention_button_text').innerHTML="Let's do it.<br>(Open " + data.url + ")"
+    if typeof data.duration !== "undefined"
+      this.$$('#intervention_duration').innerHTML = data.duration
+    this.$$('#intervention_title').innerHTML = "<b>" + this.int_type_text[data.type] + "<b><br><b>\"" + this.int_type_detail[data.type] + "\"<b>"
+    #console.log(data.url)
+    if data.url.trim() !== ""
+      this.$$('#intervention_button_text').innerHTML="Let's do it."
+      short_url = data.url.replace(/^(https:\/\/)/,"").match(/.*(.com|.org)/g)[0]
+      this.$$('#intervention_button_hover').innerHTML = "Go to <br>" + short_url
     #console.log("../icons/HSO_icons/" + this.icons[data.type])
     this.$$('#intervention_icon').src = "../icons/HSO_icons/" + this.icons[data.type]
 
   record_stress_before: ->>
-    console.log("Recording stress before...")
+    #console.log("Recording stress before...")
     #await console.log(this.$$("input[name=stress_level]:checked").value)
     to_send = localstorage_getjson("intervention_data_tosend")
+    if this.$$("input[name=stress_level]:checked") === null
+      window.alert("Please select an option.")
+      return
     stress_level_before = this.$$("input[name=stress_level]:checked").value
     to_send["stress_before"] = stress_level_before
     localstorage_setjson("intervention_data_tosend", to_send)
@@ -586,7 +616,7 @@ polymer_ext {
     #chrome.tabs.create({ url: this.intervention_data_received.url }, function(tab) {
     #  chrome.tabs.sendMessage(tab.id, {type: "action_example"})
     #});
-    await if this.intervention_data_received.url !== "" then
+    await if this.intervention_data_received.url.trim() !== "" then
       chrome.windows.create(url: this.intervention_data_received.url, top: 50px, left: 50px, width:1300, height:900)
 
   dismiss_intervention: ->
@@ -656,7 +686,7 @@ polymer_ext {
 
   end_stress_intervention: ->>
     await this.send_intervention_data()
-    console.log("Ending intervention")
+    #console.log("Ending intervention")
     this.stress_intervention_active = false
     this.stress_intervention_display = false
     this.ask_intervention_done = false
@@ -715,14 +745,14 @@ polymer_ext {
       this.cancel_stress_intervention()
 
   cancel_stress_intervention: ->>
-    console.log("Cancelling intervention")
+    #console.log("Cancelling intervention")
     this.stress_intervention_active = false
     this.stress_intervention_display = false
     this.ask_intervention_done = false
     this.intervention_stress_before = false
     this.intervention_stress_after = false
     this.intervention_end = false
-    console.log("Cancelling stress intervention")
+    #console.log("Cancelling stress intervention")
     #console.log(this.$$("input[name=stress_level]:checked").value)
     #this.$$("input[name=stress_level]").value = 0
     #this.$$("input[name=stress_level]:checked").prop('checked', false)
@@ -737,15 +767,15 @@ polymer_ext {
     localstorage_setstring("panel_timer", "")
     this.send_intervention_data()
 
-  #check_for_survey: ->>
-    #userid = await get_user_id()
+  check_for_survey: ->>
+    userid = await get_user_id()
     #console.log("Sending request for survey data from user" + userid)
-    #survey_data = JSON.parse(await get_json(hso_server_url + "/getSurvey", "userid=" + userid))
+    survey_data = JSON.parse(await get_json(hso_server_url + "/getSurvey", "userid=" + userid))
     #console.log("Received data: " + JSON.stringify(survey_data))
-    #if Object.keys(survey_data).length !== 0
-    #  localstorage_setjson("survey_data", survey_data)
-    #  localstorage_setbool("icon_notif_active", true)
-    #  once_available("survey_button", this.enable_survey_button())
+    if Object.keys(survey_data).length !== 0
+      localstorage_setjson("survey_data", survey_data)
+      localstorage_setbool("icon_notif_active", true)
+      once_available("survey_button", this.enable_survey_button())
 
   enable_survey_button: ->>
     survey_data = await localstorage_getjson("survey_data")
@@ -850,13 +880,13 @@ polymer_ext {
     survey_data = await localstorage_getjson("survey_data")
     if typeof(survey_data) === 'undefined' or survey_data === null
       localstorage_setjson("survey_data", {})
-      console.log("No previous survey data. Sending request for new...")
+      #console.log("No previous survey data. Sending request for new...")
       #this.check_for_survey()
     else if Object.keys(survey_data).length !== 0
       localstorage_setbool('icon_notif_active', true)
       once_available("survey_button", this.enable_survey_button())
-    else
-      console.log("Survey data empty. Sending request for new...")
+    #else
+      #console.log("Survey data empty. Sending request for new...")
       #this.check_for_survey()
 
     once_available("userid_label", this.show_userid())

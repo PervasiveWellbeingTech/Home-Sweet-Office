@@ -5,7 +5,7 @@ default_locale: en
 description: >-
   Home Sweet Office delivers interventions to help you manage your stress
   while browsing the web
-version: 1.1.0
+version: 1.2.4
 minimum_chrome_version: 55.0.0.0
 permissions:
   - tabs
@@ -95,20 +95,16 @@ content_scripts:
       - 'http://*/*'
       - 'https://*/*'
 icons:
-  '19': icons/HSO_icons/icon_blue_1.svg
-  '32': icons/HSO_icons/icon_blue_1.svg
-  '38': icons/HSO_icons/icon_blue_1.svg
-  '48': icons/HSO_icons/icon_blue_1.svg
-  '64': icons/HSO_icons/icon_blue_1.svg
-  '128': icons/HSO_icons/icon_blue_1.svg
+  '16': icons/HSO_icons/icon_blue16.png
+  '32': icons/HSO_icons/icon_blue32.png
+  '48': icons/HSO_icons/icon_blue48.png
+  '128': icons/HSO_icons/icon_blue128.png
 browser_action:
   default_icon:
-    '19': icons/HSO_icons/icon_blue_1.svg
-    '32': icons/HSO_icons/icon_blue_1.svg
-    '38': icons/HSO_icons/icon_blue_1.svg
-    '48': icons/HSO_icons/icon_blue_1.svg
-    '64': icons/HSO_icons/icon_blue_1.svg
-    '128': icons/HSO_icons/icon_blue_1.svg
+    '16': icons/HSO_icons/icon_blue16.png
+    '32': icons/HSO_icons/icon_blue32.png
+    '48': icons/HSO_icons/icon_blue48.png
+    '128': icons/HSO_icons/icon_blue128.png
   default_popup: popup.html
 options_ui:
   page: options.html

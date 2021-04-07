@@ -185,16 +185,53 @@
           margin-left: auto;
           margin-right: auto;
           text-align: center;
-          width:50%;
-          margin-top:5%;
+          width:40%;
+          margin-top: 5%;
+          z-index: 1;
           --paper-button: {
             color: white;
           };
+
         }
 
         .intervention_panel{
           width: 100%;
           height: 500px;
+        }
+
+        /* Tooltip container */
+        .tooltip {
+          position: relative;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          text-align: center;
+        }
+
+        /* Tooltip text */
+        .tooltip .tooltiptext {
+          text-overflow: ellipsis;
+          visibility: hidden;
+          width: 100%;
+          background-color: black;
+          color: #fff;
+          text-align: center;
+          padding: 5px 5px 2px 5px;
+          border-radius: 5px;
+          bottom: 105%;
+          left: -10%;
+          margin-left: 0px; /* Use half of the width (120/2 = 60), to center the tooltip */
+
+          /* Position the tooltip text - see examples below! */
+          position: absolute;
+          z-index: 99;
+        }
+
+        /* Show the tooltip text when you mouse over the tooltip container */
+        .tooltip:hover .tooltiptext {
+          visibility: visible;
+          transition: 1s all ease;
+          transition-delay: 1s;
         }
 
 
@@ -344,19 +381,20 @@
             <!--<iron-icon style="float: left; padding: 5px; cursor: pointer" src="../icons/back_arrow.png" raised on-click="returnto_stress_before"></iron-icon>-->
             <!--<iron-icon  src="../icons/close_icon.png" style="float: right; padding: 5px; cursor: pointer" raised on-click="confirm_cancel"></iron-icon>-->
 
-              <div style="margin-top: 23%">
+              <div style="margin-top: 5%">
 
-                  <div style="padding:0 0 0 5%;float:left;width:85%">
-                      <img id="intervention_icon" style="float:left; width:10%;height:10%; margin-right: 10px" alt="Loading..."/>
-                       <p id="intervention_title" style=" display: inline; margin-bottom:20px;margin-top:20px;font-size:25px;text-align:center"><b>Loading...</b></p>
+                <img id="intervention_icon" style="width: 15%; display:block; margin-left:auto; margin-right: auto" alt="Loading..."/>
+                  <div style="margin-top:3%; text-align:center">
+                      <p id="intervention_title" style=" display: inline; margin-bottom:20px;margin-top:20px;font-size:25px;text-align:center"><b>Loading...</b></p>
                       <p id="intervention_duration" style="display: block; margin:10px 10px 5px 0;font-size:15px"></p>
                   </div>
                   <div id="intervention_text" style="max-height: 100px; overflow-y: auto; overflow-wrap: normal; display: inline-block; margin:3% 5% 0 5%;font-size:20px;text-align:left"></div>
 
-              <paper-button id="intervention_go_button" class="stressIntervention_button" style="color:white; margin-bottom: 0" raised on-click="click_intervention_link">
-                <p id="intervention_button_text">Let's do it</p>
+              <paper-button id="intervention_go_button" class="stressIntervention_button tooltip" style="color:white; margin-bottom: 0" raised on-click="click_intervention_link">
+                <p id="intervention_button_text" style="margin-top: 2%; margin-bottom: 2%;">Let's do it</p>
+                <span id="intervention_button_hover" class="tooltiptext"></span>
                 </paper-button>
-              <paper-button id="intervention_dismiss_button" class="stressIntervention_button" style="color:white; background-color: gray; margin-top: 2%" raised on-click="dismiss_intervention">I can't / don't want to do this right now.</paper-button>
+              <paper-button id="intervention_dismiss_button" class="stressIntervention_button" style="color:white; background-color: gray; margin-top: 2%" raised on-click="dismiss_intervention">Skip</paper-button>
 
               <!--
               <paper-button id="intervention_another_button" class="stressIntervention_button" raised on-click="get_stress_intervention">Give me another sweet moment</paper-button>
@@ -406,37 +444,49 @@
               </div>
 
                 <div id="stress_meter" align="center" style="margin-top: 5%">
-                  <label class="stress_button" id="brown_button">
+                  <label class="stress_button" id="gray_button">
                   <input type="radio" name="stress_level" value=1>
-                  <img src="../icons/HSO_icons/circle_brown.png" width=50 height=50/>
-                  </label>
-                  <label class="stress_button" id="brown_button">
-                  <input type="radio" name="stress_level" value=2 >
-                  <img src="../icons/HSO_icons/circle_brown.png" width=50 height=50/>
-                  </label>
-                  <label class="stress_button" id="brown_button">
-                  <input type="radio"  name="stress_level" value=3 >
-                  <img src="../icons/HSO_icons/circle_brown.png" width=50 height=50/>
+                  <img src="../icons/HSO_icons/circle_gray.png" width=40 height=40/>
                   </label>
                   <label class="stress_button" id="gray_button">
-                  <input type="radio" name="stress_level" value=0 checked>
-                  <img src="../icons/HSO_icons/circle_gray.png" width=50 height=50 />
+                  <input type="radio" name="stress_level" value=2>
+                  <img src="../icons/HSO_icons/circle_gray.png" width=40 height=40/>
                   </label>
-                  <label class="stress_button" id="green_button">
-                  <input type="radio" name="stress_level" value=-3 >
-                  <img src="../icons/HSO_icons/circle_green.png" width=50 height=50/>
+                  <label class="stress_button" id="gray_button">
+                  <input type="radio" name="stress_level" value=3>
+                  <img src="../icons/HSO_icons/circle_gray.png" width=40 height=40/>
                   </label>
-                  <label class="stress_button" id="green_button">
-                  <input type="radio" name="stress_level" value=-2 >
-                  <img src="../icons/HSO_icons/circle_green.png" width=50 height=50/>
+                  <label class="stress_button" id="gray_button">
+                  <input type="radio" name="stress_level" value=4>
+                  <img src="../icons/HSO_icons/circle_gray.png" width=40 height=40/>
                   </label>
-                  <label class="stress_button" id="green_button">
-                  <input type="radio" name="stress_level" value=-1 >
-                  <img src="../icons/HSO_icons/circle_green.png" width=50 height=50 />
+                  <label class="stress_button" id="gray_button">
+                  <input type="radio"  name="stress_level" value=5>
+                  <img src="../icons/HSO_icons/circle_gray.png" width=40 height=40/>
                   </label>
-                  <div style="display:inline-block;margin-left:3%; width:83%">
-                    <p style="float: left; font-size: 15px;">Very<br>Stressed</p>
-                    <p style="float: right; font-size: 15px;">Not Stressed<br>At All</p>
+                  <label class="stress_button" id="gray_button">
+                  <input type="radio" name="stress_level" value=6>
+                  <img src="../icons/HSO_icons/circle_gray.png" width=40 height=40 />
+                  </label>
+                  <label class="stress_button" id="gray_button">
+                  <input type="radio" name="stress_level" value=7>
+                  <img src="../icons/HSO_icons/circle_gray.png" width=40 height=40/>
+                  </label>
+                  <label class="stress_button" id="gray_button">
+                  <input type="radio" name="stress_level" value=8>
+                  <img src="../icons/HSO_icons/circle_gray.png" width=40 height=40/>
+                  </label>
+                  <label class="stress_button" id="gray_button">
+                  <input type="radio" name="stress_level" value=9>
+                  <img src="../icons/HSO_icons/circle_gray.png" width=40 height=40 />
+                  </label>
+                  <label class="stress_button" id="gray_button">
+                  <input type="radio" name="stress_level" value=10>
+                  <img src="../icons/HSO_icons/circle_gray.png" width=40 height=40/>
+                  </label>
+                  <div style="display:inline-block;font-weight: bold; margin-left:-2%; width:92%">
+                    <p style="float: left; font-size: 15px;">Not Stressed<br>At All</p>
+                    <p style="float: right; font-size: 15px;">Very<br>Stressed</p>
                   </div>
               </div>
 
@@ -457,21 +507,33 @@
               </div>
 
               <div id="stress_change_meter" style="margin-top: 6%" align="center">
-                  <label class="stress_button" id="neg_button" >
-                  <input type="radio" name="stress_level_after" value=-1 >
-                  <img src="../icons/HSO_icons/circle_brown.png" width=70 height=70 style="margin: 0 10px 0 10px"/>
-                  <p style="font-size: 18px; font-weight:bold"> Worse </p>
+                  <label class="stress_button" id="gray_button">
+                  <input type="radio" name="stress_level_after" value=-2 >
+                  <img src="../icons/HSO_icons/circle_gray.png" width=70 height=70 style="margin: 0 10px 0 10px"/>
                 </label>
-                  <label class="stress_button" id="neutral_button">
+                  <label class="stress_button" id="gray_button" >
+                  <input type="radio" name="stress_level_after" value=-1 >
+                  <img src="../icons/HSO_icons/circle_gray.png" width=70 height=70 style="margin: 0 10px 0 10px"/>
+                </label>
+                  <label class="stress_button" id="gray_button">
                   <input type="radio" name="stress_level_after" value=0 >
                   <img src="../icons/HSO_icons/circle_gray.png" width=70 height=70 style="margin: 0 10px 0 10px"/>
-                  <p style="font-size: 18px; font-weight:bold"> Same </p>
                 </label>
-                  <label class="stress_button" id="pos_button">
+                  <label class="stress_button" id="gray_button">
                   <input type="radio" name="stress_level_after" value=1 >
-                  <img src="../icons/HSO_icons/circle_green.png" width=70 height=70 style="margin: 0 10px 0 10px"/>
-                  <p style="font-size: 18px; font-weight:bold"> Better </p>
+                  <img src="../icons/HSO_icons/circle_gray.png" width=70 height=70 style="margin: 0 10px 0 10px"/>
                 </label>
+                  <label class="stress_button" id="gray_button">
+                  <input type="radio" name="stress_level_after" value=2 >
+                  <img src="../icons/HSO_icons/circle_gray.png" width=70 height=70 style="margin: 0 10px 0 10px"/>
+                </label>
+              </div>
+              <div style="display:inline-block;margin-left:11%; width:92%">
+                <p style="float:left; margin-right: 6%; font-size: 18px; font-weight:bold">Much<br>Worse</p>
+                <p style="float:left; margin-right: 6.5%; font-size: 18px; font-weight:bold">Worse</p>
+                <p style="float:left; margin-right: 7%; font-size: 18px; font-weight:bold">Same</p>
+                <p style="float:left; margin-right: 6%; font-size: 18px; font-weight:bold">Better</p>
+                <p style="float:left; font-size: 18px; font-weight:bold">Much<br>Better</p>
               </div>
 
               <paper-button class="stressIntervention_button" style="color:white" raised on-click="record_stress_after">Finish</paper-button>
