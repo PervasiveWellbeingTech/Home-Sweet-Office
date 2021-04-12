@@ -348,13 +348,13 @@ polymer_ext {
     return normal_goals_and_interventions.concat custom_goals_and_interventions
   help_icon_clicked: ->
     swal {
-      title: 'How HabitLab Works'
+      title: 'How HSO Works'
       html: '''
-      HabitLab will help you achieve your goal by showing you a different <i>nudge</i>, like a news feed blocker or a delayed page loader, each time you visit your goal site.
+      HSO will help you achieve your goal by showing you a different <i>nudge</i>, like a news feed blocker or a delayed page loader, each time you visit your goal site.
       <br><br>
-      At first, HabitLab will show you a random nudge each visit, and over time it will learn what works most effectively for you.
+      At first, HSO will show you a random nudge each visit, and over time it will learn what works most effectively for you.
       <br><br>
-      Each visit, HabitLab will test a new nudge and measure how much time you spend on the site. Then it determines the efficacy of each nudge by comparing the time spent per visit when that nudge was deployed, compared to when other nudges are deployed. HabitLab uses an algorithmic technique called <a href="https://en.wikipedia.org/wiki/Multi-armed_bandit" target="_blank">multi-armed-bandit</a> to learn which nudges work best and choose which nudges to deploy, to minimize your time wasted online.
+      Each visit, HSO will test a new nudge and measure how much time you spend on the site. Then it determines the efficacy of each nudge by comparing the time spent per visit when that nudge was deployed, compared to when other nudges are deployed. HSO uses an algorithmic technique called <a href="https://en.wikipedia.org/wiki/Multi-armed_bandit" target="_blank">multi-armed-bandit</a> to learn which nudges work best and choose which nudges to deploy, to minimize your time wasted online.
       '''
       allowOutsideClick: true
       allowEscapeKey: true

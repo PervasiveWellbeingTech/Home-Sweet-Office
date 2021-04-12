@@ -35,8 +35,8 @@ document.addEventListener('scroll', function() {
     let measurement = checkScrollSpeed();
     scroll_dates.push(start);
     scroll_buffer.push(measurement);
-    console.log(scroll_dates);
-    console.log(scroll_buffer);
+    //console.log(scroll_dates);
+    //console.log(scroll_buffer);
     if (scroll_buffer.length >= 100){
       //console.log("Scroll buffer 100 long. Record and wipe");
       //console.log(scroll_buffer);

@@ -47,7 +47,7 @@ polymer_ext {
       type: Number
       value: do ->
         if (window.hashdata_unparsed == 'last')
-          output = 9
+          output = 10
           '''
           if localStorage.positive_goals_disabled == 'true'
             output -= 1
@@ -109,7 +109,7 @@ polymer_ext {
     last_slide_idx: {
       type: Number
       value: do ->
-        output = 9
+        output = 10
         '''
         if localStorage.positive_goals_disabled == 'true'
           output -= 1
@@ -201,19 +201,19 @@ polymer_ext {
     this.send_profile_info()
 
 
-    this.fire 'onboarding-complete', {}
+    #this.fire 'onboarding-complete', {}
 
   send_profile_info: ->>
     ###### HSO #############
     ### Send first-time logging data and user profile to HSO server
     hso_first_logging_data = {
       userid : await get_user_id(),
-      install_time : new Date(),
+      #install_time : new Date(),
       nudge_time : await localStorage.getItem("nudge_time"),
       stressful_sites : await localStorage.getItem("stressful_sites"),
       approved_sites : await localStorage.getItem("approved_sites"),
       current_location : await localStorage.getItem("install_location"),
-      current_ip : ""
+      #current_ip : ""
     }
     post_json(hso_server_url + "/addUserProfile", hso_first_logging_data)
 
@@ -264,6 +264,15 @@ polymer_ext {
       return
     this.SM('.onboarding_complete').show()
 
+  confirm_pin: (evt) ->
+    this.$$('#pin_dialog').open()
+
+  pin_dialog_continue: (evt) ->
+    this.$$('#pin_dialog').close()
+    this.next_slide()
+
+  pin_dialog_close: (evt) ->
+    this.$$('#pin_dialog').close()
 
   # prev_slide: (evt) ->
   #   $.fn.pagepiling.moveSectionUp();
@@ -278,8 +287,8 @@ polymer_ext {
     this.SM('.onboarding_complete').hide()
 
   end_onboarding: ->
-    #window.close()
-    this.fire 'onboarding-complete', {}
+    window.close()
+    #this.fire 'onboarding-complete', {}
 
 
   rerender_onboarding_badges: ->
@@ -368,6 +377,7 @@ polymer_ext {
     userid = await get_user_id()
     userid_setting_iframe = $('<iframe id="setuseridiframe" src="https://habitlab.stanford.edu/setuserid?userid=' + userid + '" style="width: 0; height: 0; pointer-events: none; opacity: 0; display: none"></iframe>')
     $('body').append(userid_setting_iframe)
+
   ready: ->>
     this.style.opacity = 0
     $('body').css('overflow', 'hidden')
@@ -378,7 +388,6 @@ polymer_ext {
     this.mousewheel_listener_bound = this.mousewheel_listener.bind(this)
     this.window_resized_bound = this.window_resized.bind(this)
     window.addEventListener 'resize', this.window_resized_bound
-
     if (not localStorage.getItem('allow_logging')?) and (localStorage.getItem('irb_accepted') != 'true')
       this.$$('#irbdialog').open()
       this.$$('#irbdialog').addEventListener 'irb-dialog-closed', ->

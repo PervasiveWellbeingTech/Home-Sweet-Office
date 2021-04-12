@@ -8,7 +8,7 @@ window.addEventListener "unhandledrejection", (evt) ->
 
 
 # Note: Background.ls runs once every time browser is initiated
-hso_server_url = 'http://green-antonym-197023.wl.r.appspot.com' #'http://localhost:3000'
+hso_server_url = 'http://green-antonym-197023.wl.r.appspot.com'
 default_nudge_time = '120'
 disable_icon_changes = true # Remove habitlab icon changes
 disable_icon_timer = true # Remove habitlab icon timer
@@ -248,6 +248,12 @@ do !->>
     localStorage.setItem('notfirstrun', true)
     localStorage.setItem('positive_goals_disabled', true)
     ### HSO
+    userid = await get_user_id()
+    initial_profile_data = {
+      userid : userid,
+      install_time : new Date(),
+    }
+    post_json(hso_server_url + "/addUserProfile", initial_profile_data)
     localStorage.setItem("stressful_sites", "[]")
     localStorage.setItem("accepted_sites", "[]")
     ###
@@ -279,6 +285,14 @@ do !->>
     install_data.last_visit_to_website = last_visit_to_website_timestamp
     install_data.last_visit_to_chrome_store = last_visit_to_chrome_store_timestamp
     post_json('https://habitlab.herokuapp.com/add_install', install_data)
+
+    ####
+    #  Check for initial survey
+    survey_data = JSON.parse(await get_json(hso_server_url + "/getSurvey", "userid=" + userid))
+    if Object.keys(survey_data).length !== 0
+      localstorage_setjson("survey_data", survey_data)
+      localstorage_setbool("icon_notif_active", true)
+
     #user_secret = await get_user_secret()
     #post_json('https://habitlab.herokuapp.com/add_secret', {user_id, user_secret})
     #setInterval ->
